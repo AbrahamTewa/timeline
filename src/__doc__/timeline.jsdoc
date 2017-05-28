@@ -1,0 +1,87 @@
+/**
+ * @typedef Store
+ * @property {Store.Timeline} timeline
+ */
+
+/**
+ * @namespace StoreAction
+ */
+
+/**
+ * @typedef {Object} Store.Timeline
+ * @property {Object.<Store.Timeline.Event>} events
+ * @property {Store.Timeline.Marker[]}       markers
+ */
+
+/**
+ * @typedef {Object} Store.Timeline.Marker
+ * @property {string[]} events - List of UUID of all event in the marker
+ * @property {string}   label  - Label of the time marker
+ * @property {string}   uuid   - UUID of the marker
+ */
+
+/**
+ * @typedef {Object} Store.Timeline.Event
+ * @memberOf Store
+ * @property {string} label
+ * @property {string} description
+ * @property {string} marker      - UUID of the marker to which the event belongs
+ * @property {string} uuid        - UUID of the event
+ */
+
+/**
+ * @typedef {Object} StoreAction.Timeline.AddEvent
+ * @property {string} description - Description of the event
+ * @property {string} label       - Label of the event
+ * @property {string} marker      - UUID of the marker to which the event will be added
+ * @property {number} position    - Position where to create the event.
+ */
+
+/**
+ * @typedef {Object} StoreAction.Timeline.AddMarker
+ * @property {string} label
+ * @property {number} position - Position of the marker
+ */
+
+/**
+ * @typedef {Object} StoreAction.Timeline.RemoveMarker
+ * @property {string} uuid - UUID of the marker to remove
+ */
+
+/**
+ * @typedef {Object} StoreAction.Timeline.MoveMarker
+ * @property {number} position - New position of the marker
+ * @property {string} uuid     - UUID of the marker to move
+ */
+
+/**
+ * @typedef {Object} StoreAction.Timeline.RenameMarker
+ * @property {string} label - New label
+ * @property {string} uuid  - UUID of the marker to rename
+ */
+
+/**
+ * @typedef {Object} StoreAction.Timeline.RemoveEvent
+ * @property {string} uuid       - UUID of the event to remove
+ */
+
+/**
+ * @typedef {Object} StoreAction.Timeline.MoveEvent
+ * @property {string} markerUUID - UUID of the marker
+ * @property {string} uuid       - UUID of the event to move
+ * @property {number} position
+ */
+
+/**
+ * @typedef {Object} StoreAction.Timeline.UpdateEventDescription
+ * @property {string} description - New description of the event
+ * @property {string} markerUUID - UUID of the marker
+ * @property {string} uuid       - UUID of the event to rename
+ */
+
+/**
+ * @typedef {Object} StoreAction.Timeline.UpdateEventLabel
+ * @property {string} label      - New label of the event
+ * @property {string} markerUUID  - UUID of the marker
+ * @property {string} uuid        - UUID of the event to rename
+ */

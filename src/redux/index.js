@@ -1,13 +1,13 @@
 import { combineReducers
        , createStore } from 'redux';
-import actionReducer from './actions';
+import timeline from './timeline';
 
 // ******************** Global variables and constants ********************
-const reducers = combineReducers( {action: actionReducer} );
+const reducers = combineReducers( {timeline: timeline} );
 let store;
 
 // ******************** Functions ********************
-function configureStore(initialState = {}) {
+function configureStore(initialState = {timeline: {events: {}, markers: []}}) {
     store = createStore( reducers
                        , initialState);
 

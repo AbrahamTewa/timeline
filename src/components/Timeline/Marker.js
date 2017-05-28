@@ -10,15 +10,15 @@ import Time from './Time';
 /**
  *
  * @param {Timeline.Event[]} events
- * @param {string}           time
+ * @param {string}           label
  * @param {string}           uuid
  * @returns {XML}
  * @constructor
  */
-function Marker({events, time, uuid}) {
+function Marker({events, label, uuid}) {
 
     return (<div className="timeline-wrapper">
-                <Time time={time} />
+                <Time time={label} />
                 <EventSeries events={events}
                              uuid={uuid}/>
             </div>);

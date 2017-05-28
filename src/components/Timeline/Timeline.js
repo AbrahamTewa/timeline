@@ -8,8 +8,8 @@ import Marker from './Marker';
 
 /**
  *
- * @param {string}            id
- * @param {Timeline.Marker[]} markers
+ * @param {string}                  id
+ * @param {Store.Timeline.Marker[]} markers
  * @returns {XML}
  * @constructor
  */
@@ -17,9 +17,9 @@ function Timeline({id, markers = []}) {
 
     let markerList;
 
-    markerList = markers.map(function({events, time}, index) {
+    markerList = markers.map(function({events, label}, index) {
         return (<Marker events={events}
-                        time={time}
+                        label={label}
                         key={index}
                         uuid={'timeline.' + id}/>);
     });
