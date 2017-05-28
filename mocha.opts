@@ -1,0 +1,7 @@
+--require source-map-support/register
+--require babel-polyfill
+--recursive
+--compilers js:babel-core/register
+--use-strict
+--check-leaks
+--ui bdd
