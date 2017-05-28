@@ -14,20 +14,17 @@ import EventDescription from './EventDescription';
  * @returns {XML}
  * @constructor
  */
-function EventSeries({events, uuid}) {
-
+function EventSeries({events}) {
     let reducer;
 
-    reducer = function(eventList, event, index) {
-        let eventUUID;
-
-        eventUUID = uuid + '.' + index;
-
+    reducer = function(eventList, event) {
         eventList.push(<EventLabel label= {event.label}
-                                   uuid = {uuid} />);
+                                   key={event.uuid}
+                                   uuid = {event.uuid} />);
 
         eventList.push(<EventDescription description={event.description}
-                                         uuid={eventUUID}/>);
+                                         key={event.uuid + 'EX'}
+                                         uuid={event.uuid + 'EX'}/>);
 
     };
 
@@ -42,8 +39,7 @@ const eventPropType = { label: PropTypes.string.isRequired
 
 const eventsPropType = PropTypes.arrayOf(eventPropType).isRequired;
 
-EventSeries.propTypes = { events : eventsPropType
-                        , uuid   : PropTypes.string.isRequired};
+EventSeries.propTypes = {events : eventsPropType};
 
 // ******************** Export ********************
 export default EventSeries;

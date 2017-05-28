@@ -1,6 +1,6 @@
 /**
- * @typedef Store
- * @property {Store.Timeline} timeline
+ * @typedef {Object} ReduxStore
+ * @property {ReduxStore.Timeline} timeline
  */
 
 /**
@@ -8,20 +8,20 @@
  */
 
 /**
- * @typedef {Object} Store.Timeline
- * @property {Object.<Store.Timeline.Event>} events
- * @property {Store.Timeline.Marker[]}       markers
+ * @typedef {Object} ReduxStore.Timeline
+ * @property {Object.<ReduxStore.Timeline.Event>} events
+ * @property {ReduxStore.Timeline.Marker[]}       markers
  */
 
 /**
- * @typedef {Object} Store.Timeline.Marker
+ * @typedef {Object} ReduxStore.Timeline.Marker
  * @property {string[]} events - List of UUID of all event in the marker
  * @property {string}   label  - Label of the time marker
  * @property {string}   uuid   - UUID of the marker
  */
 
 /**
- * @typedef {Object} Store.Timeline.Event
+ * @typedef {Object} ReduxStore.Timeline.Event
  * @memberOf Store
  * @property {string} label
  * @property {string} description
@@ -35,12 +35,14 @@
  * @property {string} label       - Label of the event
  * @property {string} marker      - UUID of the marker to which the event will be added
  * @property {number} position    - Position where to create the event.
+ * @property {string} uuid
  */
 
 /**
  * @typedef {Object} StoreAction.Timeline.AddMarker
  * @property {string} label
  * @property {number} position - Position of the marker
+ * @property {string} uuid
  */
 
 /**

@@ -2,8 +2,9 @@
 import { default as EventSeries
        , eventsPropType} from './EventSeries';
 
-import React from 'react';
-import Time from './Time';
+import PropTypes from 'prop-types';
+import React     from 'react';
+import Time      from './Time';
 
 // ******************** Container ********************
 
@@ -17,16 +18,16 @@ import Time from './Time';
  */
 function Marker({events, label, uuid}) {
 
-    return (<div className="timeline-wrapper">
+    return (<div className="timeline-wrapper" id={uuid}>
                 <Time time={label} />
-                <EventSeries events={events}
-                             uuid={uuid}/>
+                <EventSeries events={events}/>
             </div>);
 
 }
 
 Marker.propTypes = { ...Time.propTypes
-                   , events: eventsPropType};
+                   , events: eventsPropType
+                   , uuid  : PropTypes.string.isRequired};
 
 // ******************** Export ********************
 export default Marker;

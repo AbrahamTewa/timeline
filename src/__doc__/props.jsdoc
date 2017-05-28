@@ -1,0 +1,17 @@
+/**
+ * @namespace Props
+ */
+
+/**
+ * @typedef {Object} Props.Timeline.Marker
+ * @property {Props.Timeline.Event[]} events
+ * @property {string}                 label
+ * @property {string}                 uuid
+ */
+
+/**
+ * @typedef {Object} Props.Timeline.Event
+ * @property {string} description
+ * @property {string} label
+ * @property {string} uuid
+ */
