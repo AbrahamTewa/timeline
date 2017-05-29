@@ -7,7 +7,7 @@ require('load-grunt-tasks')(grunt);
 
 const buildConfig = { options:  { browserifyOptions: {debug: true}
                                 , transform: [['babelify', {presets: ['es2015', 'react']}]] }
-                    , files: { 'build/scripts/index.js' : 'src/scripts/index.js' } };
+                    , files: { 'build/scripts/index.js' : 'src/client/scripts/index.js' } };
 
 const buildAndWatch = {...buildConfig
                       , watch: true};
@@ -19,8 +19,7 @@ grunt.initConfig({
                 , watchifyOptions: {delay: 40} }
 
     , clean: {
-        build: ['build'
-               ,'!build/vendors'],
+        build: ['build'],
         doc : ['doc/']
     }
 
@@ -28,9 +27,9 @@ grunt.initConfig({
         html: {
             files: [{
                 expand: true,
-                cwd: 'src',
-                src: ['**/*.htm', '**/*.html'],
-                dest: 'build/'
+                cwd: 'src/client',
+                src: 'index.html',
+                dest: 'build'
             }]
         },
         vendors: {
@@ -63,7 +62,7 @@ grunt.initConfig({
             sourceMap: true
         }
       , build: {
-          files: { 'build/stylesheets/index.css' : 'src/stylesheets/index.scss'}
+          files: { 'build/stylesheets/index.css' : 'src/client/stylesheets/index.scss'}
       }
     }
 
