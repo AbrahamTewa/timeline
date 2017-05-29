@@ -1,0 +1,14 @@
+div#root h1 {
+  color: red; }
+
+.timeline-time input[type="text"] {
+  font-size: large; }
+  .timeline-time input[type="text"]:disabled {
+    border-color: transparent;
+    background: transparent; }
+
+.timeline-wrapper .form-event {
+  display: flex;
+  flex-direction: column; }
+
+/*# sourceMappingURL=index.css.map */
