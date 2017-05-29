@@ -2,9 +2,7 @@
   "presets": ["es2015", "es2016", "es2017", "react"],
   "plugins": [ "transform-react-jsx"
              , "transform-object-rest-spread"],
-  "env": {
-    "test": {
-      "plugins": [ "istanbul" ]
-    }
-  }
+  "env": { "browser": true
+         , "jquery" : true
+         , "test"   : {"plugins": [ "istanbul" ]}}
 }

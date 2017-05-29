@@ -7,7 +7,7 @@ require('load-grunt-tasks')(grunt);
 
 const buildConfig = { options:  { browserifyOptions: {debug: true}
                                 , transform: [['babelify', {presets: ['es2015', 'react']}]] }
-                    , files: { 'build/index.js' : 'src/index.js' } };
+                    , files: { 'build/scripts/index.js' : 'src/scripts/index.js' } };
 
 const buildAndWatch = {...buildConfig
                       , watch: true};
@@ -19,7 +19,8 @@ grunt.initConfig({
                 , watchifyOptions: {delay: 40} }
 
     , clean: {
-        build: ['build/'],
+        build: ['build'
+               ,'!build/vendors'],
         doc : ['doc/']
     }
 
@@ -29,6 +30,13 @@ grunt.initConfig({
                 expand: true,
                 cwd: 'src',
                 src: ['**/*.htm', '**/*.html'],
+                dest: 'build/'
+            }]
+        },
+        vendors: {
+            files: [{
+                expand: true,
+                src: ['vendors/**/*.*'],
                 dest: 'build/'
             }]
         }
@@ -55,7 +63,7 @@ grunt.initConfig({
             sourceMap: true
         }
       , build: {
-          files: { 'build/index.css' : 'src/index.scss'}
+          files: { 'build/stylesheets/index.css' : 'src/stylesheets/index.scss'}
       }
     }
 
@@ -65,7 +73,7 @@ grunt.initConfig({
                    , 'gruntfile.js'
                    , 'package.json'
                    , '.eslintrc.json']
-          , tasks: ['eslint', 'copy:html', 'browserify:watch', 'sass']
+          , tasks: ['eslint', 'copy', 'browserify:watch', 'sass']
           , options: { atBegin : true
                      , spawn   : false}
         }
@@ -74,5 +82,5 @@ grunt.initConfig({
 
 // Registering all tasks
 grunt.registerTask('lint', ['eslint']);
-grunt.registerTask('build', ['eslint', 'clean:build', 'copy:html', 'browserify:build']);
+grunt.registerTask('build', ['eslint', 'clean:build', 'copy', 'browserify:build', 'sass']);
 grunt.registerTask('default', ['build']);
