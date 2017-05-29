@@ -5,3 +5,18 @@ div#root {
     }
 
 }
+
+.timeline-time {
+
+    input[type="text"] {
+
+        font-size: large;
+
+        &:disabled {
+            border-color: transparent;
+            background: transparent;
+        }
+
+    }
+
+}

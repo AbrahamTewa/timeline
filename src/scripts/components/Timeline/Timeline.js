@@ -8,21 +8,24 @@ import Marker from './Marker';
 
 /**
  *
+ * @param {function(object)}        onMarkerTimeUpdate
  * @param {string}                  id
  * @param {Props.Timeline.Marker[]} markers
  * @returns {XML}
  * @constructor
  */
-function Timeline({ id      = 'timeliner'
+function Timeline({ onMarkerTimeUpdate
+                  , id      = 'timeliner'
                   , markers = []}) {
 
     let markerList;
 
     markerList = markers.map(function({events, time, uuid}) {
-        return (<Marker events = {events}
-                        time   = {time}
-                        key    = {uuid}
-                        uuid   = {uuid}/>);
+        return (<Marker events       = {events}
+                        key          = {uuid}
+                        onTimeUpdate = {onMarkerTimeUpdate}
+                        time         = {time}
+                        uuid         = {uuid}/>);
     });
 
     return (<div id={id}>
@@ -31,8 +34,9 @@ function Timeline({ id      = 'timeliner'
 
 }
 
-Timeline.propTypes = { id      : PropTypes.string.isRequired
-                     , markers : PropTypes.array};
+Timeline.propTypes = { id                 : PropTypes.string.isRequired
+                     , onMarkerTimeUpdate : PropTypes.func.isRequired
+                     , markers            : PropTypes.array};
 
 // ******************** Export ********************
 export default Timeline;

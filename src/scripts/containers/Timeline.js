@@ -1,6 +1,10 @@
 import { connect } from 'react-redux';
 import TimelineComponent from '../components/Timeline';
+import {renameMarker} from '../redux/timeline';
 
+function mapDispatchToProps(dispatch) {
+    return {onMarkerTimeUpdate: ({uuid, label}) => { dispatch(renameMarker({uuid, label})); }};
+}
 
 /**
  *
@@ -32,6 +36,6 @@ function mapStateToProps (state) {
     return props;
 }
 
-const Timeline = connect(mapStateToProps)(TimelineComponent);
+const Timeline = connect(mapStateToProps, mapDispatchToProps)(TimelineComponent);
 
 export default Timeline;

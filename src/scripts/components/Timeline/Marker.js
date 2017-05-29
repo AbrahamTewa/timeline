@@ -8,26 +8,47 @@ import Time      from './Time';
 
 // ******************** Container ********************
 
-/**
- *
- * @param {Timeline.Event[]} events
- * @param {string}           label
- * @param {string}           uuid
- * @returns {XML}
- * @constructor
- */
-function Marker({events, time, uuid}) {
+class Marker extends React.Component {
 
-    return (<div className="timeline-wrapper" id={uuid}>
-                <Time time={time} />
-                <EventSeries events={events}/>
-            </div>);
+    /**
+     * @param {Object}                 props
+     * @param {Timeline.Event[]}       props.events
+     * @param {function(label:string)} props.onTimeUpdate - Callback to execute when the
+     *                                                      user change the time of the marker
+     * @param {string}                 props.time
+     * @param {string}                 props.uuid
+     * @returns {XML}
+     * @constructor
+     */
+    constructor(props) {
+        super(props);
+
+        this.onTimeUpdate = this.onTimeUpdate.bind(this);
+    }
+
+    /**
+     * Called when the time is updated by the update
+     * @param {string} time
+     */
+    onTimeUpdate(time) {
+        this.props.onTimeUpdate({ label: time
+                                , uuid : this.props.uuid});
+    }
+
+    render() {
+        return (<div className="timeline-wrapper" id={this.props.uuid}>
+                    <Time onChange={this.onTimeUpdate}
+                          time={this.props.time}/>
+                    <EventSeries events={this.props.events}/>
+                </div>);
+    }
 
 }
 
-Marker.propTypes = { ...Time.propTypes
-                   , events: eventsPropType
-                   , uuid  : PropTypes.string.isRequired};
+Marker.propTypes = { events       : eventsPropType
+                   , onTimeUpdate : PropTypes.func.isRequired
+                   , time         : PropTypes.string.isRequired
+                   , uuid         : PropTypes.string.isRequired};
 
 // ******************** Export ********************
 export default Marker;

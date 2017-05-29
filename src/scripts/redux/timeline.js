@@ -76,7 +76,7 @@ function moveMarker(uuid, position) {
  * @param label
  * @returns {StoreAction.Timeline.RenameMarker}
  */
-function renameMarker(uuid, label) {
+function renameMarker({label, uuid}) {
     return { label
            , type: RENAME_MARKER
            , uuid};
@@ -140,8 +140,6 @@ function updateEventLabel({label, markerUUID, uuid}) {
  * @returns {Store.Timeline}
  */
 function reducer(state={events:{}, markers: []}, action={}) {
-
-    console.log(action);
 
     switch (action.type) {
 
