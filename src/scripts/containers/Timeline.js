@@ -25,7 +25,7 @@ function mapStateToProps (state) {
         });
 
         return { events
-               , label: marker.label
+               , time : marker.label
                , uuid : marker.uuid};
     });
 

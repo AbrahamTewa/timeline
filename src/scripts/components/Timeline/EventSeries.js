@@ -29,13 +29,13 @@ function EventSeries({events}) {
     };
 
     return (<dl className="timeline-series">
-                {events.reduce(reducer)}
+                {events.reduce(reducer, [])}
             </dl>);
 
 }
 
-const eventPropType = { label: PropTypes.string.isRequired
-                      , description: PropTypes.string.isRequired};
+const eventPropType = PropTypes.shape({ label: PropTypes.string.isRequired
+                                      , description: PropTypes.string.isRequired});
 
 const eventsPropType = PropTypes.arrayOf(eventPropType).isRequired;
 

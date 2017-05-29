@@ -40,7 +40,7 @@ function addEvent({description, label, marker, position=-1}) {
 function addMarker(label, position=-1) {
     return { label
            , position
-           , type : ADD_EVENT
+           , type : ADD_MARKER
            , uuid : uuid()};
 }
 
@@ -140,6 +140,8 @@ function updateEventLabel({label, markerUUID, uuid}) {
  * @returns {Store.Timeline}
  */
 function reducer(state={events:{}, markers: []}, action={}) {
+
+    console.log(action);
 
     switch (action.type) {
 

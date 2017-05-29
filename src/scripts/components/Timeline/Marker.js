@@ -16,10 +16,10 @@ import Time      from './Time';
  * @returns {XML}
  * @constructor
  */
-function Marker({events, label, uuid}) {
+function Marker({events, time, uuid}) {
 
     return (<div className="timeline-wrapper" id={uuid}>
-                <Time time={label} />
+                <Time time={time} />
                 <EventSeries events={events}/>
             </div>);
 

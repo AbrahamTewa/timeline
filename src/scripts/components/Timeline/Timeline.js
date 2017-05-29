@@ -13,16 +13,16 @@ import Marker from './Marker';
  * @returns {XML}
  * @constructor
  */
-function Timeline({ id      = 'timeline'
+function Timeline({ id      = 'timeliner'
                   , markers = []}) {
 
     let markerList;
 
-    markerList = markers.map(function({events, label, uuid}) {
-        return (<Marker events={events}
-                        label={label}
-                        key={uuid}
-                        uuid={uuid}/>);
+    markerList = markers.map(function({events, time, uuid}) {
+        return (<Marker events = {events}
+                        time   = {time}
+                        key    = {uuid}
+                        uuid   = {uuid}/>);
     });
 
     return (<div id={id}>
