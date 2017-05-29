@@ -1,4 +1,4 @@
-import App from './components/App';
+import App from './containers/App';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
@@ -9,7 +9,7 @@ import { configureStore
  * Initialize the application
  */
 function initialize() {
-    configureStore({action: {title: 'React starter'}});
+    configureStore();
 
     ReactDOM.render( <Provider store={getStore()}>
                         <App />

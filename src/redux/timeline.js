@@ -137,7 +137,7 @@ function updateEventLabel({label, markerUUID, uuid}) {
  *
  * @param {Store.Timeline} state
  * @param action
- * @returns {*}
+ * @returns {Store.Timeline}
  */
 function reducer(state={events:{}, markers: []}, action={}) {
 
@@ -231,8 +231,8 @@ function reducer(state={events:{}, markers: []}, action={}) {
             marker = state.markers[markerIndex];
 
             // Removing all events of the marker
-            for({uuid} of marker.events) {
-                delete state.events[uuid];
+            for(let event of marker.events) {
+                delete state.events[event.uuid];
             }
 
             return {...state
