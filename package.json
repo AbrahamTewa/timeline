@@ -9,6 +9,7 @@
   "scripts": {
     "analysis": "plato --dir analysis --recurse --eslint .eslintrc.json --title \"Starter server\" src/**/*.js",
     "build": "grunt build",
+    "build-page": "git checkout master && grunt build && git checkout gh-pages && cp build/ .",
     "debugger": "devtool build/index.js",
     "doc": "grunt clean:doc && jsdoc -c jsdoc.json --readme README.md",
     "lint": "grunt lint",
