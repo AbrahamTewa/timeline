@@ -165,7 +165,7 @@ function reducer(state={events:{}, markers: []}, action={}) {
                                                 , action.marker
                                                 , {cloneEvent: true});
 
-            eventPosition = action.position === -1 ? marker.event.length : action.position;
+            eventPosition = action.position === -1 ? marker.events.length : action.position;
 
             // Add the event to the list of events of the marker at the desired position
             marker.events.splice(eventPosition, 0, event.uuid);

@@ -18,14 +18,15 @@ function EventSeries({events}) {
     let reducer;
 
     reducer = function(eventList, event) {
-        eventList.push(<EventLabel label= {event.label}
-                                   key={event.uuid}
-                                   uuid = {event.uuid} />);
+        eventList.push(<EventLabel label = {event.label}
+                                   key   = {event.uuid}
+                                   uuid  = {event.uuid} />);
 
-        eventList.push(<EventDescription description={event.description}
-                                         key={event.uuid + 'EX'}
-                                         uuid={event.uuid + 'EX'}/>);
+        eventList.push(<EventDescription description = {event.description}
+                                         key         = {event.uuid + 'EX'}
+                                         uuid        = {event.uuid}/>);
 
+        return eventList;
     };
 
     return (<dl className="timeline-series">

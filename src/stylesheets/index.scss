@@ -18,5 +18,13 @@ div#root {
         }
 
     }
+}
+
+.timeline-wrapper {
+
+    .form-event {
+        display: flex;
+        flex-direction: column;
+    }
 
 }

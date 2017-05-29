@@ -1,11 +1,11 @@
 import { connect } from 'react-redux';
-import AddMarkerComponent from '../components/AddMarker';
+import FormMarker from '../components/FormMarker';
 import {addMarker} from '../redux/timeline';
 
 function mapDispatchToProps(dispatch) {
     return {onSubmit: (label) => { dispatch(addMarker(label)); }};
 }
 
-const AddMarker = connect(undefined, mapDispatchToProps)(AddMarkerComponent);
+const AddMarker = connect(undefined, mapDispatchToProps)(FormMarker);
 
 export default AddMarker;

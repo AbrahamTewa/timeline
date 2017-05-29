@@ -5,6 +5,7 @@ import { default as EventSeries
 import PropTypes from 'prop-types';
 import React     from 'react';
 import Time      from './Time';
+import FormEvent from './FormEvent';
 
 // ******************** Container ********************
 
@@ -23,6 +24,7 @@ class Marker extends React.Component {
     constructor(props) {
         super(props);
 
+        this.onNewEvent   = this.onNewEvent.bind(this);
         this.onTimeUpdate = this.onTimeUpdate.bind(this);
     }
 
@@ -35,10 +37,28 @@ class Marker extends React.Component {
                                 , uuid : this.props.uuid});
     }
 
+    /**
+     *
+     * @param {string} description
+     * @param {string} label
+     */
+    onNewEvent({description, label}) {
+        let event;
+
+        event = { description
+                , label
+                , marker : this.props.uuid};
+
+        this.props.onNewEvent(event);
+    }
+
     render() {
         return (<div className="timeline-wrapper" id={this.props.uuid}>
                     <Time onChange={this.onTimeUpdate}
                           time={this.props.time}/>
+
+                    <FormEvent onSubmit={this.onNewEvent}/>
+
                     <EventSeries events={this.props.events}/>
                 </div>);
     }
@@ -46,6 +66,7 @@ class Marker extends React.Component {
 }
 
 Marker.propTypes = { events       : eventsPropType
+                   , onNewEvent   : PropTypes.func.isRequired
                    , onTimeUpdate : PropTypes.func.isRequired
                    , time         : PropTypes.string.isRequired
                    , uuid         : PropTypes.string.isRequired};
