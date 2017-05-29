@@ -3,6 +3,5 @@
   "plugins": [ "transform-react-jsx"
              , "transform-object-rest-spread"],
   "env": { "browser": true
-         , "jquery" : true
          , "test"   : {"plugins": [ "istanbul" ]}}
 }

@@ -1,7 +1,6 @@
 import uuid from 'uuid/v4';
 
 // ******************** Actions ********************
-
 const ADD_MARKER    = 'timeline.ADD_MARKER';
 const REMOVE_MARKER = 'timeline.REMOVE_MARKER';
 const MOVE_MARKER   = 'timeline.MOVE_MARKER';
@@ -139,7 +138,7 @@ function updateEventLabel({label, markerUUID, uuid}) {
  * @param action
  * @returns {Store.Timeline}
  */
-function reducer(state={events:{}, markers: []}, action={}) {
+function reducer(state={timelines: {}, events:{}, markers: []}, action={}) {
 
     switch (action.type) {
 
