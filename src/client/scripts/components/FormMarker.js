@@ -37,7 +37,8 @@ class AddMarker extends React.Component {
                   className="addMarker">
                 <label> Ajouter un marker :
                     <input type="text"
-                            onChange={this.onChange}/>
+                           autoFocus
+                           onChange={this.onChange}/>
                 </label>
                 <input type="submit"
                        value="Ajouter" />

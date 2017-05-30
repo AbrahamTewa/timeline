@@ -29,17 +29,34 @@ div#root {
 
 }
 
+body {
+    padding: 3px;
+}
+
 header {
     display: flex;
     flex-direction: row;
 
     & > .title {
         flex-grow: 1;
+        margin-top: 0;
+
+        input {
+            color: rgba(51, 51, 51, 0.52);;
+
+            &:not(:hover):not(:focus) {
+                border-color: transparent;
+            }
+        }
     }
 
     & > .toolbar {
         display: flex;
         flex-direction: row;
+        height: 36px;
     }
 
+    .login-button, button {
+        margin-right: 0.5em;
+    }
 }

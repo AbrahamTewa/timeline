@@ -5,16 +5,16 @@ const LOGIN_USER = 'authentication.LOGIN';
 
 /**
  *
- * @param googleUser
+ * @param oauth
+ * @param user
  */
-function loginUser(googleUser) {
-    console.log('logon !');
-    let profile = googleUser.getBasicProfile();
+function loginUser({user, oauth}) {
+    let profile = user.getBasicProfile();
 
     return { fullName     : profile.getName()
            , id           : profile.getId()
-           , id_token     : googleUser.getAuthResponse().id_token
-           , access_token : googleUser.getAuthResponse().access_token
+           , id_token     : oauth.id_token
+           , access_token : oauth.access_token
            , type         : LOGIN_USER};
 }
 

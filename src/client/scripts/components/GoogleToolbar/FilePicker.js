@@ -1,12 +1,7 @@
 /* global google */
-// ******************** NodeJS events ********************
-import EventTarget from 'event-target-shim';
-
-// ******************** Events ********************
-const ON_PICK = 'FilePicker.events.ON_PICK';
 
 // ******************** Class ********************
-class FilePicker extends EventTarget {
+class FilePicker {
 
     /**
      *
@@ -15,7 +10,6 @@ class FilePicker extends EventTarget {
      */
     constructor({ access_token
                 , views = []}) {
-        super();
 
         let builder;
 
@@ -66,4 +60,3 @@ class FilePicker extends EventTarget {
 
 // ******************** Exports ********************
 export default FilePicker;
-export {ON_PICK};

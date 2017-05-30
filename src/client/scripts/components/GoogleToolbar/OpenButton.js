@@ -13,7 +13,7 @@ class OpenButton extends React.Component {
         this.onClick = this.onClick.bind(this);
 
         view = new google.picker.View(google.picker.ViewId.DOCS);
-        view.setMimeTypes('text/timeline');
+        // view.setMimeTypes('text/timeline');
 
         this.picker = new FilePicker({ access_token: this.props.access_token
                                      , views       : [view]});
