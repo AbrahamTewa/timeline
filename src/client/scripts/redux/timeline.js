@@ -1,6 +1,6 @@
 import uuid from 'uuid/v4';
 
-// ******************** Actions ********************
+// ******************** Actions types ********************
 const ADD_MARKER    = 'timeline.ADD_MARKER';
 const REMOVE_MARKER = 'timeline.REMOVE_MARKER';
 const MOVE_MARKER   = 'timeline.MOVE_MARKER';

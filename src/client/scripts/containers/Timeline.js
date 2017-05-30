@@ -69,6 +69,6 @@ function mapStateToProps (state) {
     return props;
 }
 
-const Timeline = connect(mapStateToProps, mapDispatchToProps)(TimelineComponent);
+const CurrentTimeline = connect(mapStateToProps, mapDispatchToProps)(TimelineComponent);
 
-export default Timeline;
+export default CurrentTimeline;
