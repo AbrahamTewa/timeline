@@ -28,3 +28,18 @@ div#root {
     }
 
 }
+
+header {
+    display: flex;
+    flex-direction: row;
+
+    & > .title {
+        flex-grow: 1;
+    }
+
+    & > .toolbar {
+        display: flex;
+        flex-direction: row;
+    }
+
+}

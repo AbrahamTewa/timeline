@@ -27,7 +27,7 @@ class Toolbar extends React.Component {
                                      onSave={this.props.onSaveAs}/>;
         }
 
-        return (<div>
+        return (<div className="toolbar">
                     <LoginButton onLogin={this.props.onLogin} />
                     {openButton}
                     {saveButton}
