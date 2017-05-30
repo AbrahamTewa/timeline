@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 
 // ******************** Container ********************
 
-function Input({title, onkeypress}) {
+function Input({onkeypress, title}) {
 
     return (<input
                 type="text"
@@ -14,7 +14,7 @@ function Input({title, onkeypress}) {
 }
 
 Input.propTypes = { onkeypress: PropTypes.func
-                  , title : PropTypes.string.isRequired};
+                  , title     : PropTypes.string.isRequired};
 
 // ******************** Export ********************
 export default Input;

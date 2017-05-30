@@ -1,11 +1,15 @@
 import React from 'react';
-import AddMarker from './AddMarker';
-import Timeline from './Timeline';
-import Toolbar from './Toolbar';
+import AddMarker    from './AddMarker';
+import DocumentName from './DocumentName';
+import Timeline     from './Timeline';
+import Toolbar      from './Toolbar';
 
 function App() {
     return (<div>
-                <Toolbar />
+                <header>
+                    <DocumentName />
+                    <Toolbar />
+                </header>
                 <AddMarker/>
                 <Timeline id="timeline"/>
             </div>);

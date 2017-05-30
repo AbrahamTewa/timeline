@@ -1,15 +1,18 @@
 import { combineReducers
        , createStore } from 'redux';
-import timeline from './timeline';
-import { default as google } from './google';
+
+import authentication from './authentication';
+import document       from './document';
+import timeline       from './timeline';
 
 // ******************** Global variables and constants ********************
-const reducers = combineReducers( { google
+const reducers = combineReducers( { authentication
+                                  , document
                                   , timeline} );
 let store;
 
 // ******************** Functions ********************
-function configureStore(initialState = {timeline: {events: {}, markers: []}}) {
+function configureStore(initialState) {
     store = createStore( reducers
                        , initialState
                        , window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());

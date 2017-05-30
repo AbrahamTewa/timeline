@@ -23,6 +23,8 @@
     "url": "https://github.com/AbrahamTewa/timeline"
   },
   "dependencies": {
+    "babel-plugin-transform-async-to-generator": "^6.24.1",
+    "event-target-shim": "^2.0.0",
     "express": "^4.15.3",
     "passport": "^0.3.2",
     "passport-google-oauth": "^1.0.0",
@@ -35,6 +37,7 @@
   },
   "devDependencies": {
     "babel-core": "^6.10.4",
+    "babel-eslint": "^7.2.3",
     "babel-plugin-istanbul": "^4.1.4",
     "babel-plugin-transform-object-rest-spread": "^6.23.0",
     "babel-plugin-transform-react-jsx": "^6.24.1",

@@ -2,21 +2,22 @@
 // ******************** NodeJS packages ********************
 import React from 'react';
 import PropTypes from 'prop-types';
+
 import FilePicker from './FilePicker';
 
 // ******************** Component ********************
-class OpenButton extends React.Component {
+class SaveButton extends React.Component {
 
     constructor(props) {
         let view;
+
         super(props);
+
+        view = new google.picker.View(google.picker.ViewId.FOLDERS);
+
+        this.filePicker = new FilePicker({ access_token: this.props.access_token
+                                         , views: [view]});
         this.onClick = this.onClick.bind(this);
-
-        view = new google.picker.View(google.picker.ViewId.DOCS);
-        view.setMimeTypes('text/timeline');
-
-        this.picker = new FilePicker({ access_token: this.props.access_token
-                                     , views       : [view]});
     }
 
     async onClick() {
@@ -24,7 +25,7 @@ class OpenButton extends React.Component {
         let document;
         let url;
 
-        document = await this.picker.display();
+        document = await this.filePicker.display();
 
         if (!document) {
             return;
@@ -33,20 +34,23 @@ class OpenButton extends React.Component {
         doc = document[google.picker.Response.DOCUMENTS][0];
         url = doc[google.picker.Document.URL];
 
-        this.props.onOpen(url);
+        console.log('url');
+
+        this.props.onSave(url);
     }
 
     render() {
         return (<button onClick={this.onClick}>
-                    Ouvrir...
+                    Enregistrer
                 </button>);
     }
 
 }
 
 // ******************** Prop-types ********************
-OpenButton.propTypes = { access_token : PropTypes.string
-                       , onOpen       : PropTypes.func.isRequired};
+SaveButton.propTypes = { access_token : PropTypes.string.isRequired
+                       , file_id      : PropTypes.string
+                       , onSave       : PropTypes.func.isRequired};
 
 // ******************** Exports ********************
-export default OpenButton;
+export default SaveButton;
