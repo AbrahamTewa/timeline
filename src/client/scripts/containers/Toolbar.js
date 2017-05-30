@@ -1,11 +1,17 @@
 import { connect } from 'react-redux';
 import GoogleToolbar from '../components/GoogleToolbar';
-import {loginGoogle} from '../redux/google';
+import { openFile
+       , loginGoogle} from '../redux/google';
 
-function mapDispatchProps(dispatch) {
-    return {onLogin: googleUser => dispatch(loginGoogle(googleUser))};
+function mapStateToProps(state) {
+    return {access_token: state.google.user ? state.google.user.oauth.access_token : undefined};
 }
 
-const Toolbar = connect(undefined, mapDispatchProps)(GoogleToolbar);
+function mapDispatchProps(dispatch) {
+    return { onFileOpen: file       => dispatch(openFile(file))
+           , onLogin   : googleUser => dispatch(loginGoogle(googleUser))};
+}
+
+const Toolbar = connect(mapStateToProps, mapDispatchProps)(GoogleToolbar);
 
 export default Toolbar;

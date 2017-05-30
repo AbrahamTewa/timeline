@@ -1,13 +1,33 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import GoogleButton from './GoogleButton';
+// ******************** NodeJS packages ********************
+import React        from 'react';
+import PropTypes    from 'prop-types';
 
-function Toolbar({onLogin}) {
+// ******************** Components ********************
+import LoginButton from './LoginButton';
+import OpenButton   from './OpenButton';
+
+// ******************** Component ********************
+
+function Toolbar({ access_token
+                 , onFileOpen
+                 , onLogin}) {
+
+    let button;
+
+    if (access_token)
+        button = <OpenButton access_token={access_token}
+                             onOpen={onFileOpen}/>;
+
     return (<div>
-                <GoogleButton onLogin = {onLogin} />
+                <LoginButton onLogin={onLogin} />
+                {button}
             </div>);
 }
 
-Toolbar.propTypes = { onLogin : PropTypes.func.isRequired};
+// ******************** Prop-types ********************
+Toolbar.propTypes = { access_token : PropTypes.string
+                    , onFileOpen   : PropTypes.func.isRequired
+                    , onLogin      : PropTypes.func.isRequired};
 
+// ******************** Exports ********************
 export default Toolbar;

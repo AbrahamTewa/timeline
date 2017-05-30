@@ -1,8 +1,10 @@
 /* global gapi */
+// ******************** NodeJS packages ********************
 import React from 'react';
 import PropTypes from 'prop-types';
 
-class GoogleButton extends React.Component {
+// ******************** Component ********************
+class LoginButton extends React.Component {
 
     constructor(props) {
         super(props);
@@ -12,7 +14,7 @@ class GoogleButton extends React.Component {
         /** @type {Object} */
         let params;
 
-        params = { 'scope'    : 'profile email'
+        params = { 'scope'    : 'https://www.googleapis.com/auth/drive.readonly'
                  , 'longtitle': false
                  , 'theme'    : 'dark'
                  , 'onsuccess': this.props.onLogin};
@@ -27,6 +29,8 @@ class GoogleButton extends React.Component {
 
 }
 
-GoogleButton.propTypes = {onLogin : PropTypes.func.isRequired};
+// ******************** Prop-types ********************
+LoginButton.propTypes = {onLogin : PropTypes.func.isRequired};
 
-export default GoogleButton;
+// ******************** Exports ********************
+export default LoginButton;
