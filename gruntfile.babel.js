@@ -50,8 +50,9 @@ grunt.initConfig({
         },
         'gh-pages': {
             files: [{ expand: true
-                    , src   : ['build/**/*.*']
-                    , dest  : '.'}]
+                    , cwd   : 'build'
+                    , src   : '**'
+                    , dest  : './'}]
         }
     }
 
