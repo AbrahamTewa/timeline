@@ -1,16 +1,35 @@
+// ******************** NodeJS packages ********************
+import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import EditableLabel from '../components/EditableLabel';
+
+// ******************** Imports ********************
+import EditableLabel
+     , {MODE_DIRECT} from '../components/EditableLabel';
 import {renameFile} from '../redux/document';
 
+// ******************** Container ********************
+function Name({name, onChange}) {
+    return ( <h1 className="title">
+                <EditableLabel label={name}
+                               mode={MODE_DIRECT}
+                               onChange={onChange} />
+            </h1>);
+}
+
+Name.propTypes = { name: PropTypes.string.isRequired
+                 , onChange: PropTypes.func.isRequired};
+
+// ******************** Redux ********************
 function mapStateToProps (state) {
-    return { className: 'title'
-           , label    : state.document.name};
+    return {name : state.document.name};
 }
 
 function mapDispatchToProps(dispatch) {
     return {onChange: (name) => dispatch(renameFile(name)) };
 }
 
-const Title = connect(mapStateToProps, mapDispatchToProps)(EditableLabel);
+const DocumentName = connect(mapStateToProps, mapDispatchToProps)(Name);
 
-export default Title;
+// ******************** Exports ********************
+export default DocumentName;

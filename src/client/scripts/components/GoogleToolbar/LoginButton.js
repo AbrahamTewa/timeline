@@ -23,7 +23,8 @@ class LoginButton extends React.Component {
     }
 
     render() {
-        return (<div ref={input => this.buttonElement = input }>
+        return (<div className="login-button"
+                     ref={input => this.buttonElement = input }>
                 </div>);
     }
 
