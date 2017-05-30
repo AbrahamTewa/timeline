@@ -19,25 +19,39 @@ grunt.initConfig({
                 , watchifyOptions: {delay: 40} }
 
     , clean: {
-        build: ['build'],
-        doc : ['doc/']
-    }
+        build  : ['build'],
+        doc    : ['doc/'],
+        'gh-pages': ['build/'
+                    ,'src'
+                    ,'.babelrc'
+                    ,'.editorconfig'
+                    ,'.eslintrc.json'
+                    ,'.travis.yml'
+                    ,'gruntfile.babel.js'
+                    ,'gruntfile.js'
+                    ,'jsdoc.json'
+                    ,'mocha.opts'
+                    ,'README.md'
+                    ,'server.js'
+                    ,'yarn.lock']}
 
     , copy: {
         html: {
-            files: [{
-                expand: true,
-                cwd: 'src/client',
-                src: 'index.html',
-                dest: 'build'
+            files: [{ expand: true
+                    , cwd: 'src/client'
+                    , src: 'index.html'
+                    , dest: 'build'
             }]
         },
         vendors: {
-            files: [{
-                expand: true,
-                src: ['vendors/**/*.*'],
-                dest: 'build/'
-            }]
+            files: [{ expand: true
+                    , src: ['vendors/**/*.*']
+                    , dest: 'build/'}]
+        },
+        'gh-pages': {
+            files: [{ expand: true
+                    , src   : ['build/**/*.*']
+                    , dest  : '.'}]
         }
     }
 
@@ -81,5 +95,16 @@ grunt.initConfig({
 
 // Registering all tasks
 grunt.registerTask('lint', ['eslint']);
-grunt.registerTask('build', ['eslint', 'clean:build', 'copy', 'browserify:build', 'sass']);
+
+grunt.registerTask('build', ['eslint'
+                            ,'clean:build'
+                            ,'copy:html'
+                            ,'copy:vendors'
+                            ,'browserify:build'
+                            ,'sass']);
+
+grunt.registerTask('gh-pages', ['build'
+                               ,'copy:gh-pages'
+                               ,'clean:gh-pages']);
+
 grunt.registerTask('default', ['build']);
