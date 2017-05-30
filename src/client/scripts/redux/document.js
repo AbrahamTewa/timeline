@@ -1,3 +1,5 @@
+import {LIST_MODIFIERS} from './timeline';
+
 // ******************** Actions ********************
 const OPEN_FILE    = 'document.OPEN_FILE';
 const RENAME_FILE  = 'document.RENAME_FILE';
@@ -23,6 +25,11 @@ function saveFileAs({url}) {
 // ******************** Reducer ********************
 
 function reducer(state={}, action={}) {
+
+    if (LIST_MODIFIERS.includes(action.type)) {
+        return { ...state
+               , saved: false};
+    }
 
     switch(action.type) {
 

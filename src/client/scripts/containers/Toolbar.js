@@ -7,10 +7,14 @@ import { openFile
 
 function mapStateToProps(state) {
     let access_token;
+    let document;
 
     access_token = state.authentication.user ? state.authentication.oauth.access_token : undefined;
+    document     = { saved: state.document.saved
+                   , url  : state.document.url};
 
-    return {access_token};
+    return { access_token
+           , document};
 }
 
 function mapDispatchProps(dispatch) {

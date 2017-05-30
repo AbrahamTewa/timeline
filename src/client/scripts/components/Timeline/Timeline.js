@@ -19,7 +19,6 @@ class Timeline extends React.Component {
     }
 
     applyPlugin() {
-        console.log('Applying plugin');
         $.timeliner({timelineContainer: '#' + this.props.id});
 
         this.setState({ ...this.state

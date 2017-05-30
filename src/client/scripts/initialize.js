@@ -2,9 +2,14 @@
 // ******************** Containers and redux ********************
 import { configureStore} from './redux';
 
-const initialState = { document: {name: 'Ma chronologie.timeline'}
-                     , timeline: { events: {}
-                                , markers: []}};
+/**
+ *
+ * @type {ReduxStore}
+ */
+const initialState = { document: { name : 'Ma chronologie.timeline'
+                                 , saved: true}
+                     , timeline: { events : {}
+                                 , markers: []}};
 
 // ******************** Main ********************
 

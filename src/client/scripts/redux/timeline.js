@@ -12,6 +12,21 @@ const MOVE_EVENT               = 'timeline.MOVE_EVENT';
 const UPDATE_EVENT_LABEL       = 'timeline.UPDATE_EVENT_LABEL';
 const UPDATE_EVENT_DESCRIPTION = 'timeline.UPDATE_EVENT_DESCRIPTION';
 
+/**
+ * List of actions that update the document
+ * @type {string[]}
+ */
+const LIST_MODIFIERS = [ADD_MARKER
+                       ,REMOVE_MARKER
+                       ,MOVE_MARKER
+                       ,RENAME_MARKER
+
+                       ,ADD_EVENT
+                       ,REMOVE_EVENT
+                       ,MOVE_EVENT
+                       ,UPDATE_EVENT_LABEL
+                       ,UPDATE_EVENT_DESCRIPTION];
+
 // ******************** Action creators ********************
 
 /**
@@ -134,11 +149,14 @@ function updateEventLabel({label, markerUUID, uuid}) {
 
 /**
  *
- * @param {Store.Timeline} state
- * @param action
- * @returns {Store.Timeline}
+ * @param {ReduxStore.Timeline} state
+ * @param {Object}         action
+ * @returns {ReduxStore.Timeline}
  */
-function reducer(state={timelines: {}, events:{}, markers: []}, action={}) {
+function reducer( state={ events   :{}
+                        , markers  : []
+                        , saved    : true}
+                , action) {
 
     switch (action.type) {
 
@@ -352,3 +370,6 @@ export { addEvent
        , removeMarker
        , updateEventDescription
        , updateEventLabel};
+
+
+export {LIST_MODIFIERS};

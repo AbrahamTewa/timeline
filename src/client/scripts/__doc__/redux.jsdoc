@@ -1,5 +1,6 @@
 /**
  * @typedef {Object} ReduxStore
+ * @property {ReduxStore.Document}      document
  * @property {ReduxStore.Timeline} timeline
  */
 
@@ -8,9 +9,16 @@
  */
 
 /**
+ * @typedef {Object} ReduxStore.Document
+ * @property {string} name
+ * @property {string} url
+ */
+
+/**
  * @typedef {Object} ReduxStore.Timeline
  * @property {Object.<ReduxStore.Timeline.Event>} events
  * @property {ReduxStore.Timeline.Marker[]}       markers
+ * @property {boolean}                            saved
  */
 
 /**

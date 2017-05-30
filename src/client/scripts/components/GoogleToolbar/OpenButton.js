@@ -24,11 +24,16 @@ class OpenButton extends React.Component {
         let document;
         let url;
 
+        if (!this.props.document.url && !this.props.document.saved) {
+            if (!window.confirm('La timeline actuelle n\'a pas été sauvegardée. Continuer ?')) {
+                return;
+            }
+        }
+
         document = await this.picker.display();
 
-        if (!document) {
+        if (!document)
             return;
-        }
 
         doc = document[google.picker.Response.DOCUMENTS][0];
         url = doc[google.picker.Document.URL];
@@ -46,6 +51,8 @@ class OpenButton extends React.Component {
 
 // ******************** Prop-types ********************
 OpenButton.propTypes = { access_token : PropTypes.string
+                       , document     : PropTypes.shape({ saved: PropTypes.bool.isRequired
+                                                        , url  : PropTypes.string}).isRequired
                        , onOpen       : PropTypes.func.isRequired};
 
 // ******************** Exports ********************

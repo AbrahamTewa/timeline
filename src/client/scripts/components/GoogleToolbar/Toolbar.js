@@ -21,10 +21,11 @@ class Toolbar extends React.Component {
 
         if (this.props.access_token) {
             openButton = <OpenButton access_token={this.props.access_token}
-                                 onOpen={this.props.onFileOpen}/>;
+                                     document    ={this.props.document}
+                                     onOpen      ={this.props.onFileOpen}/>;
 
             saveButton = <SaveButton access_token={this.props.access_token}
-                                     onSave={this.props.onSaveAs}/>;
+                                     onSave      ={this.props.onSaveAs}/>;
         }
 
         return (<div className="toolbar">
@@ -37,10 +38,12 @@ class Toolbar extends React.Component {
 }
 
 // ******************** Prop-types ********************
-Toolbar.propTypes = { access_token        : PropTypes.string
-                    , onFileOpen          : PropTypes.func.isRequired
-                    , onLogin             : PropTypes.func.isRequired
-                    , onSaveAs            : PropTypes.func.isRequired};
+Toolbar.propTypes = { access_token : PropTypes.string
+                    , document     : PropTypes.shape({ saved: PropTypes.bool.isRequired
+                                                     , url  : PropTypes.string}).isRequired
+                    , onFileOpen   : PropTypes.func.isRequired
+                    , onLogin      : PropTypes.func.isRequired
+                    , onSaveAs     : PropTypes.func.isRequired};
 
 // ******************** Exports ********************
 export default Toolbar;
