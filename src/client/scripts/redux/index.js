@@ -19,6 +19,11 @@ function getStore() {
     return store;
 }
 
+function getCurrentState() {
+    return store.getState();
+}
+
 // ******************** Exports ********************
 export { configureStore
+       , getCurrentState
        , getStore};

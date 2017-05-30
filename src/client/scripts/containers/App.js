@@ -1,11 +1,11 @@
 import React from 'react';
 import AddMarker from './AddMarker';
 import Timeline from './Timeline';
-import GoogleButton from './GoogleButton';
+import Toolbar from './Toolbar';
 
 function App() {
     return (<div>
-                <GoogleButton />
+                <Toolbar />
                 <AddMarker/>
                 <Timeline id="timeline"/>
             </div>);
