@@ -1,0 +1,39 @@
+.hidden {
+  display: none; }
+
+div#root h1 {
+  color: red; }
+
+.timeline-time input[type="text"] {
+  font-size: large; }
+  .timeline-time input[type="text"]:disabled {
+    border-color: transparent;
+    background: transparent; }
+
+.timeline-wrapper .form-event {
+  display: flex;
+  flex-direction: column; }
+
+body {
+  padding: 3px; }
+
+header {
+  display: flex;
+  flex-direction: row; }
+  header > .title {
+    flex-grow: 1;
+    margin-top: 0; }
+    header > .title input {
+      color: rgba(51, 51, 51, 0.52); }
+      header > .title input:not(:hover):not(:focus) {
+        border-color: transparent; }
+  header > .toolbar {
+    display: flex;
+    flex-direction: row; }
+    header > .toolbar .login-button,
+    header > .toolbar > button {
+      margin-right: 0.5em; }
+  header .user-dropdown .user-avatar {
+    height: 32px; }
+
+/*# sourceMappingURL=index.css.map */

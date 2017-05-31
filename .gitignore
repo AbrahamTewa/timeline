@@ -39,9 +39,3 @@ jspm_packages
 
 .idea/
 /doc/
-
-
-# gh-pages
-/index.html
-/scripts/
-/stylesheets/
