@@ -1,7 +1,8 @@
 /**
  * @typedef {Object} ReduxStore
- * @property {ReduxStore.Document}      document
- * @property {ReduxStore.Timeline} timeline
+ * @property {ReduxStore.Authentication} authentication
+ * @property {ReduxStore.Document}       document
+ * @property {ReduxStore.Timeline}       timeline
  */
 
 /**
@@ -9,9 +10,23 @@
  */
 
 /**
+ * @typedef {Object} ReduxStore.Authentication
+ * @property {ReduxStore.Authentication.oauth}  oauth
+ * @property {Object}  profile
+ * @property {boolean} signedIn
+ * @property {string}  status
+ * @property {Object}  user
+ */
+
+/**
+ * @typedef {Object} ReduxStore.Authentication.oauth
+ * @property {string} access_token
+ */
+
+/**
  * @typedef {Object} ReduxStore.Document
  * @property {string} name
- * @property {string} url
+ * @property {string} fileId
  */
 
 /**

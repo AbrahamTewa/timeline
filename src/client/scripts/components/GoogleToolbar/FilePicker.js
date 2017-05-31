@@ -5,25 +5,30 @@ class FilePicker {
 
     /**
      *
-     * @param {string} access_token
-     * @param {Array}  views
+     * @param {string}   access_token
+     * @param {string[]} features
+     * @param {Array}    views
      */
     constructor({ access_token
-                , views = []}) {
+                , features = []
+                , views    = []}) {
 
         let builder;
 
-        builder = new google.picker.PickerBuilder();
-        builder.enableFeature(google.picker.Feature.MULTISELECT_ENABLED)
-               .enableFeature(google.picker.Feature.NAV_HIDDEN)
-               .setOAuthToken(access_token)
+        this.builder = new google.picker.PickerBuilder();
+        this.builder.setOAuthToken(access_token)
                .setCallback(this.onPick.bind(this));
 
-        for(let view of views) {
-            builder.addView(view);
-        }
+        this.builder.setOrigin(window.location.protocol + '//' + window.location.host);
+        this.builder.disableFeature(google.picker.Feature.NAV_HIDDEN);
 
-        this.picker = builder.build();
+        features.forEach(function(feature) {
+            builder.enableFeature(feature);
+        });
+
+        for(let view of views) {
+            this.builder.addView(view);
+        }
     }
 
     async display() {
@@ -31,6 +36,9 @@ class FilePicker {
 
         if (this.isDisplayed())
             throw new Error('Picker already displayed');
+
+        if (!this.picker)
+            this.picker = this.builder.build();
 
         promise = new Promise(function(onFulfill, onReject) {
             this.currentPickerPromise = {onFulfill, onReject};

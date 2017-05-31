@@ -4,6 +4,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import FilePicker from './FilePicker';
 
+import {MIME_TYPE} from '../../settings';
+
 // ******************** Component ********************
 class OpenButton extends React.Component {
 
@@ -12,8 +14,9 @@ class OpenButton extends React.Component {
         super(props);
         this.onClick = this.onClick.bind(this);
 
-        view = new google.picker.View(google.picker.ViewId.DOCS);
-        // view.setMimeTypes('text/timeline');
+        view = new google.picker.DocsView(google.picker.ViewId.FOLDERS);
+        view.setParent('root');
+        view.setMimeTypes(MIME_TYPE);
 
         this.picker = new FilePicker({ access_token: this.props.access_token
                                      , views       : [view]});
@@ -21,7 +24,7 @@ class OpenButton extends React.Component {
 
     async onClick() {
         let document;
-        let url;
+        let fileId;
 
         if (!this.props.document.url && !this.props.document.saved) {
             if (!window.confirm('La timeline actuelle n\'a pas été sauvegardée. Continuer ?')) {
@@ -34,9 +37,9 @@ class OpenButton extends React.Component {
         if (!document)
             return;
 
-        url = document[0][google.picker.Document.URL];
+        fileId = document[0][google.picker.Document.ID];
 
-        this.props.onOpen({url});
+        this.props.loadDocument({fileId});
     }
 
     render() {
@@ -51,7 +54,7 @@ class OpenButton extends React.Component {
 OpenButton.propTypes = { access_token : PropTypes.string
                        , document     : PropTypes.shape({ saved: PropTypes.bool.isRequired
                                                         , url  : PropTypes.string}).isRequired
-                       , onOpen       : PropTypes.func.isRequired};
+                       , loadDocument : PropTypes.func.isRequired};
 
 // ******************** Exports ********************
 export default OpenButton;

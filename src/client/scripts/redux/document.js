@@ -1,25 +1,39 @@
 import {LIST_MODIFIERS} from './timeline';
 
 // ******************** Actions ********************
-const OPEN_FILE    = 'document.OPEN_FILE';
+const OPEN_FILE    = 'document.LOAD';
 const RENAME_FILE  = 'document.RENAME_FILE';
-const SAVE_FILE_AS = 'document.SAVE_FILE_AS';
+const SAVING_FILE  = 'document.SAVING_FILE';
+const SAVED_FILE   = 'document.SAVED_FILE';
+
+const SAVE_STATUS = { SAVED  : 'All changes as been saved'
+                    , NEEDED : 'Saving is needed'
+                    , SAVING : 'The saving is currently performed'};
 
 // ******************** Action creators ********************
 
-function openFile({url}) {
-    return { type: OPEN_FILE
-           , url};
+function openFile({fileId}) {
+    return { payload : {fileId}
+           , type    : OPEN_FILE};
 }
 
-function renameFile(name) {
-    return { name
-           , type: RENAME_FILE};
+function renameFile({name}) {
+    return { payload : {name}
+           , type    : RENAME_FILE};
 }
 
-function saveFileAs({url}) {
-    return { type: SAVE_FILE_AS
-           , url};
+/**
+ *
+ * @param {string} [fileId]
+ * @returns {{type: string, url: *}}
+ */
+function savedFile({fileId}={}) {
+    return { payload: {fileId}
+           , type   : SAVED_FILE};
+}
+
+function savingFile() {
+    return {type: SAVING_FILE};
 }
 
 // ******************** Reducer ********************
@@ -28,22 +42,32 @@ function reducer(state={}, action={}) {
 
     if (LIST_MODIFIERS.includes(action.type)) {
         return { ...state
-               , saved: false};
+               , saveStatus : SAVE_STATUS.NEEDED};
     }
 
     switch(action.type) {
 
         case OPEN_FILE:
             return { ...state
-                   , url: action.url};
+                   , fileId: action.payload.fileId};
 
         case RENAME_FILE:
             return { ...state
-                   , name: action.name};
+                   , name: action.payload.name};
 
-        case SAVE_FILE_AS:
+        case SAVING_FILE:
             return { ...state
-                   , url: action.url};
+                   , saveStatus: SAVE_STATUS.SAVING};
+
+        case SAVED_FILE: {
+            let fileId;
+
+            fileId = action.payload.fileId || state.fileId;
+
+            return { ...state
+                   , fileId
+                   , saveStatus: SAVE_STATUS.SAVED};
+        }
 
         default:
             return state;
@@ -56,4 +80,5 @@ function reducer(state={}, action={}) {
 export default reducer;
 export { openFile
        , renameFile
-       , saveFileAs};
+       , savedFile
+       , savingFile};

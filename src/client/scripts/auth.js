@@ -1,4 +1,5 @@
 /* global gapi */
+import {toPromise} from './main';
 
 /**
  * Indicate if a user is currently signed or not
@@ -16,7 +17,7 @@ function disconnect() {
     if (!user.isSignedIn())
         return;
 
-    return user.disconnect();
+    return toPromise(user.disconnect());
 }
 
 export { disconnect

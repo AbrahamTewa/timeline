@@ -12,6 +12,8 @@ const MOVE_EVENT               = 'timeline.MOVE_EVENT';
 const UPDATE_EVENT_LABEL       = 'timeline.UPDATE_EVENT_LABEL';
 const UPDATE_EVENT_DESCRIPTION = 'timeline.UPDATE_EVENT_DESCRIPTION';
 
+const LOAD_TIMELINE = 'timeline.LOAD';
+
 /**
  * List of actions that update the document
  * @type {string[]}
@@ -56,6 +58,15 @@ function addMarker(label, position=-1) {
            , position
            , type : ADD_MARKER
            , uuid : uuid()};
+}
+
+/**
+ *
+ * @param {ReduxStore} timeline
+ */
+function loadTimeline({timeline}) {
+    return { payload: {timeline}
+           , type   : LOAD_TIMELINE};
 }
 
 /**
@@ -213,6 +224,9 @@ function reducer( state={ events   :{}
                    , markers};
         }
 
+        case LOAD_TIMELINE:
+            return action.payload.timeline;
+
         case MOVE_MARKER:
             return { ...state
                    , markers: moveInArray( state.markers
@@ -363,6 +377,7 @@ export default reducer;
 
 export { addEvent
        , addMarker
+       , loadTimeline
        , moveEvent
        , moveMarker
        , renameMarker

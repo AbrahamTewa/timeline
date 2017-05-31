@@ -2,14 +2,19 @@
 import { connect } from 'react-redux';
 
 import * as auth from '../auth';
+import * as document from '../document';
 
 // ******************** Action creators ********************
 import { disconnect
        , disconnecting
        , loginUser}   from '../redux/authentication';
 
-import { openFile
-       , saveFileAs} from '../redux/document';
+import {openFile} from '../redux/document';
+
+import {loadTimeline} from '../redux/timeline';
+
+import { fromSaveFormat
+       , saveDocument} from '../main';
 
 // ******************** Component ********************
 import GoogleToolbar from '../components/GoogleToolbar';
@@ -25,6 +30,20 @@ function disconnectUser(dispatch) {
     auth.disconnect().then(function() {
         dispatch(disconnect());
     });
+}
+
+async function loadDocument(dispatch, {fileId}) {
+    let content;
+    let timeline;
+
+    debugger; // eslint-disable-line no-debugger
+
+    dispatch(openFile({fileId}));
+    content = await document.get({fileId});
+
+    timeline = fromSaveFormat(content);
+
+    dispatch(loadTimeline(timeline));
 }
 
 // ******************** Redux ********************
@@ -49,10 +68,10 @@ function mapStateToProps(state) {
 
 function mapDispatchProps(dispatch) {
 
-    return { disconnect: ()   => disconnectUser(dispatch)
-           , onFileOpen: file => dispatch(openFile({file}))
-           , onLogin   : ()   => dispatch(loginUser())
-           , onSaveAs  : file => dispatch(saveFileAs({file}))};
+    return { disconnect   : ()         => disconnectUser(dispatch)
+           , loadDocument : ({fileId}) => loadDocument(dispatch, {fileId})
+           , onLogin      : ()         => dispatch(loginUser())
+           , saveDocument : ()         => saveDocument};
 }
 
 const Toolbar = connect(mapStateToProps, mapDispatchProps)(GoogleToolbar);
