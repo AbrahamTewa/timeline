@@ -20,7 +20,6 @@ class OpenButton extends React.Component {
     }
 
     async onClick() {
-        let doc;
         let document;
         let url;
 
@@ -35,10 +34,9 @@ class OpenButton extends React.Component {
         if (!document)
             return;
 
-        doc = document[google.picker.Response.DOCUMENTS][0];
-        url = doc[google.picker.Document.URL];
+        url = document[0][google.picker.Document.URL];
 
-        this.props.onOpen(url);
+        this.props.onOpen({url});
     }
 
     render() {

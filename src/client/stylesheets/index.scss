@@ -1,3 +1,7 @@
+.hidden {
+    display: none;
+}
+
 div#root {
 
     h1 {
@@ -53,10 +57,17 @@ header {
     & > .toolbar {
         display: flex;
         flex-direction: row;
-        height: 36px;
+
+        .login-button,
+        & > button {
+            margin-right: 0.5em;
+        }
     }
 
-    .login-button, button {
-        margin-right: 0.5em;
+    .user-dropdown {
+
+        .user-avatar {
+            height: 32px;
+        }
     }
 }

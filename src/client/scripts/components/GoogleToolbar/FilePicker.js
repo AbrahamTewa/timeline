@@ -41,8 +41,9 @@ class FilePicker {
 
         this.picker.setVisible(true);
 
-        return promise.then(function() {
+        return promise.then(function(document) {
             this.currentPickerPromise = undefined;
+            return document;
         }.bind(this));
     }
 
@@ -50,11 +51,12 @@ class FilePicker {
         return !!this.currentPickerPromise;
     }
 
-    onPick(document) {
-        if (!this.currentPickerPromise)
-            throw new Error();
+    onPick(response) {
 
-        this.currentPickerPromise.onFulfill(document);
+        if (![google.picker.Action.PICKED, google.picker.Action.CANCEL].includes(response.action))
+            return;
+
+        this.currentPickerPromise.onFulfill(response[google.picker.Response.DOCUMENTS]);
     }
 }
 

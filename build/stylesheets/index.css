@@ -1,3 +1,6 @@
+.hidden {
+  display: none; }
+
 div#root h1 {
   color: red; }
 
@@ -26,9 +29,11 @@ header {
         border-color: transparent; }
   header > .toolbar {
     display: flex;
-    flex-direction: row;
-    height: 36px; }
-  header .login-button, header button {
-    margin-right: 0.5em; }
+    flex-direction: row; }
+    header > .toolbar .login-button,
+    header > .toolbar > button {
+      margin-right: 0.5em; }
+  header .user-dropdown .user-avatar {
+    height: 32px; }
 
 /*# sourceMappingURL=index.css.map */

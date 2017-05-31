@@ -28,13 +28,13 @@ class LoginButton extends React.Component {
         oauth = user.getAuthResponse();
 
         if (!oauth.access_token)
-            oauth = await user.reloadAuthResponse();
+            await user.reloadAuthResponse();
 
-        this.props.onLogin({oauth, user});
+        this.props.onLogin();
     }
 
     render() {
-        return (<div className="login-button"
+        return (<div className={'login-button' + (this.props.isAuthenticated ? ' hidden': '')}
                      ref={input => this.buttonElement = input }>
                 </div>);
     }
@@ -42,7 +42,8 @@ class LoginButton extends React.Component {
 }
 
 // ******************** Prop-types ********************
-LoginButton.propTypes = {onLogin : PropTypes.func.isRequired};
+LoginButton.propTypes = { isAuthenticated: PropTypes.bool.isRequired
+                        , onLogin        : PropTypes.func.isRequired};
 
 // ******************** Exports ********************
 export default LoginButton;

@@ -1,23 +1,65 @@
 /* global gapi */
 // ******************** Containers and redux ********************
 import { configureStore} from './redux';
-
-/**
- *
- * @type {ReduxStore}
- */
-const initialState = { document: { name : 'Ma chronologie.timeline'
-                                 , saved: true}
-                     , timeline: { events : {}
-                                 , markers: []}};
+import { CLIENT_ID
+       , scope} from './settings';
 
 // ******************** Main ********************
+
+async function initialize() {
+    await initializeAPI();
+    initializeStore();
+}
 
 /**
  * Initialize the application
  */
 function initializeStore() {
+
+    /** @type {ReduxStore} */
+    let initialState;
+    let authentication;
+    let access_token;
+    let profile;
+    let user;
+
+    user = gapi.auth2.getAuthInstance().currentUser.get();
+
+    if (user.isSignedIn()) {
+        access_token = user.getAuthResponse().access_token;
+        profile      = user.getBasicProfile();
+
+        authentication = { oauth  : {access_token}
+
+                         , profile: { email   : profile.getEmail()
+                                    , fullName: profile.getName()
+                                    , image   : profile.getImageUrl()}
+
+                         , signedIn: true
+                         , user     : { id: profile.getId()}};
+    }
+    else {
+        authentication = {signedIn: false};
+    }
+
+    initialState = { authentication
+                   , document: { name : 'Ma chronologie.timeline'
+                               , saved: true}
+                   , timeline: { events : {}
+                               , markers: []}};
+
     configureStore(initialState);
+}
+
+async function initializeAPI() {
+
+    await Promise.all([loadAPI('auth2')
+                      ,loadAPI('client')
+                      ,loadAPI('picker')]);
+
+    return Promise.all([gapi.client.load('drive', 'v3')
+                       ,gapi.client.init({ clientId : CLIENT_ID
+                                         , scope    : scope})]);
 }
 
 function loadAPI(api) {
@@ -31,19 +73,6 @@ function loadAPI(api) {
     gapi.load(api, {'callback': promiseHolder.onFulfill});
 
     return promise;
-}
-
-async function initializeAPI() {
-    await Promise.all([loadAPI('client')
-                      ,loadAPI('picker')]);
-
-    return gapi.client.load('drive', 'v3');
-}
-
-async function initialize() {
-    await initializeAPI();
-
-    initializeStore();
 }
 
 export default initialize;

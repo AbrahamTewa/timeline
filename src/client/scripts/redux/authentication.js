@@ -1,21 +1,42 @@
+/* global gapi */
+
 // ******************** Actions ********************
-const LOGIN_USER = 'authentication.LOGIN';
+const DISCONNECT    = 'authentication.DISCONNECT';
+const DISCONNECTING = 'authentication.DISCONNECTING';
+const LOGIN_USER    = 'authentication.LOGIN';
+
+const CONNECT_STATUS = { DISCONNECT   : 'disconnect'
+                       , DISCONNECTING: 'disconnecting'
+                       , LOGGED       : 'logged'};
 
 // ******************** Action creators ********************
 
-/**
- *
- * @param oauth
- * @param user
- */
-function loginUser({user, oauth}) {
-    let profile = user.getBasicProfile();
+function disconnecting() {
+    return {type: DISCONNECTING};
+}
 
-    return { fullName     : profile.getName()
-           , id           : profile.getId()
-           , id_token     : oauth.id_token
-           , access_token : oauth.access_token
-           , type         : LOGIN_USER};
+function disconnect() {
+    return {type: DISCONNECT};
+}
+
+function loginUser() {
+    let access_token;
+    let profile;
+    let user;
+
+    user = gapi.auth2.getAuthInstance().currentUser.get();
+    profile = user.getBasicProfile();
+    access_token = user.getAuthResponse().access_token;
+
+    return { payload : { profile: { email    : profile.getEmail()
+                                  , fullName : profile.getName()
+                                  , image    : profile.getImageUrl()}
+
+                       , user: { id: profile.getId()}
+
+                       , oauth: { access_token : access_token}}
+
+           , type    : LOGIN_USER};
 }
 
 // ******************** Reducer ********************
@@ -23,13 +44,25 @@ function loginUser({user, oauth}) {
 function reducer(state={}, action={}) {
 
     switch(action.type) {
-        case LOGIN_USER:
+        case DISCONNECT:
+            return { signedIn: false
+                   , status  : CONNECT_STATUS.DISCONNECT};
+
+        case DISCONNECTING:
+            return { signedIn: false
+                   , status: CONNECT_STATUS.DISCONNECTING};
+
+
+        case LOGIN_USER: {
+            let {oauth, profile, user} = action.payload;
+
             return { ...state
-                   , user: { id: action.id }
-                   , profile: { familyName: action.familyName
-                              , fullName  : action.fullName}
-                   , oauth : { access_token: action.access_token
-                             , id_token    : action.id_token}};
+                   , oauth   : {...oauth}
+                   , profile : {...profile}
+                   , signedIn: true
+                   , status  : CONNECT_STATUS.LOGGED
+                   , user    : {...user}};
+        }
 
         default:
             return state;
@@ -40,4 +73,6 @@ function reducer(state={}, action={}) {
 // ******************** Exports ********************
 
 export default reducer;
-export {loginUser};
+export { disconnect
+       , disconnecting
+       , loginUser};
