@@ -17,7 +17,7 @@ div#root {
 
 .timeline-time {
 
-    input[type="text"] {
+    input {
 
         font-size: large;
 
@@ -31,9 +31,25 @@ div#root {
 
 .timeline-wrapper {
 
-    .form-event {
-        display: flex;
-        flex-direction: column;
+    .add-event {
+
+        float: left;
+        width: 100%;
+        margin-left: 1rem;
+
+        .form-event {
+            display: flex;
+            flex-direction: column;
+
+            .form-event_actions {
+                display: flex;
+                flex-direction: row;
+
+                input {
+                    margin-left: 0.5rem;
+                }
+            }
+        }
     }
 
 }

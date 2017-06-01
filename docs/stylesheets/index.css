@@ -8,15 +8,24 @@ div#root > div {
 div#root h1 {
   color: red; }
 
-.timeline-time input[type="text"] {
+.timeline-time input {
   font-size: large; }
-  .timeline-time input[type="text"]:disabled {
+  .timeline-time input:disabled {
     border-color: transparent;
     background: transparent; }
 
-.timeline-wrapper .form-event {
-  display: flex;
-  flex-direction: column; }
+.timeline-wrapper .add-event {
+  float: left;
+  width: 100%;
+  margin-left: 1rem; }
+  .timeline-wrapper .add-event .form-event {
+    display: flex;
+    flex-direction: column; }
+    .timeline-wrapper .add-event .form-event .form-event_actions {
+      display: flex;
+      flex-direction: row; }
+      .timeline-wrapper .add-event .form-event .form-event_actions input {
+        margin-left: 0.5rem; }
 
 body {
   padding: 3px; }

@@ -5,7 +5,7 @@ import { default as EventSeries
 import PropTypes from 'prop-types';
 import React     from 'react';
 import Time      from './Time';
-import FormEvent from './FormEvent';
+import AddEvent from './AddEvent';
 
 // ******************** Container ********************
 
@@ -56,10 +56,8 @@ class Marker extends React.Component {
         return (<div className="timeline-wrapper" id={this.props.uuid}>
                     <Time onChange={this.onTimeUpdate}
                           time={this.props.time}/>
-
-                    <FormEvent onSubmit={this.onNewEvent}/>
-
                     <EventSeries events={this.props.events}/>
+                    <AddEvent onNewEvent={this.onNewEvent}/>
                 </div>);
     }
 
