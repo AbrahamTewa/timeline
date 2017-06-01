@@ -111,7 +111,8 @@ dd.timeline-event-content > p {
   font-size: x-large; }
 
 .description-form textarea {
-  width: 100%; }
+  width: 100%;
+  font-size: larger; }
 
 .description-form .action-buttons button {
   margin-right: 1em; }
