@@ -21,6 +21,10 @@ class InputLabel extends React.Component {
         this.props.onChange(this.inputElement.value);
     }
 
+    componentDidMount() {
+        this.inputElement.focus();
+    }
+
     render() {
         return (<form onSubmit={this.onSubmit}
                       className="input-group">

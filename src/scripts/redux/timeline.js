@@ -138,7 +138,7 @@ function removeMarker(uuid) {
 function updateEventDescription({description, markerUUID, uuid}) {
     return { description
            , markerUUID
-           , type: UPDATE_EVENT_LABEL
+           , type: UPDATE_EVENT_DESCRIPTION
            , uuid};
 }
 

@@ -1,9 +1,9 @@
 // ******************** Imports ********************
-import React from 'react';
+import React     from 'react';
 import PropTypes from 'prop-types';
 
-import EventLabel from './EventLabel';
-import EventDescription from './EventDescription';
+import EventLabel  from './EventLabel';
+import Description from './Description';
 
 // ******************** Container ********************
 
@@ -20,40 +20,19 @@ class EventSeries extends React.Component {
         super(props);
     }
 
-    /**
-     *
-     * @param {string} uuid
-     * @param {string} label
-     */
-    onLabelChange(uuid, label) {
-        this.props.onEventLabelChange({label, uuid});
-    }
-
-    /**
-     *
-     * @param {string} uuid
-     * @param {string} description
-     */
-    onDescriptionChange(uuid, description) {
-        this.props.onEventDescriptionChange({description, uuid});
-    }
-
     render() {
         let reducer;
 
         reducer = function(eventList, event) {
-            let onChange;
-
-            onChange = this.onLabelChange.bind(this, event.uuid);
-
             eventList.push(<EventLabel label    = {event.label}
                                        key      = {event.uuid}
-                                       onChange = {onChange}
+                                       onChange = {this.props.onEventLabelChange}
                                        uuid     = {event.uuid} />);
 
-            eventList.push(<EventDescription description = {event.description}
-                                             key         = {event.uuid + 'EX'}
-                                             uuid        = {event.uuid}/>);
+            eventList.push(<Description description = {event.description}
+                                        key         = {event.uuid + 'EX'}
+                                        onChange    = {this.props.onEventDescriptionChange}
+                                        uuid        = {event.uuid}/>);
 
             return eventList;
         }.bind(this);

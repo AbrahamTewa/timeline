@@ -31,7 +31,8 @@ class EventLabel extends React.Component {
 
     onChange(label) {
         this.disableEdit();
-        this.props.onChange(label);
+        this.props.onChange({ label
+                            , uuid: this.props.uuid});
     }
 
     onClick() {
