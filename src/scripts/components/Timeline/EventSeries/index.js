@@ -2,7 +2,7 @@
 import React     from 'react';
 import PropTypes from 'prop-types';
 
-import EventLabel  from './EventLabel';
+import Label       from './Label';
 import Description from './Description';
 
 // ******************** Container ********************
@@ -24,10 +24,12 @@ class EventSeries extends React.Component {
         let reducer;
 
         reducer = function(eventList, event) {
-            eventList.push(<EventLabel label    = {event.label}
-                                       key      = {event.uuid}
-                                       onChange = {this.props.onEventLabelChange}
-                                       uuid     = {event.uuid} />);
+            eventList.push(<span className="tick tick-before"> </span>);
+            eventList.push(<Label label    = {event.label}
+                                  key      = {event.uuid}
+                                  onChange = {this.props.onEventLabelChange}
+                                  uuid     = {event.uuid} />);
+            eventList.push(<span className="tick tick-after"> </span>);
 
             eventList.push(<Description description = {event.description}
                                         key         = {event.uuid + 'EX'}

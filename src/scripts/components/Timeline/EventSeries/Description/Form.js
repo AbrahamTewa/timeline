@@ -3,7 +3,7 @@ import React     from 'react';
 import PropTypes from 'prop-types';
 
 // ******************** Component ********************
-class DescriptionForm extends React.Component {
+class Form extends React.Component {
 
     constructor(props) {
         super(props);
@@ -24,11 +24,11 @@ class DescriptionForm extends React.Component {
                               rows="5">
                     </textarea>
                     <div className="action-buttons">
-                        <button className="btn btn-outline-primary"
+                        <button className="btn btn-sm btn-outline-primary"
                                 type="submit">
                             Enregistrer
                         </button>
-                        <button className="btn btn-outline-secondary"
+                        <button className="btn btn-sm btn-outline-secondary"
                                 onClick={this.props.onCancel}>
                             Annuler
                         </button>
@@ -37,9 +37,9 @@ class DescriptionForm extends React.Component {
     }
 }
 
-DescriptionForm.propTypes = { description: PropTypes.string.isRequired
+Form.propTypes = { description: PropTypes.string.isRequired
                             , onCancel   : PropTypes.func.isRequired
                             , onChange   : PropTypes.func.isRequired};
 
 // ******************** Exports ********************
-export default DescriptionForm;
+export default Form;

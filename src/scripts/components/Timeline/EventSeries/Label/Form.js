@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 
 // ******************** Component ********************
 
-class InputLabel extends React.Component {
+class Form extends React.Component {
 
     constructor(props) {
         super(props);
@@ -51,9 +51,9 @@ class InputLabel extends React.Component {
 
 }
 
-InputLabel.propTypes = { label   : PropTypes.string.isRequired
+Form.propTypes = { label   : PropTypes.string.isRequired
                        , onCancel: PropTypes.func.isRequired
                        , onChange: PropTypes.func.isRequired};
 
 // ******************** Exports ********************
-export default InputLabel;
+export default Form;

@@ -47,6 +47,8 @@ class Timeline extends React.Component {
         }.bind(this));
 
         return (<div id={this.props.id} className="timeline-container">
+                    <button className="timeline-toggle">+ expand all</button>
+                    <br className="clear"/>
                     {markerList}
                 </div>);
     }

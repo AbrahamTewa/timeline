@@ -1,8 +1,8 @@
 // ******************** Imports ********************
-import React from 'react';
+import React     from 'react';
 import PropTypes from 'prop-types';
 
-import DescriptionForm from './DescriptionForm';
+import Form from './Form';
 
 // ******************** Component ********************
 class Description extends React.Component {
@@ -54,9 +54,9 @@ class Description extends React.Component {
         let editButton;
 
         if (this.state.isEditionEnabled) {
-            descriptionForm = <DescriptionForm description= {this.props.description}
-                                               onCancel   = {this.disableEdition}
-                                               onChange   = {this.onChange}/>;
+            descriptionForm = <Form description= {this.props.description}
+                                    onCancel   = {this.disableEdition}
+                                    onChange   = {this.onChange}/>;
         }
         else {
             description = <p>{this.props.description}</p>;

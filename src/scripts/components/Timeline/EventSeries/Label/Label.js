@@ -1,11 +1,12 @@
 // ******************** Imports ********************
-import React from 'react';
-import PropTypes from 'prop-types';
-import InputLabel from './InputLabel';
+import React      from 'react';
+import PropTypes  from 'prop-types';
+
+import Form from './Form';
 
 // ******************** Container ********************
 
-class EventLabel extends React.Component {
+class Label extends React.Component {
 
     constructor(props) {
         super(props);
@@ -55,9 +56,9 @@ class EventLabel extends React.Component {
         let label;
 
         if (this.state.isEditionEnabled) {
-            form = <InputLabel label={this.props.label}
-                               onCancel={this.onCancel}
-                               onChange={this.onChange}/>;
+            form = <Form label={this.props.label}
+                         onCancel={this.onCancel}
+                         onChange={this.onChange}/>;
         }
         else {
             label = <a>{this.props.label}</a>;
@@ -79,9 +80,9 @@ class EventLabel extends React.Component {
 
 }
 
-EventLabel.propTypes = { label    : PropTypes.string.isRequired
-                       , onChange : PropTypes.func.isRequired
-                       , uuid     : PropTypes.string.isRequired};
+Label.propTypes = { label    : PropTypes.string.isRequired
+                  , onChange : PropTypes.func.isRequired
+                  , uuid     : PropTypes.string.isRequired};
 
 // ******************** Export ********************
-export default EventLabel;
+export default Label;
