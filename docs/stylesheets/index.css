@@ -107,12 +107,16 @@ dd.timeline-event-content > p {
   width: 100%;
   text-align: justify;
   max-height: 10em;
-  overflow-y: auto; }
+  overflow-y: auto;
+  font-size: x-large; }
 
 .description-form textarea {
   width: 100%; }
 
 .description-form .action-buttons button {
   margin-right: 1em; }
+
+.timeline-series {
+  font-size: small; }
 
 /*# sourceMappingURL=index.css.map */

@@ -182,6 +182,8 @@ dd.timeline-event-content > p {
 
     max-height: 10em;
     overflow-y: auto;
+
+    font-size: x-large;
 }
 
 .description-form {
@@ -194,4 +196,8 @@ dd.timeline-event-content > p {
             margin-right: 1em;
         }
     }
+}
+
+.timeline-series {
+    font-size: small;
 }
