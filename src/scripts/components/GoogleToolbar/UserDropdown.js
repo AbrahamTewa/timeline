@@ -19,7 +19,7 @@ class UserDropdown extends React.Component {
         let {userProfile} = this.props;
 
         return (<div className="user-dropdown btn-group">
-                    <button className="btn btn-secondary btn-lg">
+                    <button className="btn btn-secondary user-button">
                         <div className="user-name">
                             <img src={userProfile.image} className="user-avatar"/>
                             {userProfile.fullName}

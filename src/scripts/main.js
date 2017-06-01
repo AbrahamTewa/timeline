@@ -52,7 +52,6 @@ async function forceSave() {
                                 , name    : state.document.name
                                 , parentId: parent.parentId});
 
-    debugger; // eslint-disable-line no-debugger
     store.dispatch(documentAction.savedFile({fileId: doc.fileId}));
 }
 

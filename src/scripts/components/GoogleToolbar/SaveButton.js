@@ -5,7 +5,8 @@ import {forceSave} from '../../main';
 
 // ******************** Component ********************
 function SaveButton() {
-    return (<button onClick={forceSave}>
+    return (<button className="btn btn-primary"
+                    onClick={forceSave}>
                 Enregistrer
             </button>);
 }

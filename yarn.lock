@@ -821,7 +821,7 @@ block-stream@*:
   dependencies:
     inherits "~2.0.0"
 
-bluebird@~3.4.6:
+bluebird@^3.3.4, bluebird@~3.4.6:
   version "3.4.7"
   resolved "https://registry.yarnpkg.com/bluebird/-/bluebird-3.4.7.tgz#f72d760be09b7f76d08ed8fae98b289a8d05fab3"
 
@@ -2457,6 +2457,13 @@ grunt-mocha@^1.0.2:
     grunt-lib-phantomjs "^1.0.2"
     lodash "^3.9.0"
     mocha ">=2.5.3"
+
+grunt-rollup@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/grunt-rollup/-/grunt-rollup-1.0.1.tgz#b4185ae67d8e86fb7e1a2e927ecbc349f4adc4d8"
+  dependencies:
+    bluebird "^3.3.4"
+    rollup "^0.x"
 
 grunt-sass@^2.0.0:
   version "2.0.0"
@@ -4383,6 +4390,12 @@ ripemd160@^2.0.0, ripemd160@^2.0.1:
     hash-base "^2.0.0"
     inherits "^2.0.1"
 
+rollup@^0.x:
+  version "0.41.6"
+  resolved "https://registry.yarnpkg.com/rollup/-/rollup-0.41.6.tgz#e0d05497877a398c104d816d2733a718a7a94e2a"
+  dependencies:
+    source-map-support "^0.4.0"
+
 run-async@^0.1.0:
   version "0.1.0"
   resolved "https://registry.yarnpkg.com/run-async/-/run-async-0.1.0.tgz#c8ad4a5e110661e402a7d21b530e009f25f8e389"
@@ -4532,7 +4545,7 @@ sntp@1.x.x:
   dependencies:
     hoek "2.x.x"
 
-source-map-support@^0.4.2, source-map-support@^0.4.6:
+source-map-support@^0.4.0, source-map-support@^0.4.2, source-map-support@^0.4.6:
   version "0.4.15"
   resolved "https://registry.yarnpkg.com/source-map-support/-/source-map-support-0.4.15.tgz#03202df65c06d2bd8c7ec2362a193056fef8d3b1"
   dependencies:

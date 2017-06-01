@@ -36,8 +36,6 @@ async function loadDocument(dispatch, {fileId}) {
     let content;
     let timeline;
 
-    debugger; // eslint-disable-line no-debugger
-
     dispatch(openFile({fileId}));
     content = await document.get({fileId});
 

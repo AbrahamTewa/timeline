@@ -3,56 +3,41 @@ import grunt from 'grunt';
 
 require('load-grunt-tasks')(grunt);
 
+const BUILD_FOLDER = 'docs';
+
 // ******************** Script ********************
 
 const buildConfig = { options:  { browserifyOptions: {debug: true}
                                 , transform: [['babelify', {presets: ['es2015', 'react']}]] }
-                    , files: { 'build/scripts/index.js' : 'src/client/scripts/index.js' } };
+                    , files: { } };
+
+buildConfig.files[`${BUILD_FOLDER}/scripts/index.js`] =  'src/scripts/index.js';
 
 const buildAndWatch = {...buildConfig
                       , watch: true};
 
-grunt.initConfig({
+let tasks = {
 
     browserify: { build: buildConfig
                 , watch: buildAndWatch
                 , watchifyOptions: {delay: 40} }
 
     , clean: {
-        build  : ['build'],
-        doc    : ['doc/'],
-        'gh-pages': ['build/'
-                    ,'src'
-                    ,'.babelrc'
-                    ,'.editorconfig'
-                    ,'.eslintrc.json'
-                    ,'.travis.yml'
-                    ,'gruntfile.babel.js'
-                    ,'gruntfile.js'
-                    ,'jsdoc.json'
-                    ,'mocha.opts'
-                    ,'README.md'
-                    ,'server.js'
-                    ,'yarn.lock']}
+        build  : [BUILD_FOLDER],
+        doc    : ['doc/']}
 
     , copy: {
         html: {
             files: [{ expand: true
-                    , cwd: 'src/client'
+                    , cwd: 'src'
                     , src: 'index.html'
-                    , dest: 'build'
+                    , dest: BUILD_FOLDER
             }]
         },
         vendors: {
             files: [{ expand: true
                     , src: ['vendors/**/*.*']
-                    , dest: 'build/'}]
-        },
-        'gh-pages': {
-            files: [{ expand: true
-                    , cwd   : 'build'
-                    , src   : '**'
-                    , dest  : './'}]
+                    , dest: `${BUILD_FOLDER}/`}]
         }
     }
 
@@ -61,7 +46,7 @@ grunt.initConfig({
             expand: true
           , cwd   : 'src'
           , src   : ['**/*.js']
-          , dest  : 'build/'
+          , dest  : `${BUILD_FOLDER}/`
           , ext   : '.js'}
     }
 
@@ -77,7 +62,7 @@ grunt.initConfig({
             sourceMap: true
         }
       , build: {
-          files: { 'build/stylesheets/index.css' : 'src/client/stylesheets/index.scss'}
+          files: {}
       }
     }
 
@@ -92,7 +77,11 @@ grunt.initConfig({
                      , spawn   : false}
         }
     }
-});
+};
+
+tasks.sass.build.files[`${BUILD_FOLDER}/stylesheets/index.css`] = 'src/stylesheets/index.scss';
+
+grunt.initConfig(tasks);
 
 // Registering all tasks
 grunt.registerTask('lint', ['eslint']);
@@ -103,9 +92,5 @@ grunt.registerTask('build', ['eslint'
                             ,'copy:vendors'
                             ,'browserify:build'
                             ,'sass']);
-
-grunt.registerTask('gh-pages', ['build'
-                               ,'copy:gh-pages'
-                               ,'clean:gh-pages']);
 
 grunt.registerTask('default', ['build']);

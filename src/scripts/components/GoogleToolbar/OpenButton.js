@@ -43,7 +43,8 @@ class OpenButton extends React.Component {
     }
 
     render() {
-        return (<button onClick={this.onClick}>
+        return (<button className="btn btn-primary"
+                        onClick={this.onClick}>
                     Ouvrir...
                 </button>);
     }
