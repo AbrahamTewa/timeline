@@ -36,13 +36,15 @@ class Timeline extends React.Component {
         let {onNewEvent, onMarkerTimeUpdate} = this.props;
 
         markerList = this.props.markers.map(function({events, time, uuid}) {
-            return (<Marker events       = {events}
-                            key          = {uuid}
-                            onNewEvent   = {onNewEvent}
-                            onTimeUpdate = {onMarkerTimeUpdate}
-                            time         = {time}
-                            uuid         = {uuid}/>);
-        });
+            return (<Marker events                  = {events}
+                            key                     = {uuid}
+                            onEventLabelChange      = {this.props.onEventLabelChange}
+                            onEventDescriptionChange= {this.props.onEventDescriptionChange}
+                            onNewEvent              = {onNewEvent}
+                            onTimeUpdate            = {onMarkerTimeUpdate}
+                            time                    = {time}
+                            uuid                    = {uuid}/>);
+        }.bind(this));
 
         return (<div id={this.props.id} className="timeline-container">
                     {markerList}
@@ -51,10 +53,12 @@ class Timeline extends React.Component {
 
 }
 
-Timeline.propTypes = { id                 : PropTypes.string.isRequired
-                     , onNewEvent         : PropTypes.func.isRequired
-                     , onMarkerTimeUpdate : PropTypes.func.isRequired
-                     , markers            : PropTypes.array};
+Timeline.propTypes = { id                      : PropTypes.string.isRequired
+                     , onEventDescriptionChange: PropTypes.func.isRequired
+                     , onEventLabelChange      : PropTypes.func.isRequired
+                     , onNewEvent              : PropTypes.func.isRequired
+                     , onMarkerTimeUpdate      : PropTypes.func.isRequired
+                     , markers                 : PropTypes.array};
 
 // ******************** Export ********************
 export default Timeline;

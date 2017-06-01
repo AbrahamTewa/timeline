@@ -56,18 +56,22 @@ class Marker extends React.Component {
         return (<div className="timeline-wrapper" id={this.props.uuid}>
                     <Time onChange={this.onTimeUpdate}
                           time={this.props.time}/>
-                    <EventSeries events={this.props.events}/>
+                    <EventSeries events                  = {this.props.events}
+                                 onEventLabelChange      = {this.props.onEventLabelChange}
+                                 onEventDescriptionChange= {this.props.onEventDescriptionChange}/>
                     <AddEvent onNewEvent={this.onNewEvent}/>
                 </div>);
     }
 
 }
 
-Marker.propTypes = { events       : eventsPropType
-                   , onNewEvent   : PropTypes.func.isRequired
-                   , onTimeUpdate : PropTypes.func.isRequired
-                   , time         : PropTypes.string.isRequired
-                   , uuid         : PropTypes.string.isRequired};
+Marker.propTypes = { events                  : eventsPropType
+                   , onEventDescriptionChange: PropTypes.func.isRequired
+                   , onEventLabelChange      : PropTypes.func.isRequired
+                   , onNewEvent              : PropTypes.func.isRequired
+                   , onTimeUpdate            : PropTypes.func.isRequired
+                   , time                    : PropTypes.string.isRequired
+                   , uuid                    : PropTypes.string.isRequired};
 
 // ******************** Export ********************
 export default Marker;

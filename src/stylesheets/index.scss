@@ -133,3 +133,40 @@ header {
     }
 
 }
+
+.timeline-event {
+    display: flex;
+    flex-direction: row;
+
+    &:not(:hover) .edit-button {
+        opacity: 0;
+    }
+
+    &:hover .edit-button:not(:hover) {
+        opacity: 0.5;
+    }
+
+    .edit-button {
+        font-size: 0.6em;
+        margin-left: 0.5em;
+        opacity: 1;
+        cursor: pointer;
+    }
+
+    & > form {
+
+        button {
+            cursor: pointer;
+        }
+
+        input {
+            background: rgba(255, 255, 255, 0.45);
+            border: 1px solid #0275d8;
+
+            &:focus {
+                border: 1px solid #0275d8;
+            }
+        }
+    }
+
+}

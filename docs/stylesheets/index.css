@@ -78,4 +78,24 @@ header {
   color: rgba(255, 255, 255, 0.34);
   transition: color 0.5s; }
 
+.timeline-event {
+  display: flex;
+  flex-direction: row; }
+  .timeline-event:not(:hover) .edit-button {
+    opacity: 0; }
+  .timeline-event:hover .edit-button:not(:hover) {
+    opacity: 0.5; }
+  .timeline-event .edit-button {
+    font-size: 0.6em;
+    margin-left: 0.5em;
+    opacity: 1;
+    cursor: pointer; }
+  .timeline-event > form button {
+    cursor: pointer; }
+  .timeline-event > form input {
+    background: rgba(255, 255, 255, 0.45);
+    border: 1px solid #0275d8; }
+    .timeline-event > form input:focus {
+      border: 1px solid #0275d8; }
+
 /*# sourceMappingURL=index.css.map */

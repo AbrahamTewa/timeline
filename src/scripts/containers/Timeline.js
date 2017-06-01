@@ -1,42 +1,15 @@
 import { connect } from 'react-redux';
 import TimelineComponent from '../components/Timeline';
 import {addEvent,
-        renameMarker} from '../redux/timeline';
+        renameMarker,
+        updateEventDescription,
+        updateEventLabel} from '../redux/timeline';
 
 function mapDispatchToProps(dispatch) {
-
-    function onMarkerTimeUpdate({label, uuid}) {
-        let action;
-
-        action = renameMarker({ label
-                              , uuid});
-
-        dispatch(action);
-    }
-
-    /**
-     *
-     * @param {string} description
-     * @param {string} label
-     * @param position
-     * @param {string} marker
-     */
-    function onNewEvent({ description
-                        , label
-                        , position=-1
-                        , marker}) {
-        let action;
-
-        action = addEvent({ description
-                          , label
-                          , marker
-                          , position});
-
-        dispatch(action);
-    }
-
-    return { onMarkerTimeUpdate
-           , onNewEvent};
+    return { onEventDescriptionChange : data => dispatch(updateEventDescription(data))
+           , onEventLabelChange       : data => dispatch(updateEventLabel(data))
+           , onMarkerTimeUpdate       : data => dispatch(renameMarker(data))
+           , onNewEvent               : data => dispatch(addEvent(data))};
 }
 
 /**
