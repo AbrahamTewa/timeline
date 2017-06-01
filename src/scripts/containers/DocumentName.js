@@ -4,16 +4,16 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 // ******************** Imports ********************
-import EditableLabel
-     , {MODE_DIRECT} from '../components/EditableLabel';
+import EditableText
+     , {MODE_DIRECT} from '../components/EditableText';
 import {renameFile} from '../redux/document';
 
 // ******************** Container ********************
 function Name({name, onChange}) {
     return ( <h1 className="title">
-                <EditableLabel label={name}
-                               mode={MODE_DIRECT}
-                               onChange={onChange} />
+                <EditableText label={name}
+                              mode={MODE_DIRECT}
+                              onChange={onChange} />
             </h1>);
 }
 

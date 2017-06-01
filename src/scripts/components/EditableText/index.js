@@ -2,8 +2,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-// ******************** Container ********************
+// ******************** Import components ********************
+import RenameButton from './RenameButton';
 
+// ******************** Component ********************
 const MODE_BUTTON = 'BUTTON';
 const MODE_DIRECT = 'DIRECT';
 
@@ -11,11 +13,11 @@ const MODE_DIRECT = 'DIRECT';
  * @property {Object}  state
  * @property {boolean} state.updatable
  */
-class EditableLabel extends React.Component {
+class EditableText extends React.Component {
 
     /**
      *
-     * @param mode
+     * @param {string}           mode
      * @param {Object}           props
      * @param {string}           props.className
      * @param {string}           props.mode
@@ -67,15 +69,13 @@ class EditableLabel extends React.Component {
         let renameButton;
 
         if (this.props.mode === MODE_BUTTON) {
-            renameButton =  <input onClick={this.enableUpdate}
-                                   type="button"
-                                   value="Rename"/>;
+            renameButton =  <RenameButton onClick={this.enableUpdate}/>;
         }
 
         return (
             <form onSubmit={this.disableUpdate}
                   data-mode={this.props.mode}
-                  className={this.props.className}>
+                  className={`editable-text ${this.props.className}`}>
                 <input disabled={!this.state.updatable}
                        onClick={this.onClick}
                        onChange={this.onChange}
@@ -90,15 +90,15 @@ class EditableLabel extends React.Component {
 
 }
 
-EditableLabel.defaultProps = {mode: MODE_BUTTON};
+EditableText.defaultProps = {mode: MODE_BUTTON};
 
-EditableLabel.propTypes = { className : PropTypes.string
-                          , label     : PropTypes.string.isRequired
-                          , mode      : PropTypes.string
-                          , onChange  : PropTypes.func.isRequired};
+EditableText.propTypes = { className : PropTypes.string
+                         , label     : PropTypes.string.isRequired
+                         , mode      : PropTypes.string
+                         , onChange  : PropTypes.func.isRequired};
 
 // ******************** Export ********************
-export default EditableLabel;
+export default EditableText;
 
 export { MODE_BUTTON
        , MODE_DIRECT};

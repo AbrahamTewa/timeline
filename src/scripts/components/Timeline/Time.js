@@ -1,14 +1,14 @@
 // ******************** Imports ********************
 import React from 'react';
 import PropTypes from 'prop-types';
-import EditableLabel from '../EditableLabel';
+import EditableText from '../EditableText';
 
 // ******************** Container ********************
 
 function Time({onChange, time}) {
-    return (<EditableLabel className="timeline-time"
-                           label={time}
-                           onChange={onChange} />);
+    return (<EditableText className="timeline-time"
+                          label={time}
+                          onChange={onChange} />);
 }
 
 Time.propTypes = { onChange: PropTypes.func.isRequired

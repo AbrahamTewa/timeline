@@ -103,7 +103,7 @@ header {
     }
 }
 
-.timeline-wrapper .timeline-time input[type="text"] {
+.timeline-time input[type="text"] {
     background        : rgba(0, 69, 121, 0.65);
     -moz-border-radius: 10px;
     border-radius     : 10px;
@@ -112,4 +112,24 @@ header {
     letter-spacing    : 0;
     padding           : 10px 10px 5px 10px;
     text-align        : center;
+
+    &:focus {
+        border: 1px solid rgba(194, 203, 210, 0.62);
+        outline: 0;
+    }
+
+}
+
+.editable-text {
+
+    &:not(:hover) .rename-button {
+        color: transparent;
+    }
+
+    .rename-button {
+        font-size: 0.6em;
+        color: rgba(255, 255, 255, 0.34);
+        transition: color 0.5s;
+    }
+
 }

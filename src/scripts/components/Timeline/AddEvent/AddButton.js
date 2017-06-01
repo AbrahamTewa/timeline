@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 // ******************** Component ********************
 function AddButton({onClick}) {
 
-    return ( <button className="btn btn-primary btn-sm"
+    return ( <button className="btn btn-outline-primary btn-sm"
                      onClick={onClick}>
                 + Évènement
             </button>);
