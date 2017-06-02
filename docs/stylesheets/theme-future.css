@@ -1,7 +1,7 @@
 .timeline {
   border-left: 4px solid rgba(0, 69, 121, 0.65);
   margin: 20px auto;
-  width: calc(100% - 40px); }
+  max-width: 70%; }
 
 .addMarker input[type="text"] {
   margin-left: 1rem;
