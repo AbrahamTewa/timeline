@@ -164,6 +164,11 @@ div.timeline-event {
         margin-top  : 0.5rem;
         margin-left : 40px;
         padding-left: 24px;
+
+        p {
+            font-size: 1em;
+        }
+
     }
 
     &:not(:hover) .edit-button {
@@ -189,6 +194,12 @@ div.timeline-event {
 
     .form-event {
         margin-left: $marker-stick_width;
-    }
+        margin-bottom: 1.5rem;
 
+        .form-event_actions {
+            input:not(:last-child) {
+                margin-right: 1em;
+            }
+        }
+    }
 }

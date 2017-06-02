@@ -1,6 +1,6 @@
 /**
  *
- * @param {HTMLElement} element
+ * @param {HTMLElement|React.Component} element
  */
 function scrollIfNeeded(element) {
 
@@ -12,7 +12,6 @@ function scrollIfNeeded(element) {
 
     pageYOffset = window.pageYOffset;
     innerHeight  = window.innerHeight;
-
 
     isStrictlyBetween = (value, min, max) => value < max && value > min;
 

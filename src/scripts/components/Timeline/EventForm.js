@@ -67,14 +67,14 @@ class EventForm extends React.Component {
                                     initialValue = {this.props.description}
                                     placeholder  = "Description"
                                     ref          = {editor => this.descriptionEditor = editor}
-                                    rows         = {3}/>
+                                    rows         = {5}/>
                     </div>
 
                     <div className="form-event_actions">
-                        <input className="btn btn-primary"
+                        <input className="btn btn-primary btn-sm"
                                type="submit"
                                value="Ajouter évènement" />
-                        <input className="btn btn-secondary"
+                        <input className="btn btn-secondary btn-sm"
                                onClick={this.props.onCancel}
                                type="button"
                                value="Annuler" />

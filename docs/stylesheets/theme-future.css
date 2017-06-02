@@ -90,6 +90,8 @@ div.timeline-event {
     margin-top: 0.5rem;
     margin-left: 40px;
     padding-left: 24px; }
+    div.timeline-event div.event-description p {
+      font-size: 1em; }
   div.timeline-event:not(:hover) .edit-button {
     opacity: 0; }
   div.timeline-event:hover .edit-button:not(:hover) {
@@ -103,6 +105,9 @@ div.timeline-event {
 .timeline-event-list {
   margin-bottom: 1rem; }
   .timeline-event-list .form-event {
-    margin-left: 1.5rem; }
+    margin-left: 1.5rem;
+    margin-bottom: 1.5rem; }
+    .timeline-event-list .form-event .form-event_actions input:not(:last-child) {
+      margin-right: 1em; }
 
 /*# sourceMappingURL=theme-future.css.map */

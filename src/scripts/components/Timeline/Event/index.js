@@ -1,10 +1,9 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 
 import TextMode from './TextMode';
 import EventForm from '../EventForm';
-
-import {scrollIfNeeded} from '../../../utils';
 
 class Event extends React.Component {
 
@@ -57,19 +56,22 @@ class Event extends React.Component {
                              , uuid : this.props.uuid});
     }
 
+    componentDidMount() {
+        this.dom = this.node;
+    }
+
     /**
      * If the edition mode has change, then we scroll to the element
      * @param prevProps
      * @param prevState
      */
     componentDidUpdate(prevProps, prevState) {
-        if (!this.dom)
-            return;
 
         if (this.state.editionEnabled === prevState.editionEnabled)
             return;
 
-        scrollIfNeeded(this.dom);
+        // eslint-disable-next-line react/no-find-dom-node
+        ReactDOM.findDOMNode(this).scrollIntoView();
     }
 
     // ***** React methods *****
@@ -79,14 +81,12 @@ class Event extends React.Component {
             return <EventForm description = {this.props.description}
                               label       = {this.props.label}
                               onCancel    = {this.disableEdition}
-                              onSubmit    = {this.onSubmit}
-                              ref         = {dom => this.dom = dom}/>;
+                              onSubmit    = {this.onSubmit}/>;
         else
             return <TextMode description   = {this.props.description}
                              enableEdition = {this.enableEdition}
                              label         = {this.props.label}
-                             ref           = {dom => this.dom = dom}
-                             removeEvent   = {this.removeEvent} />;
+                             removeEvent   = {this.removeEvent}/>;
     }
 
 }
