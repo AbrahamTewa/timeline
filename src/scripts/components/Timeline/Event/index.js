@@ -90,7 +90,7 @@ class Event extends React.Component {
     }
 }
 
-Event.propTypes = { bubbuleURL : PropTypes.string.isRequired
+Event.propTypes = { bubbuleURL : PropTypes.string
                   , description: PropTypes.string.isRequired
                   , label      : PropTypes.string.isRequired
                   , onChange   : PropTypes.func.isRequired

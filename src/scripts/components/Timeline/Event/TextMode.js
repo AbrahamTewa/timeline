@@ -9,9 +9,15 @@ function TextMode({ bubbuleURL
                   , label
                   , removeEvent}) {
 
+    let bubbule;
     let style;
 
     style = {backgroundImage: `url('${bubbuleURL}')` };
+
+    if (bubbuleURL)
+        bubbule = <div className="bubbule"
+                         style={style}>
+                    </div>;
 
     return (<div className="timeline-event"
                  data-mode="text">
@@ -21,9 +27,7 @@ function TextMode({ bubbuleURL
                 <div className="event-content">
                     <div className="event-description"
                          dangerouslySetInnerHTML={{__html: description}}/>
-                    <div className="bubbule"
-                         style={style}>
-                    </div>
+                    {bubbule}
                 </div>
             </div>);
 }
