@@ -14,12 +14,16 @@ class AddMarker extends React.Component {
         this.onSubmit = this.onSubmit.bind(this);
     }
 
-    /**
-     *
-     * @param {Event} event
-     */
-    onChange(event) {
-        this.setState({value: event.target.value});
+    empty() {
+        this.inputElement.value = '';
+    }
+
+    getValue() {
+        return this.state.value;
+    }
+
+    onChange() {
+        this.setState({value: this.inputElement.value});
     }
 
     onSubmit(event) {
@@ -27,20 +31,25 @@ class AddMarker extends React.Component {
         this.props.onSubmit(this.getValue());
     }
 
-    getValue() {
-        return this.state.value;
+    componentDidMount() {
+        this.inputElement.focus();
     }
 
     render() {
         return (
-            <form onSubmit={this.onSubmit}
-                  className="addMarker">
-                <label> Ajouter un marker :
-                    <input type="text"
-                           autoFocus
-                           onChange={this.onChange}/>
-                </label>
-                <input type="submit"
+            <form className="addMarker form-inline"
+                  onSubmit={this.onSubmit}>
+                <div className="form-group">
+                    <label htmlFor="addMarkerInput">Ajouter un marqueur</label>
+                    <input className="form-control"
+                           id="addMarkerInput"
+                           onChange={this.onChange}
+                           ref={input => this.inputElement = input}
+                           type="text"/>
+                </div>
+
+                <input className="btn btn-primary"
+                       type="submit"
                        value="Ajouter" />
             </form>);
     }

@@ -21,7 +21,7 @@ div#root h1 {
 .timeline-wrapper .add-event {
   float: left;
   width: 100%;
-  margin-left: 1rem; }
+  margin-left: 2rem; }
   .timeline-wrapper .add-event .form-event {
     display: flex;
     flex-direction: column; }
@@ -30,6 +30,11 @@ div#root h1 {
       flex-direction: row; }
       .timeline-wrapper .add-event .form-event .form-event_actions input {
         margin-left: 0.5rem; }
+  .timeline-wrapper .add-event > button {
+    cursor: pointer; }
+
+.timeline-wrapper:not(:hover) .add-event > button {
+  opacity: 0.4; }
 
 body {
   padding: 3px; }
@@ -59,7 +64,8 @@ header {
       padding-top: 0;
       padding-bottom: 0; }
     header .user-dropdown .user-avatar {
-      height: 26px; }
+      height: 26px;
+      margin-right: 0.4em; }
 
 .timeline-time input[type="text"] {
   background: rgba(0, 69, 121, 0.65);
@@ -115,12 +121,16 @@ textarea:focus, .timeline-event-content input:focus, .timeline-event-content tex
 button, .timeline-event-content button {
   cursor: pointer; }
 
-dd.timeline-event-content > p {
+dd.timeline-event-content > div {
   width: 100%;
   text-align: justify;
   max-height: 10em;
   overflow-y: auto;
-  font-size: x-large; }
+  font-size: x-large;
+  padding-right: 1rem; }
+  dd.timeline-event-content > div > p {
+    font-size: x-large;
+    width: 100% !important; }
 
 .timeline-event-content:not(:hover) .edit-button {
   opacity: 0.5; }
@@ -130,8 +140,10 @@ dd.timeline-event-content > p {
   font-size: larger;
   padding-right: 3px; }
 
-.description-form .action-buttons button {
-  margin-right: 1em; }
+.description-form .action-buttons {
+  margin-top: 1em; }
+  .description-form .action-buttons button {
+    margin-right: 1em; }
 
 .timeline-series {
   font-size: small; }
@@ -145,5 +157,27 @@ dd.timeline-event-content > p {
 
 .tick-after {
   top: -34px; }
+
+.noMarkers .addMarker {
+  font-size: 2rem;
+  width: 48rem;
+  margin-top: calc(50vh - 100px);
+  margin-left: auto;
+  margin-right: auto; }
+  .noMarkers .addMarker label {
+    width: 17rem; }
+  .noMarkers .addMarker input[type="text"] {
+    width: 26em; }
+  .noMarkers .addMarker input[type="submit"] {
+    margin-top: 0.5em;
+    margin-left: 18rem; }
+
+#root:not(.noMarkers) .addMarker label {
+  font-family: sans-serif;
+  font-size: 1.3rem; }
+
+.addMarker input[type="text"] {
+  margin-left: 1rem;
+  margin-right: 1rem; }
 
 /*# sourceMappingURL=index.css.map */

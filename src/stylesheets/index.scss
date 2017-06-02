@@ -40,7 +40,7 @@ div#root {
 
         float: left;
         width: 100%;
-        margin-left: 1rem;
+        margin-left: 2rem;
 
         .form-event {
             display: flex;
@@ -54,6 +54,16 @@ div#root {
                     margin-left: 0.5rem;
                 }
             }
+        }
+
+        & > button {
+            cursor: pointer;
+        }
+    }
+
+    &:not(:hover) {
+        .add-event > button {
+            opacity: 0.4;
         }
     }
 
@@ -104,6 +114,7 @@ header {
 
         .user-avatar {
             height: 26px;
+            margin-right: 0.4em;
         }
     }
 }
@@ -184,14 +195,19 @@ header {
     }
 }
 
-dd.timeline-event-content > p {
+dd.timeline-event-content > div {
     width: 100%;
     text-align: justify;
 
     max-height: 10em;
     overflow-y: auto;
-
     font-size: x-large;
+    padding-right: 1rem;
+
+    & > p {
+        font-size: x-large;
+        width: 100% !important;
+    }
 }
 
 .timeline-event-content {
@@ -208,6 +224,8 @@ dd.timeline-event-content > p {
     }
 
     .action-buttons {
+        margin-top: 1em;
+
         button {
             margin-right: 1em;
         }
@@ -233,4 +251,45 @@ dd.timeline-event-content > p {
 
 .tick-after {
     top: -34px;
+}
+
+$addMarkerInput_marginLeft: 1rem;
+
+.noMarkers .addMarker {
+
+    $labelWidth: 17rem;
+
+    font-size: 2rem;
+
+    width: 48rem;
+    margin-top: calc(50vh - 100px);
+    margin-left: auto;
+    margin-right: auto;
+
+    label {
+        width: $labelWidth;
+    }
+
+    input[type="text"] {
+        width: 26em;
+    }
+
+    input[type="submit"] {
+        margin-top: 0.5em;
+        margin-left: $addMarkerInput_marginLeft + $labelWidth;
+    }
+
+}
+
+#root:not(.noMarkers) .addMarker label {
+    font-family: sans-serif;
+    font-size: 1.3rem;
+}
+
+.addMarker {
+
+    input[type="text"] {
+        margin-left: $addMarkerInput_marginLeft;
+        margin-right: 1rem;
+    }
 }
