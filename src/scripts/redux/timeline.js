@@ -107,13 +107,11 @@ function renameMarker({label, uuid}) {
 
 /**
  *
- * @param {string} markerUUID
  * @param {string} uuid
  * @returns {StoreAction.Timeline.RemoveEvent}
  */
-function removeEvent(markerUUID, uuid) {
-    return { markerUUID
-           , type: REMOVE_EVENT
+function removeEvent({uuid}) {
+    return { type: REMOVE_EVENT
            , uuid};
 }
 
@@ -308,7 +306,7 @@ function cloneEvent(state, uuid) {
 /**
  *
  * @param {ReduxStore.Timeline} state
- * @param {string}              uuid
+ * @param {string}              uuid       - UUID of the marker to clone
  * @param {boolean}             cloneEvent
  * @returns {{newState: ReduxStore.Timeline, marker: ReduxStore.Timeline.Marker}}
  */

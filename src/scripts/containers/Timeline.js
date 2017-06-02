@@ -6,10 +6,10 @@ import {addEvent,
         updateEvent} from '../redux/timeline';
 
 function mapDispatchToProps(dispatch) {
-    return { onEventChange      : data => dispatch(updateEvent(data))
-           , onEventRemove      : data => dispatch(removeEvent(data))
-           , onMarkerTimeUpdate : data => dispatch(renameMarker(data))
-           , onNewEvent         : data => dispatch(addEvent(data))};
+    return { onEventChange      : data     => dispatch(updateEvent(data))
+           , onEventRemove      : ({uuid}) => dispatch(removeEvent({uuid}))
+           , onMarkerTimeUpdate : data     => dispatch(renameMarker(data))
+           , onNewEvent         : data     => dispatch(addEvent(data))};
 }
 
 /**
