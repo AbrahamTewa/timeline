@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 
 // ******************** Components ********************
 import AddButton from './AddButton';
-import FormEvent from './FormEvent';
+import EventForm from '../EventForm';
 
 // ******************** Component ********************
 class AddEvent extends React.Component {
@@ -63,8 +63,8 @@ class AddEvent extends React.Component {
         let form;
 
         if (this.state.formDisplayed)
-            form = <FormEvent onCancel={this.onCancel}
-                              onNewEvent={this.onNewEvent}/>;
+            form = <EventForm onCancel={this.onCancel}
+                              onSubmit={this.onNewEvent}/>;
         else
             button = <AddButton onClick={this.onAdd}/>;
 

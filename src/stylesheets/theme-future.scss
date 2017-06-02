@@ -1,0 +1,194 @@
+$main-border-color: rgba(0, 69, 121, 0.65);
+$marker-stick_width: 1.5rem;
+$addMarkerInput_marginLeft: 1rem;
+
+.timeline {
+
+    // Box model
+    border-left: 4px solid $main-border-color;
+    margin: 20px auto;
+    width: calc(100% - 40px);
+}
+
+.addMarker {
+    input[type="text"] {
+        margin-left: $addMarkerInput_marginLeft;
+        margin-right: 1rem;
+    }
+}
+
+.noMarkers .addMarker {
+
+    $labelWidth: 17rem;
+
+    font-size: 2rem;
+
+    width: 48rem;
+    margin-top: calc(50vh - 100px);
+    margin-left: auto;
+    margin-right: auto;
+
+    label {
+        width: $labelWidth;
+    }
+
+    input[type="text"] {
+        width: 26em;
+    }
+
+    input[type="submit"] {
+        margin-top: 0.5em;
+        margin-left: $addMarkerInput_marginLeft + $labelWidth;
+    }
+
+}
+
+
+.timeline-time {
+    cursor     : pointer;
+    font-size  : 2.8em;
+    font-weight: 400;
+    margin     : 0 0 30px 0;
+    padding    : 0;
+
+    &::before {
+        border-top    : 4px solid $main-border-color;
+        content       : "";
+        display       : inline-block;
+        height        : 4px;
+        margin-right  : 0;
+        vertical-align: middle;
+        width         : $marker-stick_width;
+    }
+
+    & > input {
+        background        : $main-border-color;
+        -moz-border-radius: 10px;
+        border-radius     : 10px;
+        color             : rgba(255, 255, 255, 0.85);
+        display           : inline-block;
+        letter-spacing    : 0;
+        padding           : 10px 10px 5px 10px;
+        text-align        : center;
+    }
+
+}
+
+.timeline-marker {
+
+    & > .add-event {
+        margin-left: $marker-stick_width;
+    }
+
+}
+
+div.timeline-event {
+
+    // Variables
+    $label_line-height  : 1.7rem;
+    $label-collapsed_line-height: 2rem;
+    $toolbar_width      : 14rem;
+    $toolbar_margin-left: 1rem;
+
+    // Flex box
+    display       : flex;
+    flex-direction: row;
+    flex-wrap     : wrap;
+
+    // Box model
+    margin-bottom: 1rem;
+
+    &::before {
+        border-top    : 3px solid $main-border-color;
+        content       : "";
+        display       : inline-block;
+        height        : 3px;
+        margin-right  : 10px;
+        vertical-align: middle;
+        width         : 10px;
+        margin-top    : $label_line-height/2;
+    }
+
+    &.collapsed::before {
+        margin-top: $label-collapsed_line-height/2;
+    }
+
+    // Event label
+    a.event-label {
+
+        // Font
+        color      : rgba(255, 255, 255, 0.4) !important;
+        font-size  : 1.4rem;
+        line-height: $label_line-height;
+
+        // Box model
+        max-width: calc(100% - #{$toolbar_width} - #{$toolbar_margin-left});
+
+        // Others
+        cursor: pointer;
+    }
+
+    &.collapsed a.event-label {
+        $line-height: $label-collapsed_line-height;
+
+        // Text
+        font-size: 2rem;
+        line-height: 2rem;
+    }
+
+    .event-toolbar {
+        width: $toolbar_width;
+        margin-left: $toolbar_margin-left;
+        opacity: 0.4;
+
+        & > button:not(:last-child) {
+            margin-right: 1rem;
+        }
+    }
+
+    &:hover {
+        a.event-label {
+            color: rgba(255, 255, 255, 0.6) !important;
+            transition: color 0.2s ease-in;
+        }
+
+        .event-toolbar {
+            opacity: 1;
+            transition: opacity 0.2s ease-in;
+        }
+    }
+
+    div.event-description {
+        // Box model
+        width       : 100%;
+        margin-top  : 0.5rem;
+        margin-left : 40px;
+        padding-left: 24px;
+    }
+
+    &:not(:hover) .edit-button {
+        opacity: 0;
+    }
+
+    &:hover .edit-button:not(:hover) {
+        opacity: 0.5;
+    }
+
+    .edit-button {
+        font-size: 0.6em;
+        margin-left: 0.5em;
+        opacity: 1;
+        cursor: pointer;
+    }
+
+}
+
+.timeline-event-list {
+
+    margin-bottom: 1rem;
+
+    .form-event {
+        margin-left: $marker-stick_width;
+    }
+
+}

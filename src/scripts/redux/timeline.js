@@ -6,11 +6,10 @@ const REMOVE_MARKER = 'timeline.REMOVE_MARKER';
 const MOVE_MARKER   = 'timeline.MOVE_MARKER';
 const RENAME_MARKER = 'timeline.RENAME_MARKER';
 
-const ADD_EVENT                = 'timeline.ADD_EVENT';
-const REMOVE_EVENT             = 'timeline.REMOVE_EVENT';
-const MOVE_EVENT               = 'timeline.MOVE_EVENT';
-const UPDATE_EVENT_LABEL       = 'timeline.UPDATE_EVENT_LABEL';
-const UPDATE_EVENT_DESCRIPTION = 'timeline.UPDATE_EVENT_DESCRIPTION';
+const ADD_EVENT     = 'timeline.ADD_EVENT';
+const REMOVE_EVENT  = 'timeline.REMOVE_EVENT';
+const MOVE_EVENT    = 'timeline.MOVE_EVENT';
+const UPDATE_EVENT  = 'timeline.UPDATE_EVENT';
 
 const LOAD_TIMELINE = 'timeline.LOAD';
 
@@ -26,8 +25,7 @@ const LIST_MODIFIERS = [ADD_MARKER
                        ,ADD_EVENT
                        ,REMOVE_EVENT
                        ,MOVE_EVENT
-                       ,UPDATE_EVENT_LABEL
-                       ,UPDATE_EVENT_DESCRIPTION];
+                       ,UPDATE_EVENT];
 
 // ******************** Action creators ********************
 
@@ -131,28 +129,16 @@ function removeMarker(uuid) {
 /**
  *
  * @param {string} description
+ * @param {string} label
  * @param {string} markerUUID
  * @param {string} uuid
  * @returns {StoreAction.Timeline.UpdateEventDescription}
  */
-function updateEventDescription({description, markerUUID, uuid}) {
+function updateEvent({description, label, markerUUID, uuid}) {
     return { description
+           , label
            , markerUUID
-           , type: UPDATE_EVENT_DESCRIPTION
-           , uuid};
-}
-
-/**
- *
- * @param {string} label
- * @param {string} markerUUID
- * @param {string} uuid
- * @returns {StoreAction.Timeline.UpdateEventLabel}
- */
-function updateEventLabel({label, markerUUID, uuid}) {
-    return { label
-           , markerUUID
-           , type: UPDATE_EVENT_LABEL
+           , type: UPDATE_EVENT
            , uuid};
 }
 
@@ -174,7 +160,7 @@ function reducer( state={ events   :{}
         case ADD_EVENT: {
             /**
              * Created event
-             * @type {Store.Timeline.Event}
+             * @type {ReduxStore.Timeline.Event}
              */
             let event;
 
@@ -252,7 +238,7 @@ function reducer( state={ events   :{}
         }
 
         case REMOVE_MARKER: {
-            /** @type {Store.Timeline.Marker} */
+            /** @type {ReduxStore.Timeline.Marker} */
             let marker;
 
             /** @type {number} */
@@ -288,15 +274,10 @@ function reducer( state={ events   :{}
             return newState;
         }
 
-        case UPDATE_EVENT_DESCRIPTION: {
+        case UPDATE_EVENT: {
             let {newState, event} = cloneEvent(state, action.uuid);
             event.description = action.description;
-            return newState;
-        }
-
-        case UPDATE_EVENT_LABEL: {
-            let {newState, event} = cloneEvent(state, action.uuid);
-            event.label = action.label;
+            event.label       = action.label;
             return newState;
         }
 
@@ -308,9 +289,9 @@ function reducer( state={ events   :{}
 
 /**
  *
- * @param {Store.Timeline} state
+ * @param {ReduxStore.Timeline} state
  * @param {string} uuid
- * @returns {{newState: Store.Timeline, event: Store.Timeline.Event}}
+ * @returns {{newState: ReduxStore.Timeline, event: ReduxStore.Timeline.Event}}
  */
 function cloneEvent(state, uuid) {
     let newState;
@@ -326,10 +307,10 @@ function cloneEvent(state, uuid) {
 
 /**
  *
- * @param {Store.Timeline} state
- * @param {string}         uuid
- * @param {boolean}        cloneEvent
- * @returns {{newState: Store.Timeline, marker: Store.Timeline.Marker}}
+ * @param {ReduxStore.Timeline} state
+ * @param {string}              uuid
+ * @param {boolean}             cloneEvent
+ * @returns {{newState: ReduxStore.Timeline, marker: ReduxStore.Timeline.Marker}}
  */
 function cloneMarker(state, uuid, {cloneEvent=false}={}) {
     let marker;
@@ -364,8 +345,8 @@ function moveInArray(array, oldPosition, newPosition) {
 
 /**
  *
- * @param {Store.Timeline} state
- * @param {string}         uuid
+ * @param {ReduxStore.Timeline} state
+ * @param {string}              uuid
  * @returns {number}
  */
 function getMarkerIndex(state, uuid) {
@@ -383,8 +364,7 @@ export { addEvent
        , renameMarker
        , removeEvent
        , removeMarker
-       , updateEventDescription
-       , updateEventLabel};
+       , updateEvent};
 
 
 export {LIST_MODIFIERS};

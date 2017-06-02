@@ -1,15 +1,15 @@
 import { connect } from 'react-redux';
 import TimelineComponent from '../components/Timeline';
 import {addEvent,
+        removeEvent,
         renameMarker,
-        updateEventDescription,
-        updateEventLabel} from '../redux/timeline';
+        updateEvent} from '../redux/timeline';
 
 function mapDispatchToProps(dispatch) {
-    return { onEventDescriptionChange : data => dispatch(updateEventDescription(data))
-           , onEventLabelChange       : data => dispatch(updateEventLabel(data))
-           , onMarkerTimeUpdate       : data => dispatch(renameMarker(data))
-           , onNewEvent               : data => dispatch(addEvent(data))};
+    return { onEventChange      : data => dispatch(updateEvent(data))
+           , onEventRemove      : data => dispatch(removeEvent(data))
+           , onMarkerTimeUpdate : data => dispatch(renameMarker(data))
+           , onNewEvent         : data => dispatch(addEvent(data))};
 }
 
 /**
@@ -19,7 +19,7 @@ function mapDispatchToProps(dispatch) {
 function mapStateToProps (state) {
     let props;
 
-    props = {};
+    props = {dragModeEnabled: false};
 
     props.markers = state.timeline.markers.map(function (marker) {
         let events;
@@ -34,7 +34,8 @@ function mapStateToProps (state) {
                    , uuid       : event.uuid};
         });
 
-        return { events
+        return { dragModeEnabled : false
+               , events
                , time : marker.label
                , uuid : marker.uuid};
     });

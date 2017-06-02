@@ -75,11 +75,21 @@ let tasks = {
           , tasks: ['eslint', 'copy', 'browserify:watch', 'sass']
           , options: { atBegin : true
                      , spawn   : false}
+        },
+        stylesheets: {
+            files: ['src/**/*.scss']
+          , tasks: ['sass']
+          , options: { atBegin : true
+                     , spawn   : false}
         }
     }
 };
 
-tasks.sass.build.files[`${BUILD_FOLDER}/stylesheets/index.css`] = 'src/stylesheets/index.scss';
+{
+    const STYLESHEET_FOLDER = `${BUILD_FOLDER}/stylesheets`;
+    tasks.sass.build.files[`${STYLESHEET_FOLDER}/index.css`] = 'src/stylesheets/index.scss';
+    tasks.sass.build.files[`${STYLESHEET_FOLDER}/theme-future.css`] = 'src/stylesheets/theme-future.scss';
+}
 
 grunt.initConfig(tasks);
 

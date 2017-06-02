@@ -31,22 +31,26 @@ class Timeline extends React.Component {
     }
 
     render() {
+        let dragModeClass;
         let markerList;
 
         let {onNewEvent, onMarkerTimeUpdate} = this.props;
 
         markerList = this.props.markers.map(function({events, time, uuid}) {
-            return (<Marker events                  = {events}
-                            key                     = {uuid}
-                            onEventLabelChange      = {this.props.onEventLabelChange}
-                            onEventDescriptionChange= {this.props.onEventDescriptionChange}
-                            onNewEvent              = {onNewEvent}
-                            onTimeUpdate            = {onMarkerTimeUpdate}
-                            time                    = {time}
-                            uuid                    = {uuid}/>);
+            return (<Marker events        = {events}
+                            key           = {uuid}
+                            onEventChange = {this.props.onEventChange}
+                            onEventRemove = {this.props.onEventRemove}
+                            onNewEvent    = {onNewEvent}
+                            onTimeUpdate  = {onMarkerTimeUpdate}
+                            time          = {time}
+                            uuid          = {uuid}/>);
         }.bind(this));
 
-        return (<div id={this.props.id} className="timeline-container">
+        dragModeClass = this.props.dragModeEnabled ? 'dragMode' : '';
+
+        return (<div className={`timeline ${dragModeClass}`}
+                     id={this.props.id}>
                     <button className="timeline-toggle">+ expand all</button>
                     <br className="clear"/>
                     {markerList}
@@ -55,12 +59,13 @@ class Timeline extends React.Component {
 
 }
 
-Timeline.propTypes = { id                      : PropTypes.string.isRequired
-                     , onEventDescriptionChange: PropTypes.func.isRequired
-                     , onEventLabelChange      : PropTypes.func.isRequired
-                     , onNewEvent              : PropTypes.func.isRequired
-                     , onMarkerTimeUpdate      : PropTypes.func.isRequired
-                     , markers                 : PropTypes.array};
+Timeline.propTypes = { dragModeEnabled    : PropTypes.bool.isRequired
+                     , id                 : PropTypes.string.isRequired
+                     , onEventChange      : PropTypes.func.isRequired
+                     , onEventRemove      : PropTypes.func.isRequired
+                     , onNewEvent         : PropTypes.func.isRequired
+                     , onMarkerTimeUpdate : PropTypes.func.isRequired
+                     , markers            : PropTypes.array};
 
 // ******************** Export ********************
 export default Timeline;

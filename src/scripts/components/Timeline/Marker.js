@@ -1,6 +1,6 @@
 // ******************** Imports ********************
-import { default as EventSeries
-       , eventsPropType} from './EventSeries';
+import { default as EventList
+       , eventsPropType} from './EventList';
 
 import PropTypes from 'prop-types';
 import React     from 'react';
@@ -53,25 +53,25 @@ class Marker extends React.Component {
     }
 
     render() {
-        return (<div className="timeline-wrapper" id={this.props.uuid}>
+        return (<div className="timeline-marker" id={this.props.uuid}>
                     <Time onChange={this.onTimeUpdate}
                           time={this.props.time}/>
-                    <EventSeries events                  = {this.props.events}
-                                 onEventLabelChange      = {this.props.onEventLabelChange}
-                                 onEventDescriptionChange= {this.props.onEventDescriptionChange}/>
+                    <EventList events        = {this.props.events}
+                               onEventChange = {this.props.onEventChange}
+                               onEventRemove = {this.props.onEventRemove}/>
                     <AddEvent onNewEvent={this.onNewEvent}/>
                 </div>);
     }
 
 }
 
-Marker.propTypes = { events                  : eventsPropType
-                   , onEventDescriptionChange: PropTypes.func.isRequired
-                   , onEventLabelChange      : PropTypes.func.isRequired
-                   , onNewEvent              : PropTypes.func.isRequired
-                   , onTimeUpdate            : PropTypes.func.isRequired
-                   , time                    : PropTypes.string.isRequired
-                   , uuid                    : PropTypes.string.isRequired};
+Marker.propTypes = { events        : eventsPropType
+                   , onEventChange : PropTypes.func.isRequired
+                   , onEventRemove : PropTypes.func.isRequired
+                   , onNewEvent    : PropTypes.func.isRequired
+                   , onTimeUpdate  : PropTypes.func.isRequired
+                   , time          : PropTypes.string.isRequired
+                   , uuid          : PropTypes.string.isRequired};
 
 // ******************** Export ********************
 export default Marker;

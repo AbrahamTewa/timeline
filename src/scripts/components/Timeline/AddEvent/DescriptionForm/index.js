@@ -15,7 +15,7 @@ class DescriptionForm extends React.Component {
     }
 
     render() {
-        return (<div className="form-group row">
+        return (<div className="form-group row no-gutters">
                     <label htmlFor="description">Description</label>
                     <TextEditor className  = "form-control"
                                 placeholder= "Description"

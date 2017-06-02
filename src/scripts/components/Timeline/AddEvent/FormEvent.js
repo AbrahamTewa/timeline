@@ -31,7 +31,7 @@ class FormEvent extends React.Component {
     render() {
         return (<form className="form-event"
                       onSubmit={this.onSubmit}>
-                    <div className="form-group row">
+                    <div className="form-group row no-gutters">
                         <label htmlFor="event">Évènement</label>
                         <input className="form-control"
                                id="event"
