@@ -24,7 +24,7 @@ class TextEditor extends React.Component {
         let state;
 
         editor = await tinymce.init({
-            plugins : 'hr lists link image preview table imagetools textcolor'
+            plugins : 'hr image imagetools link lists preview table textcolor visualblocks'
           , selector: '.text-editor'
 
             // Editor Appearance
