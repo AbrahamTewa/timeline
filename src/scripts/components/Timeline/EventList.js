@@ -23,7 +23,8 @@ class EventList extends React.Component {
         let events;
 
         events = this.props.events.map(function(event) {
-            return <Event description = {event.description}
+            return <Event bubbuleURL  = {event.bubbuleURL}
+                          description = {event.description}
                           key         = {event.uuid}
                           label       = {event.label}
                           onChange    = {this.props.onEventChange}

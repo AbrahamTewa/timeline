@@ -30,17 +30,15 @@ const LIST_MODIFIERS = [ADD_MARKER
 // ******************** Action creators ********************
 
 /**
- *
- * @param {string} description - Description of the event
- * @param {string} label       - Label of the event
- * @param {string} marker      - UUID of the marker
- * @param {number} position    - Position of the created event
+ * @param {Object} data
+ * @param {Object} data.bubbuleURL
+ * @param {string} data.description - Description of the event
+ * @param {string} data.label       - Label of the event
+ * @param {string} data.marker      - UUID of the marker
+ * @param {number} data.position    - Position of the created event
  */
-function addEvent({description, label, marker, position=-1}) {
-    return { description
-           , label
-           , marker
-           , position
+function addEvent(data) {
+    return { ...data
            , type: ADD_EVENT
            , uuid: uuid()};
 }
@@ -125,19 +123,17 @@ function removeMarker(uuid) {
 }
 
 /**
- *
- * @param {string} description
- * @param {string} label
- * @param {string} markerUUID
- * @param {string} uuid
+ * @param {Object} data
+ * @param {string} data.bubbuleURL
+ * @param {string} data.description
+ * @param {string} data.label
+ * @param {string} data.markerUUID
+ * @param {string} data.uuid
  * @returns {StoreAction.Timeline.UpdateEventDescription}
  */
-function updateEvent({description, label, markerUUID, uuid}) {
-    return { description
-           , label
-           , markerUUID
-           , type: UPDATE_EVENT
-           , uuid};
+function updateEvent(data) {
+    return { ...data
+           , type: UPDATE_EVENT};
 }
 
 // ******************** Reducer ********************
@@ -168,7 +164,8 @@ function reducer( state={ events   :{}
              */
             let eventPosition;
 
-            event = { description: action.description
+            event = { bubbuleURL : action.bubbuleURL || ''
+                    , description: action.description
                     , label      : action.label
                     , marker     : action.marker
                     , uuid       : action.uuid};
@@ -274,6 +271,7 @@ function reducer( state={ events   :{}
 
         case UPDATE_EVENT: {
             let {newState, event} = cloneEvent(state, action.uuid);
+            event.bubbuleURL  = action.bubbuleURL || '';
             event.description = action.description;
             event.label       = action.label;
             return newState;

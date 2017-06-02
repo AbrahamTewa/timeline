@@ -29,9 +29,7 @@ function mapStateToProps (state) {
 
             event = state.timeline.events[uuid];
 
-            return { description: event.description
-                   , label      : event.label
-                   , uuid       : event.uuid};
+            return event;
         });
 
         return { dragModeEnabled : false

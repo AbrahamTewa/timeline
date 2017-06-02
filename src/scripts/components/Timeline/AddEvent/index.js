@@ -50,12 +50,14 @@ class AddEvent extends React.Component {
     /**
      * Callback triggered when the user complete the event form
      * and add a new event
-     * @param {string} description
-     * @param {string} label
+     * @param {Object} data
+     * @param {string} data.bubbuleURL
+     * @param {string} data.description
+     * @param {string} data.label
      */
-    onNewEvent({description, label}) {
+    onNewEvent(data) {
         this.toggleFormDisplay(false);
-        this.props.onNewEvent({description, label});
+        this.props.onNewEvent(data);
     }
 
     render() {

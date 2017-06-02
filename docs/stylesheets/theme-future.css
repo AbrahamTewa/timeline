@@ -85,13 +85,15 @@ div.timeline-event {
   div.timeline-event:hover .event-toolbar {
     opacity: 1;
     transition: opacity 0.2s ease-in; }
-  div.timeline-event div.event-description {
+  div.timeline-event div.event-content {
     width: 100%;
     margin-top: 0.5rem;
     margin-left: 40px;
-    padding-left: 24px; }
-    div.timeline-event div.event-description p {
-      font-size: 1em; }
+    padding-left: 24px;
+    display: flex;
+    flex-direction: row; }
+  div.timeline-event div.event-description p {
+    font-size: 1em; }
   div.timeline-event:not(:hover) .edit-button {
     opacity: 0; }
   div.timeline-event:hover .edit-button:not(:hover) {
@@ -112,5 +114,15 @@ div.timeline-event {
 
 button {
   cursor: pointer; }
+
+.bubbule {
+  width: 13rem;
+  height: 13rem;
+  background-size: cover;
+  background-position: 50%;
+  border-radius: 50%;
+  flex-shrink: 0;
+  margin-left: 3rem;
+  border: solid 2px rgba(255, 255, 255, 0.85); }
 
 /*# sourceMappingURL=theme-future.css.map */

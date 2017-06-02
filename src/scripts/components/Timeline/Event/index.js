@@ -48,11 +48,9 @@ class Event extends React.Component {
         this.disableEdition();
     }
 
-    onSubmit({description, label}) {
-
+    onSubmit(data) {
         this.disableEdition();
-        this.props.onChange( { description
-                             , label
+        this.props.onChange( { ...data
                              , uuid : this.props.uuid});
     }
 
@@ -78,20 +76,22 @@ class Event extends React.Component {
 
     render() {
         if (this.state.editionEnabled)
-            return <EventForm description = {this.props.description}
+            return <EventForm bubbuleURL  = {this.props.bubbuleURL}
+                              description = {this.props.description}
                               label       = {this.props.label}
                               onCancel    = {this.disableEdition}
                               onSubmit    = {this.onSubmit}/>;
         else
-            return <TextMode description   = {this.props.description}
+            return <TextMode bubbuleURL    = {this.props.bubbuleURL}
+                             description   = {this.props.description}
                              enableEdition = {this.enableEdition}
                              label         = {this.props.label}
                              removeEvent   = {this.removeEvent}/>;
     }
-
 }
 
-Event.propTypes = { description: PropTypes.string.isRequired
+Event.propTypes = { bubbuleURL : PropTypes.string.isRequired
+                  , description: PropTypes.string.isRequired
                   , label      : PropTypes.string.isRequired
                   , onChange   : PropTypes.func.isRequired
                   , onRemove   : PropTypes.func.isRequired

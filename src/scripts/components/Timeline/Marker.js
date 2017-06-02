@@ -37,16 +37,10 @@ class Marker extends React.Component {
                                 , uuid : this.props.uuid});
     }
 
-    /**
-     *
-     * @param {string} description
-     * @param {string} label
-     */
-    onNewEvent({description, label}) {
+    onNewEvent(data) {
         let event;
 
-        event = { description
-                , label
+        event = { ...data
                 , marker : this.props.uuid};
 
         this.props.onNewEvent(event);

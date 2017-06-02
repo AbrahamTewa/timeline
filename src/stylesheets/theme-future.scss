@@ -158,17 +158,21 @@ div.timeline-event {
         }
     }
 
-    div.event-description {
+    div.event-content {
         // Box model
         width       : 100%;
         margin-top  : 0.5rem;
         margin-left : 40px;
         padding-left: 24px;
 
+        display: flex;
+        flex-direction: row;
+    }
+
+    div.event-description {
         p {
             font-size: 1em;
         }
-
     }
 
     &:not(:hover) .edit-button {
@@ -206,4 +210,16 @@ div.timeline-event {
 
 button {
     cursor: pointer;
+}
+
+.bubbule {
+
+    width: 13rem;
+    height: 13rem;
+    background-size: cover;
+    background-position: 50%;
+    border-radius: 50%;
+    flex-shrink: 0;
+    margin-left: 3rem;
+    border: solid 2px rgba(255, 255, 255, 0.85);
 }

@@ -19,6 +19,10 @@ class EventForm extends React.Component {
         this.onSubmit = this.onSubmit.bind(this);
     }
 
+    getBubbuleURL() {
+        return this.bubbuleInput.value;
+    }
+
     getDescription() {
         return this.descriptionEditor.getValue();
     }
@@ -36,8 +40,9 @@ class EventForm extends React.Component {
      */
     onSubmit(event) {
         event.preventDefault();
-        this.props.onSubmit({ label      : this.labelInput.value
-                            , description: this.descriptionEditor.getValue()});
+        this.props.onSubmit({ bubbuleURL : this.bubbuleInput.value
+                            , description: this.descriptionEditor.getValue()
+                            , label      : this.labelInput.value});
     }
 
     // ********** React methods **********
@@ -51,6 +56,7 @@ class EventForm extends React.Component {
         return (<form className = "form-event"
                       onSubmit  = {this.onSubmit}
                       ref       = {form => this.form = form}>
+
                     <div className="form-group row no-gutters">
                         <label htmlFor="event">Évènement</label>
                         <input className    = "form-control"
@@ -58,6 +64,16 @@ class EventForm extends React.Component {
                                id           = "event"
                                placeholder  = "Nom de l'évènement"
                                ref          = {input => this.labelInput = input}
+                               type         = "text"/>
+                    </div>
+
+                    <div className="form-group row no-gutters">
+                        <label htmlFor="event">Bubbule</label>
+                        <input className    = "form-control"
+                               defaultValue = {this.props.bubbuleURL}
+                               id           = "event"
+                               placeholder  = "Bubble"
+                               ref          = {input => this.bubbuleInput = input}
                                type         = "text"/>
                     </div>
 
@@ -84,6 +100,7 @@ class EventForm extends React.Component {
 }
 
 EventForm.propTypes = { autoScroll : PropTypes.bool
+                      , bubbuleURL : PropTypes.string
                       , description: PropTypes.string
                       , label      : PropTypes.string
                       , onCancel   : PropTypes.func.isRequired
