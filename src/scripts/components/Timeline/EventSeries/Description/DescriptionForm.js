@@ -2,8 +2,10 @@
 import React     from 'react';
 import PropTypes from 'prop-types';
 
+import TextEditor from '../../../TextEditor';
+
 // ******************** Component ********************
-class Form extends React.Component {
+class DescriptionForm extends React.Component {
 
     constructor(props) {
         super(props);
@@ -13,16 +15,15 @@ class Form extends React.Component {
 
     onSubmit(event) {
         event.preventDefault();
-        this.props.onChange(this.descriptionArea.value);
+        this.props.onChange(this.editor.getValue());
     }
 
     render() {
         return (<form className="description-form"
                       onSubmit={this.onSubmit}>
-                    <textarea defaultValue={this.props.description}
-                              ref={d => this.descriptionArea = d}
-                              rows="5">
-                    </textarea>
+                    <TextEditor initialValue={this.props.description}
+                                ref={editor => this.editor = editor}
+                                rows={5}/>
                     <div className="action-buttons">
                         <button className="btn btn-sm btn-outline-primary"
                                 type="submit">
@@ -37,9 +38,9 @@ class Form extends React.Component {
     }
 }
 
-Form.propTypes = { description: PropTypes.string.isRequired
+DescriptionForm.propTypes = { description: PropTypes.string.isRequired
                             , onCancel   : PropTypes.func.isRequired
                             , onChange   : PropTypes.func.isRequired};
 
 // ******************** Exports ********************
-export default Form;
+export default DescriptionForm;

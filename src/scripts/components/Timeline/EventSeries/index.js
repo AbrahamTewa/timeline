@@ -24,12 +24,14 @@ class EventSeries extends React.Component {
         let reducer;
 
         reducer = function(eventList, event) {
-            eventList.push(<span className="tick tick-before"> </span>);
+            eventList.push(<span className="tick tick-after"
+                                 key={event.uuid + '.tick.before'}> </span>);
             eventList.push(<Label label    = {event.label}
                                   key      = {event.uuid}
                                   onChange = {this.props.onEventLabelChange}
                                   uuid     = {event.uuid} />);
-            eventList.push(<span className="tick tick-after"> </span>);
+            eventList.push(<span className="tick tick-after"
+                                 key={event.uuid + '.tick.after'}> </span>);
 
             eventList.push(<Description description = {event.description}
                                         key         = {event.uuid + 'EX'}

@@ -2,7 +2,7 @@
 import React     from 'react';
 import PropTypes from 'prop-types';
 
-import Form from './Form';
+import Form from './DescriptionForm';
 
 // ******************** Component ********************
 class Description extends React.Component {
@@ -43,35 +43,29 @@ class Description extends React.Component {
         state = {...this.state
                 , isEditionEnabled: enable};
 
-        console.log('xxx');
         this.setState(state);
-        console.log('---');
     }
 
     render() {
-        let description;
-        let descriptionForm;
-        let editButton;
-
         if (this.state.isEditionEnabled) {
-            descriptionForm = <Form description= {this.props.description}
-                                    onCancel   = {this.disableEdition}
-                                    onChange   = {this.onChange}/>;
+
+            return (<dd className="timeline-event-content"
+                        id={this.props.uuid + 'EX'}>
+                        <Form description= {this.props.description}
+                              onCancel   = {this.disableEdition}
+                              onChange   = {this.onChange}/>
+                    </dd>);
         }
         else {
-            description = <p>{this.props.description}</p>;
-            editButton = <button className="edit-button btn btn-sm btn-outline-primary"
-                                 onClick={this.enableEdition}>
+            return (<dd className="timeline-event-content"
+                        id={this.props.uuid + 'EX'}>
+                        <div dangerouslySetInnerHTML={{__html: this.props.description}} />
+                        <button className="edit-button btn btn-sm btn-outline-primary"
+                                onClick={this.enableEdition}>
                             Modifier
-                         </button>;
+                        </button>
+                    </dd>);
         }
-
-        return (<dd className="timeline-event-content"
-                    id={this.props.uuid + 'EX'}>
-                    {descriptionForm}
-                    {description}
-                    {editButton}
-                </dd>);
     }
 }
 

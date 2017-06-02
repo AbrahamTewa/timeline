@@ -1,6 +1,9 @@
-// ******************** Imports ********************
-import React from 'react';
+// ******************** Imports NodeJS packages ********************
+import React     from 'react';
 import PropTypes from 'prop-types';
+
+// ******************** Imports components ********************
+import DescriptionForm from './DescriptionForm';
 
 // ******************** Container ********************
 class FormEvent extends React.Component {
@@ -22,7 +25,7 @@ class FormEvent extends React.Component {
     onSubmit(event) {
         event.preventDefault();
         this.props.onNewEvent({ label      : this.labelInput.value
-                              , description: this.descriptionInput.value});
+                              , description: this.descriptionForm.getValue()});
     }
 
     render() {
@@ -37,15 +40,7 @@ class FormEvent extends React.Component {
                                type="text"/>
                     </div>
 
-                    <div className="form-group row">
-                        <label htmlFor="description">Description</label>
-                        <textarea className="form-control"
-                                  id="description"
-                                  placeholder="Description"
-                                  ref={input => { this.descriptionInput = input; }}
-                                  rows="3">
-                        </textarea>
-                    </div>
+                    <DescriptionForm ref={r => this.descriptionForm = r} />
                     <div className="form-event_actions">
                         <input className="btn btn-primary"
                                type="submit"

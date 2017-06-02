@@ -1,4 +1,4 @@
-/* global gapi */
+/* global gapi tinymce */
 // ******************** Containers and redux ********************
 import { configureStore} from './redux';
 import { CLIENT_ID
@@ -9,6 +9,16 @@ import { CLIENT_ID
 async function initialize() {
     await initializeAPI();
     initializeStore();
+    initializeEditor();
+}
+
+/**
+ * Initialize the text editor
+ */
+function initializeEditor() {
+    tinymce.init({
+        selector: '.text-editor'
+    });
 }
 
 /**
