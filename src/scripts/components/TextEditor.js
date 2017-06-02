@@ -24,12 +24,22 @@ class TextEditor extends React.Component {
         let state;
 
         editor = await tinymce.init({
-            selector: '.text-editor'
+            plugins : 'hr lists link image preview table imagetools textcolor'
+          , selector: '.text-editor'
 
             // Editor Appearance
           , branding : false
           , menubar  : false
           , statusbar: false
+          , toolbar  :   'preview undo redo removeformat | '
+                       + 'formatselect fontselect fontsizeselect | '
+                       + 'forecolor bold italic underline blockquote | '
+                       + 'outdent indent | '
+                       + 'alignleft aligncenter alignright alignjustify | '
+                       + 'bullist numlist hr | '
+                       + 'link unlink table | '
+                       + 'image imageoptions | '
+                       + 'visualblocks'
         });
 
         state = {...this.state

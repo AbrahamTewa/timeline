@@ -1,7 +1,7 @@
 .timeline {
   border-left: 4px solid rgba(0, 69, 121, 0.65);
   margin: 20px auto;
-  max-width: 70%; }
+  width: 70%; }
 
 .addMarker input[type="text"] {
   margin-left: 1rem;
@@ -109,5 +109,8 @@ div.timeline-event {
     margin-bottom: 1.5rem; }
     .timeline-event-list .form-event .form-event_actions input:not(:last-child) {
       margin-right: 1em; }
+
+button {
+  cursor: pointer; }
 
 /*# sourceMappingURL=theme-future.css.map */
