@@ -1,5 +1,6 @@
 // ******************** NodeJS packages ********************
 import grunt from 'grunt';
+import babel from 'rollup-plugin-babel';
 
 require('load-grunt-tasks')(grunt);
 
@@ -57,6 +58,13 @@ let tasks = {
         }
     }
 
+    , rollup: {
+        options: {
+            plugins: () => [babel({exclude: './node_modules/**'})]
+        }
+      , files: buildConfig.files,
+    }
+
     , sass: {
         options: {
             sourceMap: true
@@ -85,6 +93,8 @@ let tasks = {
     }
 };
 
+console.log(tasks.rollup);
+
 {
     const STYLESHEET_FOLDER = `${BUILD_FOLDER}/stylesheets`;
     tasks.sass.build.files[`${STYLESHEET_FOLDER}/index.css`] = 'src/stylesheets/index.scss';
@@ -100,7 +110,7 @@ grunt.registerTask('build', ['eslint'
                             ,'clean:build'
                             ,'copy:html'
                             ,'copy:vendors'
-                            ,'browserify:build'
+                            ,'rollup'
                             ,'sass']);
 
 grunt.registerTask('default', ['build']);

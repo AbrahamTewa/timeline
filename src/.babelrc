@@ -4,7 +4,8 @@
              , "transform-async-to-generator"
              , "transform-object-rest-spread"
              , "transform-react-jsx"],
-
+    
   "env": { "browser": true
+         , "modules": false
          , "test"   : {"plugins": [ "istanbul" ]}}
 }

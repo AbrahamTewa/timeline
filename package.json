@@ -8,15 +8,16 @@
   "private": true,
   "scripts": {
     "analysis": "plato --dir analysis --recurse --eslint .eslintrc.json --title \"Starter server\" src/**/*.js",
-    "build": "grunt build",
+    "build": "webpack -p",
     "build-page": "git checkout master && grunt build && git checkout gh-pages && cp build/ .",
     "debugger": "devtool build/index.js",
+    "dev": "webpack-dev-server",
     "doc": "grunt clean:doc && jsdoc -c jsdoc.json --readme README.md",
     "lint": "grunt lint",
     "start": "node build/index.js ",
     "test": "mocha src\\**\\__test__\\**\\*.js --opts mocha.opts -R spec",
     "test-cov": "istanbul cover ./node_modules/mocha/bin/_mocha -- src\\**\\__test__\\**\\*.js --opts mocha.opts -R spec",
-    "watch": "grunt watch:scripts",
+    "watch": "webpack --progress --watch",
     "watch:stylesheets": "grunt watch:stylesheets"
   },
   "repository": {
@@ -24,22 +25,23 @@
     "url": "https://github.com/AbrahamTewa/timeline"
   },
   "dependencies": {
-    "babel-plugin-transform-async-to-generator": "^6.24.1",
     "event-target-shim": "^2.0.0",
     "express": "^4.15.3",
-    "passport": "^0.3.2",
-    "passport-google-oauth": "^1.0.0",
     "prop-types": "^15.5.10",
     "react": "^15.5.4",
     "react-dom": "^15.5.4",
     "react-redux": "^5.0.5",
     "redux": "^3.6.0",
-    "uuid": "^3.0.1"
+    "uuid": "^3.0.1",
+    "webpack": "^2.6.1"
   },
   "devDependencies": {
-    "babel-core": "^6.10.4",
+    "babel-core": "^6.24.1",
     "babel-eslint": "^7.2.3",
+    "babel-loader": "^7.0.0",
+    "babel-plugin-external-helpers": "^6.22.0",
     "babel-plugin-istanbul": "^4.1.4",
+    "babel-plugin-transform-async-to-generator": "^6.24.1",
     "babel-plugin-transform-object-rest-spread": "^6.23.0",
     "babel-plugin-transform-react-jsx": "^6.24.1",
     "babel-polyfill": "^6.23.0",
@@ -71,7 +73,13 @@
     "minami": "^1.1.1",
     "mocha": "^3.2.0",
     "plato": "^1.7.0",
-    "source-map-support": "^0.4.6"
+    "react-hot-loader": "next",
+    "rollup": "^0.41.6",
+    "rollup-plugin-babel": "^2.7.1",
+    "rollup-plugin-commonjs": "^8.0.2",
+    "rollup-plugin-node-resolve": "^3.0.0",
+    "source-map-support": "^0.4.6",
+    "webpack-dev-server": "^2.4.5"
   },
   "optionalDependencies": {
     "fsevents": "*"

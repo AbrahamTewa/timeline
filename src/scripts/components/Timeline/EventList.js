@@ -23,18 +23,19 @@ class EventList extends React.Component {
         let events;
 
         events = this.props.events.map(function(event) {
-            return <Event bubbuleURL  = {event.bubbuleURL}
-                          description = {event.description}
-                          key         = {event.uuid}
-                          label       = {event.label}
-                          onChange    = {this.props.onEventChange}
-                          onRemove    = {this.props.onEventRemove}
-                          uuid        = {event.uuid}/>;
+            return <li key = {event.uuid}>
+                       <Event bubbuleURL  = {event.bubbuleURL}
+                              description = {event.description}
+                              label       = {event.label}
+                              onChange    = {this.props.onEventChange}
+                              onRemove    = {this.props.onEventRemove}
+                              uuid        = {event.uuid}/>;
+                    </li>;
         }.bind(this));
 
-        return (<div className="timeline-event-list">
+        return (<ul className="timeline-event-list">
                     {events}
-                </div>);
+                </ul>);
     }
 
 }

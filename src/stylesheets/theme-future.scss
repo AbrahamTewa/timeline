@@ -196,6 +196,10 @@ div.timeline-event {
 
     margin-bottom: 1rem;
 
+    // List style
+    list-style: none;
+    padding-left: 0;
+
     .form-event {
         margin-left: $marker-stick_width;
         margin-bottom: 1.5rem;

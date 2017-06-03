@@ -72,7 +72,7 @@ class EventForm extends React.Component {
                         <input className    = "form-control"
                                defaultValue = {this.props.bubbuleURL}
                                id           = "event"
-                               placeholder  = "Bubble"
+                               placeholder  = "URL de l'image d'illustration"
                                ref          = {input => this.bubbuleInput = input}
                                type         = "text"/>
                     </div>
