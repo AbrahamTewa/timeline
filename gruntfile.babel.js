@@ -93,8 +93,6 @@ let tasks = {
     }
 };
 
-console.log(tasks.rollup);
-
 {
     const STYLESHEET_FOLDER = `${BUILD_FOLDER}/stylesheets`;
     tasks.sass.build.files[`${STYLESHEET_FOLDER}/index.css`] = 'src/stylesheets/index.scss';

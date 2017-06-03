@@ -105,7 +105,9 @@ div.timeline-event {
     cursor: pointer; }
 
 .timeline-event-list {
-  margin-bottom: 1rem; }
+  margin-bottom: 1rem;
+  list-style: none;
+  padding-left: 0; }
   .timeline-event-list .form-event {
     margin-left: 1.5rem;
     margin-bottom: 1.5rem; }
