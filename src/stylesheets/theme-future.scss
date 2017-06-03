@@ -1,6 +1,7 @@
+$addMarkerInput_marginLeft: 1rem;
 $main-border-color: rgba(0, 69, 121, 0.65);
 $marker-stick_width: 1.5rem;
-$addMarkerInput_marginLeft: 1rem;
+$timeline-time_margin-bottom: 30px;
 
 .timeline {
 
@@ -43,12 +44,11 @@ $addMarkerInput_marginLeft: 1rem;
 
 }
 
-
 .timeline-time {
     cursor     : pointer;
     font-size  : 2.8em;
     font-weight: 400;
-    margin     : 0 0 30px 0;
+    margin     : 0 0 $timeline-time_margin-bottom 0;
     padding    : 0;
 
     &::before {
@@ -80,6 +80,15 @@ $addMarkerInput_marginLeft: 1rem;
         margin-left: $marker-stick_width;
     }
 
+    &.empty {
+        form.timeline-time {
+            margin-bottom: 0;
+        }
+
+        ul.timeline-event-list {
+            height: $timeline-time_margin-bottom;
+        }
+    }
 }
 
 div.timeline-event {
@@ -200,6 +209,35 @@ div.timeline-event {
     list-style: none;
     padding-left: 0;
 
+    & > li {
+
+        position: relative;
+
+        &:hover > .reorder {
+            color : rgba(0, 69, 121, 0.6);
+        }
+
+        & > .reorder {
+
+            // Text
+            font-size  : 1.4rem;
+            line-height: 1.4rem;
+            color      : rgba(0, 69, 121, 0.3);
+
+            // Box model
+            position   : absolute;
+            left       : -27px;
+            top        : 4px;
+
+            // Behavior
+            cursor: pointer;
+
+            &:hover {
+                color : rgba(0, 69, 121, 1);
+            }
+        }
+    }
+
     .form-event {
         margin-left: $marker-stick_width;
         margin-bottom: 1.5rem;
@@ -226,4 +264,9 @@ button {
     flex-shrink: 0;
     margin-left: 3rem;
     border: solid 2px rgba(255, 255, 255, 0.85);
+}
+
+.ui-sortable-placeholder {
+    border-top: solid 1px rgba(255, 255, 255, 1);
+    padding: 0;
 }

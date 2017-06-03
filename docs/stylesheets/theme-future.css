@@ -48,6 +48,12 @@
 .timeline-marker > .add-event {
   margin-left: 1.5rem; }
 
+.timeline-marker.empty form.timeline-time {
+  margin-bottom: 0; }
+
+.timeline-marker.empty ul.timeline-event-list {
+  height: 30px; }
+
 div.timeline-event {
   display: flex;
   flex-direction: row;
@@ -108,6 +114,20 @@ div.timeline-event {
   margin-bottom: 1rem;
   list-style: none;
   padding-left: 0; }
+  .timeline-event-list > li {
+    position: relative; }
+    .timeline-event-list > li:hover > .reorder {
+      color: rgba(0, 69, 121, 0.6); }
+    .timeline-event-list > li > .reorder {
+      font-size: 1.4rem;
+      line-height: 1.4rem;
+      color: rgba(0, 69, 121, 0.3);
+      position: absolute;
+      left: -27px;
+      top: 4px;
+      cursor: pointer; }
+      .timeline-event-list > li > .reorder:hover {
+        color: #004579; }
   .timeline-event-list .form-event {
     margin-left: 1.5rem;
     margin-bottom: 1.5rem; }
@@ -126,5 +146,9 @@ button {
   flex-shrink: 0;
   margin-left: 3rem;
   border: solid 2px rgba(255, 255, 255, 0.85); }
+
+.ui-sortable-placeholder {
+  border-top: solid 1px white;
+  padding: 0; }
 
 /*# sourceMappingURL=theme-future.css.map */

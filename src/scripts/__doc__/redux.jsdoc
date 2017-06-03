@@ -92,9 +92,9 @@
 
 /**
  * @typedef {Object} StoreAction.Timeline.MoveEvent
- * @property {string} markerUUID - UUID of the marker
- * @property {string} uuid       - UUID of the event to move
- * @property {number} position
+ * @property {string} marker   - Marker when the event has been moved
+ * @property {string} event    - UUID of the event to move
+ * @property {string} position - Position in the marker event list of the event
  */
 
 /**

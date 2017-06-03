@@ -66,17 +66,15 @@ function loadTimeline({timeline}) {
 }
 
 /**
- *
- * @param {string} markerUUID
- * @param {number} position
- * @param {string} uuid
+ * @param {string} data
+ * @param {string} data.marker
+ * @param {string} data.event
+ * @param {string} data.position
  * @returns {StoreAction.Timeline.MoveEvent}
  */
-function moveEvent({markerUUID, position, uuid}) {
-    return { markerUUID
-           , position
-           , type: MOVE_EVENT
-           , uuid};
+function moveEvent(data) {
+    return { ...data
+           , type: MOVE_EVENT};
 }
 
 /**
@@ -163,6 +161,7 @@ function reducer( state={ events   :{}
              * @type {number}
              */
             let eventPosition;
+            let marker;
 
             event = { bubbuleURL : action.bubbuleURL || ''
                     , description: action.description
@@ -170,9 +169,11 @@ function reducer( state={ events   :{}
                     , marker     : action.marker
                     , uuid       : action.uuid};
 
-            let {newState, marker} = cloneMarker( state
-                                                , action.marker
-                                                , {cloneEvent: true});
+            let {newState, newMarkers} = cloneMarker( state
+                                                    , action.marker
+                                                    , {cloneEventList: true});
+
+            marker = newMarkers[0];
 
             eventPosition = action.position === -1 || typeof action.position === 'undefined'
                                 ? marker.events.length
@@ -210,6 +211,54 @@ function reducer( state={ events   :{}
         case LOAD_TIMELINE:
             return action.payload.timeline;
 
+        case MOVE_EVENT: {
+            let destinationMarker;
+            let event;
+            let eventOriginIndex;
+            let markersToClone;
+            let originMarker;
+
+            event = state.events[action.event];
+
+            // Cloning both origin and destination markers
+            markersToClone = [event.marker];
+
+                // If the destination marker is not the same, then we clone this one too
+            if (event.marker !== action.marker)
+                markersToClone.push(action.marker);
+
+                // Cloning origin and destination markers
+            let {newState, newMarkers} = cloneMarker(state, markersToClone, {cloneEventList: true});
+
+            originMarker      = newMarkers[0];
+            destinationMarker = newMarkers[1];
+
+            eventOriginIndex = originMarker.events.indexOf(event.uuid);
+
+            // If the origin and destination marker are the same, then we simply move the event
+            if (!destinationMarker) {
+                originMarker.events = moveInArray( originMarker.events
+                                                 , eventOriginIndex
+                                                 , action.position);
+            }
+            else {
+                let cloneResult;
+
+                // Removing the event from the origin
+                originMarker.events.splice(eventOriginIndex, 1);
+
+                // Adding the event to the destination
+                destinationMarker.events.splice(action.position, 0, event.uuid);
+
+                cloneResult  = cloneEvent(newState, event.uuid);
+                newState     = cloneResult.newState;
+                event        = cloneResult.event;
+                event.marker = destinationMarker.uuid;
+            }
+
+            return newState;
+        }
+
         case MOVE_MARKER:
             return { ...state
                    , markers: moveInArray( state.markers
@@ -218,10 +267,12 @@ function reducer( state={ events   :{}
 
         case REMOVE_EVENT: {
             let event;
+            let marker;
 
             event = state.events[action.uuid];
 
-            let {newState, marker} = cloneMarker(state, event.marker, {cloneEvent: true});
+            let {newState, newMarkers} = cloneMarker(state, event.marker, {cloneEventList: true});
+            marker = newMarkers[0];
 
             marker.events = marker.events.filter(event => event !== action.uuid);
 
@@ -254,19 +305,10 @@ function reducer( state={ events   :{}
         }
 
         case RENAME_MARKER: {
-            let {newState, marker} = cloneMarker(state, action.uuid);
+            let {newState, newMarkers} = cloneMarker(state, action.uuid);
+            let marker = newMarkers[0];
 
             marker.label = action.label;
-
-            return newState;
-        }
-
-        case MOVE_EVENT: {
-            let {newState, marker} = cloneMarker(state, action.markerUUID);
-
-            marker.events = moveInArray( marker.events
-                                       , marker.events.find(event => event === action.uuid)
-                                       , action.position);
 
             return newState;
         }
@@ -295,7 +337,7 @@ function cloneEvent(state, uuid) {
     let newState;
 
     newState = { events: {...state.events}
-            , ...state};
+               , ...state};
 
     state.events[uuid] = {...state.events[uuid]};
 
@@ -306,39 +348,58 @@ function cloneEvent(state, uuid) {
 /**
  *
  * @param {ReduxStore.Timeline} state
- * @param {string}              uuid       - UUID of the marker to clone
- * @param {boolean}             cloneEvent
- * @returns {{newState: ReduxStore.Timeline, marker: ReduxStore.Timeline.Marker}}
+ * @param {string|string[]}     uuid       - UUID of the marker to clone
+ * @param {boolean}             cloneEventList
+ * @returns {{newState: ReduxStore.Timeline, marker: ReduxStore.Timeline.Marker[]}}
  */
-function cloneMarker(state, uuid, {cloneEvent=false}={}) {
-    let marker;
-    let markerIndex;
+function cloneMarker(state, uuid, {cloneEventList=false}={}) {
     let markers;
+    let newMarkers;
     let newState;
 
-    markers     = state.markers.slice(0);
-    markerIndex = getMarkerIndex(state, uuid);
-    marker      = Object.assign({}, markers[markerIndex]);
+    if (typeof uuid === 'string')
+        uuid = [uuid];
 
-    if (cloneEvent)
-        marker.events = [...marker.events];
+    markers    = state.markers.slice(0);
+    newMarkers = [];
 
-    markers[markerIndex] = marker;
+    for(let id of uuid) {
+        let marker;
+        let markerIndex;
+
+        markerIndex = getMarkerIndex(state, id);
+
+        // Cloning the marker
+        marker = Object.assign({}, markers[markerIndex]);
+
+        if (cloneEventList)
+            marker.events = [...marker.events];
+
+        // Updating the state
+        markers[markerIndex] = marker;
+        newMarkers.push(marker);
+    }
 
     newState = { ...state
                , markers};
 
     return { newState
-           , marker : marker};
+           , newMarkers};
 }
 
+/**
+ * @param {Array} array
+ * @param {number} oldPosition - Old position of the event
+ * @param {number} newPosition - New position of the event
+ */
 function moveInArray(array, oldPosition, newPosition) {
-
     array = array.slice(0);
 
     // Code inspired by :
     // https://stackoverflow.com/questions/5306680/move-an-array-element-from-one-array-position-to-another
     array.splice(newPosition, 0, array.splice(oldPosition, 1)[0]);
+
+    return array;
 }
 
 /**

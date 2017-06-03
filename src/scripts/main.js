@@ -90,6 +90,14 @@ function setCurrentUser(user) {
     currentUser = user;
 }
 
+function disableEventDrag() {
+
+}
+
+function enableEventDrag() {
+
+}
+
 function toPromise(thenable) {
 
     let promise;
@@ -120,7 +128,9 @@ function toSaveFormat(state) {
     return JSON.stringify(document);
 }
 
-export { forceSave
+export { disableEventDrag
+       , enableEventDrag
+       , forceSave
        , fromSaveFormat
        , getCurrentUser
        , saveDocument

@@ -40,6 +40,7 @@ class Timeline extends React.Component {
             return (<Marker events        = {events}
                             key           = {uuid}
                             onEventChange = {this.props.onEventChange}
+                            onEventMoved  = {this.props.onEventMoved}
                             onEventRemove = {this.props.onEventRemove}
                             onNewEvent    = {onNewEvent}
                             onTimeUpdate  = {onMarkerTimeUpdate}
@@ -62,6 +63,7 @@ class Timeline extends React.Component {
 Timeline.propTypes = { dragModeEnabled    : PropTypes.bool.isRequired
                      , id                 : PropTypes.string.isRequired
                      , onEventChange      : PropTypes.func.isRequired
+                     , onEventMoved       : PropTypes.func.isRequired
                      , onEventRemove      : PropTypes.func.isRequired
                      , onNewEvent         : PropTypes.func.isRequired
                      , onMarkerTimeUpdate : PropTypes.func.isRequired

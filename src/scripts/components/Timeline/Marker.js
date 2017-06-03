@@ -1,11 +1,13 @@
 // ******************** Imports ********************
+import PropTypes from 'prop-types';
+import React     from 'react';
+
 import { default as EventList
        , eventsPropType} from './EventList';
 
-import PropTypes from 'prop-types';
-import React     from 'react';
 import Time      from './Time';
-import AddEvent from './AddEvent';
+import AddEvent  from './AddEvent';
+
 
 // ******************** Container ********************
 
@@ -28,6 +30,7 @@ class Marker extends React.Component {
         this.onTimeUpdate = this.onTimeUpdate.bind(this);
     }
 
+    // ********** Event listeners **********
     /**
      * Called when the time is updated by the update
      * @param {string} time
@@ -46,12 +49,22 @@ class Marker extends React.Component {
         this.props.onNewEvent(event);
     }
 
+    // ********** React methods **********
+
     render() {
-        return (<div className="timeline-marker" id={this.props.uuid}>
+
+        let classNoEvents;
+
+        classNoEvents = this.props.events.length === 0 ? 'empty' : '';
+
+        return (<div className={'timeline-marker ' + classNoEvents}
+                     data-uuid={this.props.uuid}
+                     id={this.props.uuid}>
                     <Time onChange={this.onTimeUpdate}
                           time={this.props.time}/>
                     <EventList events        = {this.props.events}
                                onEventChange = {this.props.onEventChange}
+                               onEventMoved  = {this.props.onEventMoved}
                                onEventRemove = {this.props.onEventRemove}/>
                     <AddEvent onNewEvent={this.onNewEvent}/>
                 </div>);
@@ -61,6 +74,7 @@ class Marker extends React.Component {
 
 Marker.propTypes = { events        : eventsPropType
                    , onEventChange : PropTypes.func.isRequired
+                   , onEventMoved  : PropTypes.func.isRequired
                    , onEventRemove : PropTypes.func.isRequired
                    , onNewEvent    : PropTypes.func.isRequired
                    , onTimeUpdate  : PropTypes.func.isRequired
