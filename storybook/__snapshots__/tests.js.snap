@@ -1,0 +1,17 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Storyshots Button with some emoji 1`] = `
+<h1>
+  to
+</h1>
+`;
+
+exports[`Storyshots Button with text 1`] = `<h1 />`;
+
+exports[`Storyshots Input with text 1`] = `
+<input
+  defaultValue="Enter title"
+  onChange={[Function]}
+  type="text"
+/>
+`;

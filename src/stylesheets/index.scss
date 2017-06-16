@@ -8,7 +8,6 @@ body {
 }
 
 div#root {
-
     & > div {
         display: flex;
         flex-direction: column;
@@ -17,27 +16,21 @@ div#root {
     h1 {
         color: red;
     }
-
 }
 
 .timeline-time {
-
     input {
-
         font-size: large;
 
         &:disabled {
             border-color: transparent;
             background: transparent;
         }
-
     }
 }
 
 .timeline-wrapper {
-
     .add-event {
-
         float: left;
         width: 100%;
         margin-left: 2rem;
@@ -66,7 +59,6 @@ div#root {
             opacity: 0.4;
         }
     }
-
 }
 
 body {
@@ -104,7 +96,6 @@ header {
     }
 
     .user-dropdown {
-
         margin-right: 0.5em;
 
         .user-button {
@@ -137,7 +128,6 @@ header {
 }
 
 .editable-text {
-
     &:not(:hover) .rename-button {
         color: transparent;
     }

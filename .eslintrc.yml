@@ -1,0 +1,35 @@
+env:
+  browser: true
+  jquery: true
+  es6: true
+extends:
+  - eslint:recommended
+  - plugin:react/recommended
+  - plugin:jest/recommended
+parserOptions:
+  ecmaVersion: 2017
+  ecmaFeatures:
+    jsx: true
+    experimentalObjectRestSpread: true
+  sourceType: module
+plugins:
+  - jest
+  - react
+rules:
+  array-bracket-spacing:
+    - 2
+    - never
+  indent:
+    - error
+    - 4
+    - SwitchCase: 1
+  linebreak-style:
+    - error
+    - unix
+  quotes:
+    - error
+    - single
+  semi:
+    - error
+    - always
+  no-console: 0

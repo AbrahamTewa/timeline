@@ -1,0 +1,11 @@
+{
+  "coverageDirectory": "./reports/coverage/",
+  "name": "starter.react",
+  "roots": [
+    "./src"
+  ],
+  "testMatch": [
+    "**/__tests__/**/*.js"
+  ],
+  "verbose": true
+}

@@ -1,114 +1,87 @@
+/* eslint-env node */
+
 // ******************** NodeJS packages ********************
 import grunt from 'grunt';
-import babel from 'rollup-plugin-babel';
 
 require('load-grunt-tasks')(grunt);
 
-const BUILD_FOLDER = 'docs';
-
 // ******************** Script ********************
 
-const buildConfig = { options:  { browserifyOptions: {debug: true}
-                                , transform: [['babelify', {presets: ['es2015', 'react']}]] }
-                    , files: { } };
-
-buildConfig.files[`${BUILD_FOLDER}/scripts/index.js`] =  'src/scripts/index.js';
-
-const buildAndWatch = {...buildConfig
-                      , watch: true};
-
-let tasks = {
-
-    browserify: { build: buildConfig
-                , watch: buildAndWatch
-                , watchifyOptions: {delay: 40} }
-
-    , clean: {
-        build  : [BUILD_FOLDER],
-        doc    : ['doc/']}
+grunt.initConfig({
+    clean: { analysis : ['reports/analysis']
+           , build    : ['build/']
+           , coverage : ['reports/coverage']
+           , jsdoc    : ['doc/jsdoc/']
+           , storybook: ['doc/storybook/']}
 
     , copy: {
         html: {
-            files: [{ expand: true
-                    , cwd: 'src'
-                    , src: 'index.html'
-                    , dest: BUILD_FOLDER
+            files: [{
+                expand: true,
+                cwd: 'src',
+                src: ['**/*.htm', '**/*.html'],
+                dest: 'build/'
             }]
-        },
-        vendors: {
-            files: [{ expand: true
-                    , src: ['vendors/**/*.*']
-                    , dest: `${BUILD_FOLDER}/`}]
+        }
+    },
+
+    cssmin: {
+        options: {sourceMap: true},
+        target: {
+            files: {
+                'build/index.css': 'build/index.css'
+            }
         }
     }
 
     , eslint: {
-        target: {
-            expand: true
-          , cwd   : 'src'
-          , src   : ['**/*.js']
-          , dest  : `${BUILD_FOLDER}/`
-          , ext   : '.js'}
+        src: { expand: true
+             , cwd   : 'src'
+             , src   : ['**/*.js']
+             , ext   : '.js'}
+      , storybook: { expand: true
+                   , cwd   : 'storybook'
+                   , src   : ['**/*.js']
+                   , ext   : '.js'}
+      , tools: ['gruntfile.js'
+               ,'gruntfile.babel.js'
+               ,'server.js'
+               ,'webpack.config.js'
+               ,'webpack.development.js'
+               ,'webpack.production.js']
     }
 
-    , mocha : {
-        test: {
-            src: ['src\\**\\__test__\\**\\*.js'],
-            opts : 'mocha.opts'
-        }
-    }
-
-    , rollup: {
-        options: {
-            plugins: () => [babel({exclude: './node_modules/**'})]
-        }
-      , files: buildConfig.files,
+    , jsonlint: {
+        options: { format: true
+                 , indent: 2}
+      , src  : { expand: true
+               , cwd   : 'src'
+               , src   : '**/*.json'}
+      , tools: { expand: false
+               , cwd   : '.'
+               , src   : ['*.json'
+                         ,'.*.json'
+                         ,'.babelrc']}
     }
 
     , sass: {
         options: {
             sourceMap: true
         }
-      , build: {
-          files: {}
-      }
-    }
-
-    , watch: {
-        scripts: {
-            files: ['src/**/*.*'
-                   , 'gruntfile.js'
-                   , 'package.json'
-                   , '.eslintrc.json']
-          , tasks: ['eslint', 'copy', 'browserify:watch', 'sass']
-          , options: { atBegin : true
-                     , spawn   : false}
-        },
-        stylesheets: {
-            files: ['src/**/*.scss']
-          , tasks: ['sass']
-          , options: { atBegin : true
-                     , spawn   : false}
+        , build: {
+            files: { 'build/index.css' : 'src/index.scss'}
         }
     }
-};
 
-{
-    const STYLESHEET_FOLDER = `${BUILD_FOLDER}/stylesheets`;
-    tasks.sass.build.files[`${STYLESHEET_FOLDER}/index.css`] = 'src/stylesheets/index.scss';
-    tasks.sass.build.files[`${STYLESHEET_FOLDER}/theme-future.css`] = 'src/stylesheets/theme-future.scss';
-}
-
-grunt.initConfig(tasks);
+    , stylelint: {
+        options: {
+            configFile: '.stylelintrc.json'
+        },
+        src: ['src/**/*.{css,scss,sass}']
+    }
+});
 
 // Registering all tasks
-grunt.registerTask('lint', ['eslint']);
-
-grunt.registerTask('build', ['eslint'
-                            ,'clean:build'
-                            ,'copy:html'
-                            ,'copy:vendors'
-                            ,'rollup'
-                            ,'sass']);
-
+grunt.registerTask('lint', ['eslint', 'stylelint', 'jsonlint']);
+grunt.registerTask('pre-build', ['lint', 'clean:build', 'copy:html', 'sass', 'cssmin']);
 grunt.registerTask('default', ['build']);

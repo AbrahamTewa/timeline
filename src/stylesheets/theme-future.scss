@@ -4,7 +4,6 @@ $marker-stick_width: 1.5rem;
 $timeline-time_margin-bottom: 30px;
 
 .timeline {
-
     // Box model
     border-left: 4px solid $main-border-color;
     margin: 20px auto;
@@ -19,7 +18,6 @@ $timeline-time_margin-bottom: 30px;
 }
 
 .noMarkers .addMarker {
-
     $labelWidth: 17rem;
 
     font-size: 2rem;
@@ -75,7 +73,6 @@ $timeline-time_margin-bottom: 30px;
 }
 
 .timeline-marker {
-
     & > .add-event {
         margin-left: $marker-stick_width;
     }
@@ -92,7 +89,6 @@ $timeline-time_margin-bottom: 30px;
 }
 
 div.timeline-event {
-
     // Variables
     $label_line-height  : 1.7rem;
     $label-collapsed_line-height: 2rem;
@@ -124,7 +120,6 @@ div.timeline-event {
 
     // Event label
     a.event-label {
-
         // Font
         color      : rgba(255, 255, 255, 0.4) !important;
         font-size  : 1.4rem;
@@ -202,7 +197,6 @@ div.timeline-event {
 }
 
 .timeline-event-list {
-
     margin-bottom: 1rem;
 
     // List style
@@ -210,7 +204,6 @@ div.timeline-event {
     padding-left: 0;
 
     & > li {
-
         position: relative;
 
         &:hover > .reorder {
@@ -218,7 +211,6 @@ div.timeline-event {
         }
 
         & > .reorder {
-
             // Text
             font-size  : 1.4rem;
             line-height: 1.4rem;
@@ -255,7 +247,6 @@ button {
 }
 
 .bubbule {
-
     width: 13rem;
     height: 13rem;
     background-size: cover;

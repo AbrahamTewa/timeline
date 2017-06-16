@@ -1,9 +1,12 @@
+/* eslint-env es5,node */
+
 require('babel-register');
 
-module.exports = function(env) {
+let config;
 
-    if (env === 'production')
-        return require('./webpack.production.config');
-    else
-        return require('./webpack.development.config');
-};
+if (process.env.NODE_ENV === 'production')
+    config = require('./webpack.production').default;
+else
+    config = require('./webpack.development').default;
+
+module.exports = config;

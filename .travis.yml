@@ -1,9 +1,8 @@
 language: node_js
 node_js:
-  - "6"
-  - "6.1"
-  - "5.11"
-  - "0.6"
-  - "iojs"
+  - "6.11.0"
+  - "8.1.1"
+install:
+  - yarn
 script:
-  - npm run builder
+  - npm run build

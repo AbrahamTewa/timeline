@@ -1,13 +1,14 @@
-// ******************** NodeJS packages ********************
-const express = require('express');
+/* eslint-env node */
 
-// ******************** Global constants and variables ********************
-const app = express();
+// Will run an express server serving build files
 
-// ******************** Routes ********************
+let express = require('express');
+let app = express();
+const port = 3000;
 
-app.use('/', express.static('docs'));
+app.use('/', express.static('build/index.html'));
+app.use(express.static('build'));
 
-app.listen(3000, function () {
-    console.log('Serving at http://localhost:3000!');
+app.listen(port, function () {
+    console.log(`Starter React App served on ${port}`);
 });
