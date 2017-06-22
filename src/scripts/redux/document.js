@@ -48,16 +48,12 @@ function reducer(state={}, action={}) {
     switch(action.type) {
 
         case OPEN_FILE:
-            return { ...state
-                   , fileId: action.payload.fileId};
+            return { fileId    : action.payload.fileId
+                   , saveStatus: SAVE_STATUS.SAVED };
 
         case RENAME_FILE:
             return { ...state
                    , name: action.payload.name};
-
-        case SAVING_FILE:
-            return { ...state
-                   , saveStatus: SAVE_STATUS.SAVING};
 
         case SAVED_FILE: {
             let fileId;
@@ -69,6 +65,10 @@ function reducer(state={}, action={}) {
                    , saveStatus: SAVE_STATUS.SAVED};
         }
 
+        case SAVING_FILE:
+            return { ...state
+                   , saveStatus: SAVE_STATUS.SAVING};
+
         default:
             return state;
     }
@@ -78,7 +78,17 @@ function reducer(state={}, action={}) {
 // ******************** Exports ********************
 
 export default reducer;
-export { openFile
+export { // Action creators
+         openFile
        , renameFile
        , savedFile
-       , savingFile};
+       , savingFile
+
+         // Action type
+       , OPEN_FILE
+       , RENAME_FILE
+       , SAVING_FILE
+       , SAVED_FILE
+
+        // Enums
+       , SAVE_STATUS};

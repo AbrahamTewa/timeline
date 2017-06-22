@@ -1,0 +1,15 @@
+/**
+ * @namespace MockData
+ */
+
+/**
+ * @typedef {Object} MockData.User
+ * @property {MockData.UserProfile} profile
+ */
+
+/**
+ * @typedef {Object} MockData.UserProfile
+ * @property {string} email
+ * @property {string} name
+ * @property {string} imageURL
+ */

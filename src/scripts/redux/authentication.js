@@ -1,11 +1,13 @@
 /* global gapi */
+import {getCurrentState} from '.';
+import ExtandableError from 'es6-error';
 
 // ******************** Actions ********************
 const DISCONNECT    = 'authentication.DISCONNECT';
 const DISCONNECTING = 'authentication.DISCONNECTING';
 const LOGIN_USER    = 'authentication.LOGIN';
 
-const CONNECT_STATUS = { DISCONNECT   : 'disconnect'
+const CONNECT_STATUS = { DISCONNECTED : 'disconnected'
                        , DISCONNECTING: 'disconnecting'
                        , LOGGED       : 'logged'};
 
@@ -24,9 +26,13 @@ function loginUser() {
     let profile;
     let user;
 
+    if (getCurrentState().authentication.signedIn)
+        throw new UserAlreadyAuthenticatedError('User already authenticated');
+
     user = gapi.auth2.getAuthInstance().currentUser.get();
-    profile = user.getBasicProfile();
+
     access_token = user.getAuthResponse().access_token;
+    profile      = user.getBasicProfile();
 
     return { payload : { profile: { email    : profile.getEmail()
                                   , fullName : profile.getName()
@@ -46,7 +52,7 @@ function reducer(state={}, action={}) {
     switch(action.type) {
         case DISCONNECT:
             return { signedIn: false
-                   , status  : CONNECT_STATUS.DISCONNECT};
+                   , status  : CONNECT_STATUS.DISCONNECTED};
 
         case DISCONNECTING:
             return { signedIn: false
@@ -70,9 +76,28 @@ function reducer(state={}, action={}) {
 
 }
 
+// ******************** Exceptions ********************
+class UserAlreadyAuthenticatedError extends ExtandableError {
+    constructor() {
+        super('User already authenticated');
+    }
+}
+
 // ******************** Exports ********************
 
 export default reducer;
-export { disconnect
+export { // Action creators
+         disconnect
        , disconnecting
-       , loginUser};
+       , loginUser
+
+        // Actions
+       , DISCONNECT
+       , DISCONNECTING
+       , LOGIN_USER
+
+        // Other constants
+       , CONNECT_STATUS
+
+        // Exceptions
+      , UserAlreadyAuthenticatedError};
