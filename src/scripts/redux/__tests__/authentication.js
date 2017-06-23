@@ -6,19 +6,7 @@ import { default as reducer
 import { __mock__ as gapiMock} from '../../../../__mocks__/gapi';
 import gapi from '../../../../__mocks__/gapi';
 import {getStore, configureStore} from '..';
-
-function overrideStore(state) {
-
-    let store;
-    store = getStore();
-
-    store.replaceReducer(function() {
-        return state;
-    });
-
-    store.dispatch({type: 'reset'});
-}
-
+import {overrideStore} from './helpers';
 
 describe('Authentication', () => {
 

@@ -1,4 +1,6 @@
 import uuid from 'uuid/v4';
+import * as Marker from './helpers/marker';
+import {ActionCreatorError} from './helpers';
 
 // ******************** Actions types ********************
 const ADD_MARKER    = 'timeline.ADD_MARKER';
@@ -31,16 +33,24 @@ const LIST_MODIFIERS = [ADD_MARKER
 
 /**
  * @param {Object} data
- * @param {Object} data.bubbuleURL
+ * @param {Object} data.illustrationURL
  * @param {string} data.description - Description of the event
  * @param {string} data.label       - Label of the event
  * @param {string} data.marker      - UUID of the marker
- * @param {number} data.position    - Position of the created event
+ * @param {number} [data.position]  - Position of the created event
  */
 function addEvent(data) {
-    return { ...data
-           , type: ADD_EVENT
-           , uuid: uuid()};
+
+    // Checking that the marker exists
+    if (!Marker.getMarker(data.marker))
+        throw new ActionCreatorError( 'Marker not found'
+                                    , { actionCreator: 'addEvent'
+                                      , data
+                                      , actionType   : ADD_EVENT});
+
+    return { payload: { uuid: uuid()
+                      , ...data}
+           , type: ADD_EVENT};
 }
 
 /**
@@ -150,6 +160,7 @@ function reducer( state={ events   :{}
     switch (action.type) {
 
         case ADD_EVENT: {
+
             /**
              * Created event
              * @type {ReduxStore.Timeline.Event}
@@ -162,22 +173,25 @@ function reducer( state={ events   :{}
              */
             let eventPosition;
             let marker;
+            let payload;
 
-            event = { bubbuleURL : action.bubbuleURL || ''
-                    , description: action.description
-                    , label      : action.label
-                    , marker     : action.marker
-                    , uuid       : action.uuid};
+            payload = action.payload;
+
+            event = { bubbuleURL : payload.bubbuleURL || ''
+                    , description: payload.description
+                    , label      : payload.label
+                    , marker     : payload.marker
+                    , uuid       : payload.uuid};
 
             let {newState, newMarkers} = cloneMarker( state
-                                                    , action.marker
+                                                    , payload.marker
                                                     , {cloneEventList: true});
 
             marker = newMarkers[0];
 
-            eventPosition = action.position === -1 || typeof action.position === 'undefined'
+            eventPosition = payload.position === -1 || typeof payload.position === 'undefined'
                                 ? marker.events.length
-                                : action.position;
+                                : payload.position;
 
             // Add the event to the list of events of the marker at the desired position
             marker.events.splice(eventPosition, 0, event.uuid);

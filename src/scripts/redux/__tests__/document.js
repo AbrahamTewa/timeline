@@ -3,18 +3,6 @@ import * as redux from '../document';
 import { default as reducer} from '../document';
 import {getStore, configureStore} from '..';
 
-function overrideStore(state) {
-
-    let store;
-    store = getStore();
-
-    store.replaceReducer(function() {
-        return state;
-    });
-
-    store.dispatch({type: 'reset'});
-}
-
 describe('Document', ()=> {
 
     // Creating store if it hasn't been created yet

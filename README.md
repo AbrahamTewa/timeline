@@ -1,5 +1,5 @@
-# starter.reactjs &middot; [![Build Status](https://travis-ci.org/AbrahamTewa/starter.reactjs.svg?branch=master)](https://travis-ci.org/AbrahamTewa/starter.reactjs)
-A starter for developing react redux projects.
+# starter.reactjs &middot; [![Build Status](https://travis-ci.org/AbrahamTewa/timeline.svg?branch=master)](https://travis-ci.org/AbrahamTewa/starter.reactjs)
+Timeline application to handle 
 
 ## Philosophy of the starter
 I've created this starter very simple: only few lines of codes, just enough to illustrate the usage of react, redux, [jest](https://facebook.github.io/jest) and [storybook](https://storybook.js.org). All the tools around are configured and working.
