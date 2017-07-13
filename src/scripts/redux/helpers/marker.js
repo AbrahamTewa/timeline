@@ -8,7 +8,7 @@ import {getCurrentState} from '..';
  */
 function getMarker(uuid, state) {
     state = state || getCurrentState();
-    return state.timeline.markers[uuid];
+    return state.timeline.markers.filter(marker => marker.uuid === uuid)[0];
 }
 
 export {getMarker};

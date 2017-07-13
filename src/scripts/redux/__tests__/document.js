@@ -1,4 +1,5 @@
 /* eslint-env node, jest */
+
 import * as redux from '../document';
 import { default as reducer} from '../document';
 import {getStore, configureStore} from '..';

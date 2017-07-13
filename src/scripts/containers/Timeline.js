@@ -7,11 +7,11 @@ import { addEvent
        , updateEvent} from '../redux/timeline';
 
 function mapDispatchToProps(dispatch) {
-    return { onEventChange      : data => dispatch(updateEvent(data))
-           , onEventMoved       : data => dispatch(moveEvent(data))
-           , onEventRemove      : data => dispatch(removeEvent(data))
-           , onMarkerTimeUpdate : data => dispatch(renameMarker(data))
-           , onNewEvent         : data => dispatch(addEvent(data))};
+    return { onEventChange      : params => dispatch(updateEvent(params))
+           , onEventMoved       : params => dispatch(moveEvent(params))
+           , onEventRemove      : params => dispatch(removeEvent(params))
+           , onMarkerTimeUpdate : params => dispatch(renameMarker(params))
+           , onNewEvent         : params => dispatch(addEvent(params))};
 }
 
 /**

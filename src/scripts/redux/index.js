@@ -29,4 +29,5 @@ function getCurrentState() {
 // ******************** Exports ********************
 export { configureStore
        , getCurrentState
-       , getStore};
+       , getStore
+       , reducers};

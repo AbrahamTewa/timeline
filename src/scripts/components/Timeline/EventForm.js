@@ -40,9 +40,9 @@ class EventForm extends React.Component {
      */
     onSubmit(event) {
         event.preventDefault();
-        this.props.onSubmit({ bubbuleURL : this.bubbuleInput.value
-                            , description: this.descriptionEditor.getValue()
-                            , label      : this.labelInput.value});
+        this.props.onSubmit({ illustrationURL : this.bubbuleInput.value
+                            , description     : this.descriptionEditor.getValue()
+                            , label           : this.labelInput.value});
     }
 
     // ********** React methods **********
@@ -70,7 +70,7 @@ class EventForm extends React.Component {
                     <div className="form-group row no-gutters">
                         <label htmlFor="event">Bubbule</label>
                         <input className    = "form-control"
-                               defaultValue = {this.props.bubbuleURL}
+                               defaultValue = {this.props.illustrationURL}
                                id           = "event"
                                placeholder  = "URL de l'image d'illustration"
                                ref          = {input => this.bubbuleInput = input}
@@ -99,11 +99,11 @@ class EventForm extends React.Component {
     }
 }
 
-EventForm.propTypes = { autoScroll : PropTypes.bool
-                      , bubbuleURL : PropTypes.string
-                      , description: PropTypes.string
-                      , label      : PropTypes.string
-                      , onCancel   : PropTypes.func.isRequired
-                      , onSubmit   : PropTypes.func.isRequired};
+EventForm.propTypes = { autoScroll      : PropTypes.bool
+                      , illustrationURL : PropTypes.string
+                      , description     : PropTypes.string
+                      , label           : PropTypes.string
+                      , onCancel        : PropTypes.func.isRequired
+                      , onSubmit        : PropTypes.func.isRequired};
 
 export default EventForm;

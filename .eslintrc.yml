@@ -16,6 +16,10 @@ plugins:
   - jest
   - react
 rules:
+  no-await-in-loop:
+    - error
+  no-template-curly-in-string:
+    - error
   array-bracket-spacing:
     - 2
     - never

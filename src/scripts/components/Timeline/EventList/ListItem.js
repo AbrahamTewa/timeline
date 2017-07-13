@@ -17,12 +17,12 @@ class ListItem extends React.Component {
                     <div className = "reorder">
                         <i className="fa fa-reorder" />
                     </div>
-                    <Event bubbuleURL  = {this.props.event.bubbuleURL}
-                           description = {this.props.event.description}
-                           label       = {this.props.event.label}
-                           onChange    = {this.props.onEventChange}
-                           onRemove    = {this.props.onEventRemove}
-                           uuid        = {this.props.event.uuid}/>
+                    <Event description     = {this.props.event.description}
+                           illustrationURL = {this.props.event.illustrationURL}
+                           label           = {this.props.event.label}
+                           onChange        = {this.props.onEventChange}
+                           onRemove        = {this.props.onEventRemove}
+                           uuid            = {this.props.event.uuid}/>
                 </li>;
     }
 }

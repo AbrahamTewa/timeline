@@ -1,4 +1,8 @@
 /**
+ * @namespace ReduxAction
+ */
+
+/**
  * @typedef {Object} ReduxStore
  * @property {ReduxStore.Authentication} authentication
  * @property {ReduxStore.Document}       document
@@ -46,26 +50,11 @@
 /**
  * @typedef {Object} ReduxStore.Timeline.Event
  * @memberOf Store
- * @property {string} label
  * @property {string} description
- * @property {string} marker      - UUID of the marker to which the event belongs
- * @property {string} uuid        - UUID of the event
- */
-
-/**
- * @typedef {Object} StoreAction.Timeline.AddEvent
- * @property {string} description - Description of the event
- * @property {string} label       - Label of the event
- * @property {string} marker      - UUID of the marker to which the event will be added
- * @property {number} position    - Position where to create the event.
- * @property {string} uuid
- */
-
-/**
- * @typedef {Object} StoreAction.Timeline.AddMarker
+ * @property {string} illustrationURL
  * @property {string} label
- * @property {number} position - Position of the marker
- * @property {string} uuid
+ * @property {string} marker          - UUID of the marker to which the event belongs
+ * @property {string} uuid            - UUID of the event
  */
 
 /**
@@ -86,22 +75,12 @@
  */
 
 /**
- * @typedef {Object} StoreAction.Timeline.RemoveEvent
- * @property {string} uuid       - UUID of the event to remove
- */
-
-/**
  * @typedef {Object} StoreAction.Timeline.MoveEvent
- * @property {string} marker   - Marker when the event has been moved
- * @property {string} event    - UUID of the event to move
- * @property {string} position - Position in the marker event list of the event
- */
-
-/**
- * @typedef {Object} StoreAction.Timeline.UpdateEventDescription
- * @property {string} description - New description of the event
- * @property {string} markerUUID - UUID of the marker
- * @property {string} uuid       - UUID of the event to rename
+ * @property {Object} payload
+ * @property {string} payload.event    - UUID of the event to move
+ * @property {string} payload.marker   - Marker when the event has been moved
+ * @property {number} payload.position - Position in the marker event list of the event
+ * @property {string} type
  */
 
 /**

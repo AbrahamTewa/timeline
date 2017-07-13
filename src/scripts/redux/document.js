@@ -1,10 +1,10 @@
-import {LIST_MODIFIERS} from './timeline';
+import * as Timeline from './timeline';
 
 // ******************** Actions ********************
-const OPEN_FILE    = 'document.LOAD';
-const RENAME_FILE  = 'document.RENAME_FILE';
-const SAVING_FILE  = 'document.SAVING_FILE';
-const SAVED_FILE   = 'document.SAVED_FILE';
+const OPEN_FILE   = 'document.LOAD';
+const RENAME_FILE = 'document.RENAME_FILE';
+const SAVING_FILE = 'document.SAVING_FILE';
+const SAVED_FILE  = 'document.SAVED_FILE';
 
 const SAVE_STATUS = { SAVED  : 'All changes as been saved'
                     , NEEDED : 'Saving is needed'
@@ -40,7 +40,7 @@ function savingFile() {
 
 function reducer(state={}, action={}) {
 
-    if (LIST_MODIFIERS.includes(action.type)) {
+    if (Timeline.LIST_MODIFIERS.includes(action.type)) {
         return { ...state
                , saveStatus : SAVE_STATUS.NEEDED};
     }

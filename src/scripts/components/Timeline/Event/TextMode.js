@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import EventToolbar from './EventToolbar';
 import {eventAttributePropTypes} from './Event';
 
-function TextMode({ bubbuleURL
+function TextMode({ illustrationURL
                   , description
                   , enableEdition
                   , label
@@ -13,9 +13,9 @@ function TextMode({ bubbuleURL
     let bubbule;
     let style;
 
-    style = {backgroundImage: `url('${bubbuleURL}')` };
+    style = {backgroundImage: `url('${illustrationURL}')` };
 
-    if (bubbuleURL)
+    if (illustrationURL)
         bubbule = <div className="bubbule"
                        style={style}>
                   </div>;

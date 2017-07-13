@@ -1,5 +1,6 @@
 import uuid from 'uuid/v4';
 import * as Marker from './helpers/marker';
+import * as Event from './helpers/event';
 import {ActionCreatorError} from './helpers';
 
 // ******************** Actions types ********************
@@ -20,26 +21,30 @@ const LOAD_TIMELINE = 'timeline.LOAD';
  * @type {string[]}
  */
 const LIST_MODIFIERS = [ADD_MARKER
-                       ,REMOVE_MARKER
                        ,MOVE_MARKER
+                       ,REMOVE_MARKER
                        ,RENAME_MARKER
 
                        ,ADD_EVENT
-                       ,REMOVE_EVENT
                        ,MOVE_EVENT
+                       ,REMOVE_EVENT
                        ,UPDATE_EVENT];
 
 // ******************** Action creators ********************
 
 /**
+ * @typedef {Object} StoreAction.Timeline.AddEvent
+ */
+
+/**
  * @param {Object} data
- * @param {Object} data.illustrationURL
  * @param {string} data.description - Description of the event
  * @param {string} data.label       - Label of the event
- * @param {string} data.marker      - UUID of the marker
- * @param {number} [data.position]  - Position of the created event
+ * @param {string} data.marker      - UUID of the marker to which the event will be added
+ * @param {number} [position]       - Position where to create the event.
+ * @returns {{payload: {event: ReduxStore.Timeline.Event, position: number}, type: string}}
  */
-function addEvent(data) {
+function addEvent(data, position) {
 
     // Checking that the marker exists
     if (!Marker.getMarker(data.marker))
@@ -48,10 +53,19 @@ function addEvent(data) {
                                       , data
                                       , actionType   : ADD_EVENT});
 
-    return { payload: { uuid: uuid()
-                      , ...data}
+    return { payload: { event: { uuid: uuid()
+                               , ...data}
+                      , position: position}
            , type: ADD_EVENT};
 }
+
+/**
+ * @typedef {Object} StoreAction.Timeline.AddMarker
+ * @property {Object}                       payload
+ * @property {{label: string, uuid: string} payload.marker
+ * @property {number}                       payload.position - Position of the marker
+ * @property {string}                       type
+ */
 
 /**
  *
@@ -60,10 +74,10 @@ function addEvent(data) {
  * @returns {StoreAction.Timeline.AddMarker}
  */
 function addMarker(label, position=-1) {
-    return { label
-           , position
-           , type : ADD_MARKER
-           , uuid : uuid()};
+    return { payload: { marker: { label
+                                , uuid : uuid()}
+                      , position }
+           , type : ADD_MARKER};
 }
 
 /**
@@ -76,14 +90,56 @@ function loadTimeline({timeline}) {
 }
 
 /**
- * @param {string} data
- * @param {string} data.marker
- * @param {string} data.event
- * @param {string} data.position
+ * Create an action that will move an event to a new position inside a marker.
+ * If no marker is provided, then the event will move inside the same marker.
+ *
+ * @param {string} [marker] - UUID of the destination marker.
+ *                            If undefined, then the event will be moved inside of its actual marker
+ * @param {string} event  - UUID of the event to move
+ * @param {number} [position]
  * @returns {StoreAction.Timeline.MoveEvent}
  */
-function moveEvent(data) {
-    return { ...data
+function moveEvent({event, marker, position}) {
+
+    let destinationMarker;
+    let eventInstance;
+
+    // Checking that the event exists
+    if (!Event.getEvent(event))
+        throw new ActionCreatorError( 'Event not found'
+                                    , { actionCreator: 'moveEvent'
+                                      , data: {event, marker, position}
+                                      , actionType : MOVE_EVENT});
+
+    eventInstance = Event.getEvent(event);
+
+    // Checking that the marker exists
+    if (marker && !Marker.getMarker(marker))
+        throw new ActionCreatorError( 'Marker not found'
+                                    , { actionCreator: 'moveEvent'
+                                      , data: {event, marker, position}
+                                      , actionType : MOVE_EVENT});
+
+
+    destinationMarker = Marker.getMarker(marker || eventInstance.marker);
+
+    // Checking that the position is valid exists
+    if (   typeof position !== 'number'
+        || position < 0
+            // If moving in the same marker
+        || (destinationMarker.uuid === eventInstance.marker && position >= destinationMarker.events.length)
+            // If moving in another marker (the new marker will have one more event in that case)
+        || (destinationMarker.uuid !== eventInstance.marker && position > destinationMarker.events.length)) {
+
+        throw new ActionCreatorError( 'Invalid position'
+                                    , { actionCreator: 'moveEvent'
+                                      , data: {event, marker, position}
+                                      , actionType : MOVE_EVENT});
+    }
+
+    return { payload: { event
+                      , marker: destinationMarker.uuid
+                      , position }
            , type: MOVE_EVENT};
 }
 
@@ -112,13 +168,26 @@ function renameMarker({label, uuid}) {
 }
 
 /**
+ * @typedef {Object} StoreAction.Timeline.RemoveEvent
+ * @property {Object} payload
+ * @property {string} payload.uuid  - UUID of the event to remove
+ */
+
+/**
  *
  * @param {string} uuid
  * @returns {StoreAction.Timeline.RemoveEvent}
  */
 function removeEvent({uuid}) {
+    // Checking that the event exists
+    if (!Event.getEvent(uuid))
+        throw new ActionCreatorError( 'Event not found'
+                                    , { actionCreator: 'removeEvent'
+                                      , data: {uuid}
+                                      , actionType : REMOVE_EVENT});
+
     return { type: REMOVE_EVENT
-           , uuid};
+           , payload: {uuid} };
 }
 
 /**
@@ -131,17 +200,32 @@ function removeMarker(uuid) {
 }
 
 /**
+ * @typedef {Object} StoreAction.Timeline.UpdateEventDescription
+ * @property {Object} payload
+ * @property {string} payload.data
+ * @property {string} payload.data.description - New description of the event
+ * @property {string} payload.uuid             - UUID of the event to rename
+ */
+
+/**
+ * @param {string} uuid
  * @param {Object} data
- * @param {string} data.bubbuleURL
+ * @param {string} data.illustrationURL
  * @param {string} data.description
  * @param {string} data.label
- * @param {string} data.markerUUID
- * @param {string} data.uuid
  * @returns {StoreAction.Timeline.UpdateEventDescription}
  */
-function updateEvent(data) {
-    return { ...data
-           , type: UPDATE_EVENT};
+function updateEvent({uuid, data}) {
+
+    // Checking that the event exists
+    if (!Event.getEvent(uuid))
+        throw new ActionCreatorError( 'Event not found'
+                                    , { actionCreator: 'updateEvent'
+                                      , data: {...data}
+                                      , actionType : UPDATE_EVENT});
+
+    return { payload: {data, uuid}
+           , type   : UPDATE_EVENT};
 }
 
 // ******************** Reducer ********************
@@ -177,14 +261,10 @@ function reducer( state={ events   :{}
 
             payload = action.payload;
 
-            event = { bubbuleURL : payload.bubbuleURL || ''
-                    , description: payload.description
-                    , label      : payload.label
-                    , marker     : payload.marker
-                    , uuid       : payload.uuid};
+            event = {...action.payload.event};
 
             let {newState, newMarkers} = cloneMarker( state
-                                                    , payload.marker
+                                                    , event.marker
                                                     , {cloneEventList: true});
 
             marker = newMarkers[0];
@@ -206,15 +286,16 @@ function reducer( state={ events   :{}
         case ADD_MARKER: {
             let marker;
             let markers;
+            let payload;
             let position;
 
             markers = state.markers.slice(0);
+            payload = action.payload;
 
-            position = action.position === -1 ? markers.length : action.position;
+            position = payload.position === -1 ? markers.length : payload.position;
 
             marker = { events: []
-                     , label : action.label
-                     , uuid  : action.uuid};
+                     , ...payload.marker };
 
             markers.splice(position, 0, marker);
 
@@ -231,15 +312,18 @@ function reducer( state={ events   :{}
             let eventOriginIndex;
             let markersToClone;
             let originMarker;
+            let payload;
 
-            event = state.events[action.event];
+            payload = action.payload;
+
+            event = state.events[payload.event];
 
             // Cloning both origin and destination markers
             markersToClone = [event.marker];
 
                 // If the destination marker is not the same, then we clone this one too
-            if (event.marker !== action.marker)
-                markersToClone.push(action.marker);
+            if (payload.marker && event.marker !== payload.marker)
+                markersToClone.push(payload.marker);
 
                 // Cloning origin and destination markers
             let {newState, newMarkers} = cloneMarker(state, markersToClone, {cloneEventList: true});
@@ -253,7 +337,7 @@ function reducer( state={ events   :{}
             if (!destinationMarker) {
                 originMarker.events = moveInArray( originMarker.events
                                                  , eventOriginIndex
-                                                 , action.position);
+                                                 , payload.position);
             }
             else {
                 let cloneResult;
@@ -262,7 +346,7 @@ function reducer( state={ events   :{}
                 originMarker.events.splice(eventOriginIndex, 1);
 
                 // Adding the event to the destination
-                destinationMarker.events.splice(action.position, 0, event.uuid);
+                destinationMarker.events.splice(payload.position, 0, event.uuid);
 
                 cloneResult  = cloneEvent(newState, event.uuid);
                 newState     = cloneResult.newState;
@@ -282,19 +366,22 @@ function reducer( state={ events   :{}
         case REMOVE_EVENT: {
             let event;
             let marker;
+            let uuid;
 
-            event = state.events[action.uuid];
+            uuid = action.payload.uuid;
+
+            event = state.events[uuid];
 
             let {newState, newMarkers} = cloneMarker(state, event.marker, {cloneEventList: true});
             marker = newMarkers[0];
 
-            marker.events = marker.events.filter(event => event !== action.uuid);
+            marker.events = marker.events.filter(event => event !== uuid);
 
             // Cloning the list of all events
             newState.events = {...newState.events};
 
             // Removing the event from the list of events
-            delete newState.events[action.uuid];
+            delete newState.events[uuid];
 
             return newState;
         }
@@ -328,10 +415,12 @@ function reducer( state={ events   :{}
         }
 
         case UPDATE_EVENT: {
-            let {newState, event} = cloneEvent(state, action.uuid);
-            event.bubbuleURL  = action.bubbuleURL || '';
-            event.description = action.description;
-            event.label       = action.label;
+            let {newState, event} = cloneEvent(state, action.payload.uuid);
+            let newData = action.payload.data;
+
+            event.illustrationURL = newData.illustrationURL || '';
+            event.description     = newData.description;
+            event.label           = newData.label;
             return newState;
         }
 
@@ -387,7 +476,7 @@ function cloneMarker(state, uuid, {cloneEventList=false}={}) {
         marker = Object.assign({}, markers[markerIndex]);
 
         if (cloneEventList)
-            marker.events = [...marker.events];
+            marker.events = marker.events.slice(0);
 
         // Updating the state
         markers[markerIndex] = marker;
@@ -437,7 +526,14 @@ export { addEvent
        , renameMarker
        , removeEvent
        , removeMarker
-       , updateEvent};
+       , updateEvent
 
+       // Action type
+       , ADD_EVENT
+       , ADD_MARKER
+       , MOVE_EVENT
+       , REMOVE_EVENT
+       , UPDATE_EVENT
 
-export {LIST_MODIFIERS};
+        // Other constants
+       , LIST_MODIFIERS};
