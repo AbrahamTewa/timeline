@@ -2,6 +2,15 @@ import {getStore, configureStore} from '..';
 import * as Timeline from '../timeline';
 import faker from 'faker';
 
+describe('timeline', () => {
+
+    describe('Helpers', ()=> {
+        it('Nothing', ()=> {
+            expect(true);
+        });
+    });
+});
+
 /**
  * Create a new event and add it to the store.
  * @param {string} marker  - UUID of the event marker

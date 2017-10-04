@@ -64,8 +64,9 @@
 
 /**
  * @typedef {Object} StoreAction.Timeline.MoveMarker
- * @property {number} position - New position of the marker
- * @property {string} uuid     - UUID of the marker to move
+ * @property {Object} payload
+ * @property {number} payload.position - New position of the marker
+ * @property {string} payload.marker   - UUID of the marker to move
  */
 
 /**

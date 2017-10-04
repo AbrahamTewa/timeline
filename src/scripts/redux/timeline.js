@@ -87,7 +87,6 @@ function addEvent(data, position) {
  * @returns {StoreAction.Timeline.AddMarker}
  */
 function addMarker(label, position) {
-
     /** @type {number} */
     let nbMarkers;
 
@@ -124,9 +123,9 @@ function loadTimeline({timeline}) {
  * Create an action that will move an event to a new position inside a marker.
  * If no marker is provided, then the event will move inside the same marker.
  *
+ * @param {string} event  - UUID of the event to move
  * @param {string} [marker] - UUID of the destination marker.
  *                            If undefined, then the event will be moved inside of its actual marker
- * @param {string} event  - UUID of the event to move
  * @param {number} [position]
  * @returns {StoreAction.Timeline.MoveEvent}
  */
@@ -135,14 +134,14 @@ function moveEvent({event, marker, position}) {
     let destinationMarker;
     let eventInstance;
 
+    eventInstance = Event.getEvent(event);
+
     // Checking that the event exists
-    if (!Event.getEvent(event))
+    if (!eventInstance)
         throw new ActionCreatorError( 'Event not found'
                                     , { actionCreator: 'moveEvent'
                                       , data: {event, marker, position}
                                       , actionType : MOVE_EVENT});
-
-    eventInstance = Event.getEvent(event);
 
     // Checking that the marker exists
     if (marker && !Marker.getMarker(marker))
@@ -176,13 +175,42 @@ function moveEvent({event, marker, position}) {
 
 /**
  *
- * @param {string} uuid
+ * @param {string} marker
  * @param {number} position
  * @returns {StoreAction.Timeline.MoveMarker}
  */
-function moveMarker(uuid, position) {
-    return { position
-           , uuid
+function moveMarker({marker, position}) {
+    /** @type {ReduxStore.Timeline.Marker} */
+    let markerInstance;
+
+    /** @type {number} */
+    let nbMarkers;
+
+    markerInstance = Marker.getMarker(marker);
+
+    // Checking that the event exists
+    if (!markerInstance)
+        throw new ActionCreatorError( 'Marker not found'
+                                    , { actionCreator: 'moveMarker'
+                                      , data: {marker, position}
+                                      , actionType : MOVE_EVENT});
+
+    nbMarkers = Marker.listMarkersUUID().length;
+
+    if (typeof position !== 'undefined') {
+        if (!Number.isInteger(position) || position < 0 || position >= nbMarkers) {
+            throw new ActionCreatorError( 'Invalid position'
+                                        , { actionCreator: 'addMarker'
+                                          , position
+                                          , actionType   : ADD_MARKER});
+        }
+    }
+    else {
+        position = nbMarkers;
+    }
+
+    return { payload: { marker
+                      , position }
            , type: MOVE_MARKER};
 }
 
@@ -267,9 +295,9 @@ function updateEvent({uuid, data}) {
  * @param {Object}         action
  * @returns {ReduxStore.Timeline}
  */
-function reducer( state={ events   :{}
-                        , markers  : []
-                        , saved    : true}
+function reducer( state = { events   :{}
+                          , markers  : []
+                          , saved    : true}
                 , action) {
 
     switch (action.type) {
@@ -391,8 +419,8 @@ function reducer( state={ events   :{}
         case MOVE_MARKER:
             return { ...state
                    , markers: moveInArray( state.markers
-                                         , getMarkerIndex(state, action.uuid)
-                                         , action.position)};
+                                         , getMarkerIndex(state, action.payload.marker)
+                                         , action.payload.position)};
 
         case REMOVE_EVENT: {
             let event;
@@ -563,6 +591,7 @@ export { addEvent
        , ADD_EVENT
        , ADD_MARKER
        , MOVE_EVENT
+       , MOVE_MARKER
        , REMOVE_EVENT
        , UPDATE_EVENT
 

@@ -185,7 +185,6 @@ describe('Timeline', ()=> {
                 Each of these markers have one event.
                 The test will consist of moving the event of A to B. */
 
-
                 let event;
                 let markerA;
                 let markerB;
@@ -859,6 +858,61 @@ describe('Timeline', ()=> {
                     expect(action).toEqual(expectedAction);
                 }
             });
+        });
+
+        describe('Action creator: moveMarker', () => {
+            it('Should throw an error if the marker don\'t exists', () => {
+                expect(() => redux.moveMarker({ marker  : uuid()
+                                              , position: 0}))
+                    .toThrow(ActionCreatorError);
+            });
+
+            it('Should throw an error if position is invalid', () => {
+
+                let marker;
+
+                marker = addMarkerToStore().uuid;
+
+                // The only valid position is 0 (0 marker in state)
+                expect(() => redux.moveMarker({marker, position: 0})).not.toThrowError();
+
+                // The position 1 is invalid (0 marker in state)
+                expect(() => redux.moveMarker({marker, position: 1})).toThrowError(ActionCreatorError);
+
+                // Position is negative
+                expect(() => redux.moveMarker({marker, position: -1})).toThrowError(ActionCreatorError);
+
+                // Not a number
+                expect(() => redux.moveMarker({marker, position: 'a'})).toThrowError(ActionCreatorError);
+
+                // Error because is not an integer
+                expect(() => redux.moveMarker({marker, position: 1.1})).toThrowError(ActionCreatorError);
+
+                addMarkerToStore();
+
+                // The valid positions are 0 and 1
+                expect(() => redux.moveMarker({marker, position: 0})).not.toThrowError();
+                expect(() => redux.moveMarker({marker, position: 1})).not.toThrowError();
+
+                // The position 2 is invalid (1 marker in state)
+                expect(() => redux.moveMarker({marker, position: 2})).toThrowError(ActionCreatorError);
+            });
+
+            it('Should create an action', () => {
+                let action;
+                let expectedAction;
+                let marker;
+
+                marker = addMarkerToStore().uuid;
+                action = redux.moveMarker({marker, position: 0});
+
+                expectedAction = { payload: { marker,
+                                              position: 0}
+                                 , type   : redux.MOVE_MARKER};
+
+                expect(action).toEqual(expectedAction);
+            });
+
         });
 
     });
