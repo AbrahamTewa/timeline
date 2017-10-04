@@ -912,7 +912,53 @@ describe('Timeline', ()=> {
 
                 expect(action).toEqual(expectedAction);
             });
+        });
 
+        describe('Action creator: renameMarker', ()=> {
+            it('Should throw an error if the marker don\'t exists', () => {
+                expect(() => redux.renameMarker({ marker : uuid()
+                                                , label  : generateMarkerLabel()}))
+                    .toThrow(ActionCreatorError);
+            });
+
+            it('Should create an action', () => {
+                let action;
+                let expectedAction;
+                let label;
+                let marker;
+
+                label = generateMarkerLabel();
+
+                marker = addMarkerToStore().uuid;
+                action = redux.renameMarker({marker, label});
+
+                expectedAction = { payload: { marker, label}
+                                 , type   : redux.RENAME_MARKER};
+
+                expect(action).toEqual(expectedAction);
+            });
+        });
+
+        describe('Action creator: removeMarker', ()=> {
+            it('Should throw an error if the marker don\'t exists', () => {
+                expect(() => redux.removeMarker({ marker : uuid() }))
+                    .toThrow(ActionCreatorError);
+            });
+
+            it('Should create an action', () => {
+                let action;
+                let expectedAction;
+                let label;
+                let marker;
+
+                marker = addMarkerToStore().uuid;
+                action = redux.removeMarker({marker});
+
+                expectedAction = { payload: { marker}
+                                 , type   : redux.REMOVE_MARKER};
+
+                expect(action).toEqual(expectedAction);
+            });
         });
 
     });

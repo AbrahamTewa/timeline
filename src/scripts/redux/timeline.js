@@ -180,16 +180,12 @@ function moveEvent({event, marker, position}) {
  * @returns {StoreAction.Timeline.MoveMarker}
  */
 function moveMarker({marker, position}) {
-    /** @type {ReduxStore.Timeline.Marker} */
-    let markerInstance;
 
     /** @type {number} */
     let nbMarkers;
 
-    markerInstance = Marker.getMarker(marker);
-
     // Checking that the event exists
-    if (!markerInstance)
+    if (!Marker.getMarker(marker))
         throw new ActionCreatorError( 'Marker not found'
                                     , { actionCreator: 'moveMarker'
                                       , data: {marker, position}
@@ -220,10 +216,16 @@ function moveMarker({marker, position}) {
  * @param label
  * @returns {StoreAction.Timeline.RenameMarker}
  */
-function renameMarker({label, uuid}) {
-    return { label
-           , type: RENAME_MARKER
-           , uuid};
+function renameMarker({label, marker}) {
+    // Checking that the marker exists
+    if (!Marker.getMarker(marker))
+        throw new ActionCreatorError( 'Marker not found'
+                                    , { actionCreator: 'renameMarker'
+                                      , data: {marker, label}
+                                      , actionType : RENAME_MARKER});
+
+    return { payload : { label, marker}
+           , type: RENAME_MARKER};
 }
 
 /**
@@ -250,12 +252,19 @@ function removeEvent({uuid}) {
 }
 
 /**
- * @param {string} uuid
+ * @param {string} marker - UUID of the marker to remove
  * @returns {StoreAction.Timeline.RemoveMarker}
  */
-function removeMarker(uuid) {
+function removeMarker({marker}) {
+    // Checking that the marker exists
+    if (!Marker.getMarker(marker))
+        throw new ActionCreatorError( 'Marker not found'
+                                    , { actionCreator: 'removeMarker'
+                                      , data: {marker}
+                                      , actionType : REMOVE_MARKER});
+
     return { type: REMOVE_MARKER
-           , uuid};
+           , payload: {marker}};
 }
 
 /**
@@ -452,7 +461,7 @@ function reducer( state = { events   :{}
             /** @type {number} */
             let markerIndex;
 
-            markerIndex = getMarkerIndex(state, action.uuid);
+            markerIndex = getMarkerIndex(state, action.payload.marker);
             marker = state.markers[markerIndex];
 
             // Removing all events of the marker
@@ -461,14 +470,14 @@ function reducer( state = { events   :{}
             }
 
             return {...state
-                   , markers: state.markers.filter(marker => marker.uuid !== action.uuid)};
+                   , markers: state.markers.filter(marker => marker.uuid !== action.payload.marker)};
         }
 
         case RENAME_MARKER: {
-            let {newState, newMarkers} = cloneMarker(state, action.uuid);
+            let {newState, newMarkers} = cloneMarker(state, action.payload.marker);
             let marker = newMarkers[0];
 
-            marker.label = action.label;
+            marker.label = action.payload.label;
 
             return newState;
         }
@@ -593,6 +602,8 @@ export { addEvent
        , MOVE_EVENT
        , MOVE_MARKER
        , REMOVE_EVENT
+       , REMOVE_MARKER
+       , RENAME_MARKER
        , UPDATE_EVENT
 
         // Other constants

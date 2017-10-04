@@ -59,7 +59,8 @@
 
 /**
  * @typedef {Object} StoreAction.Timeline.RemoveMarker
- * @property {string} uuid - UUID of the marker to remove
+ * @property {Object} payload
+ * @property {string} payload.marker - UUID of the marker to remove
  */
 
 /**
@@ -71,8 +72,9 @@
 
 /**
  * @typedef {Object} StoreAction.Timeline.RenameMarker
- * @property {string} label - New label
- * @property {string} uuid  - UUID of the marker to rename
+ * @property {Object} payload
+ * @property {string} payload.label  - New label
+ * @property {string} payload.marker - UUID of the marker to rename
  */
 
 /**

@@ -37,7 +37,7 @@ class Marker extends React.Component {
      */
     onTimeUpdate(time) {
         this.props.onTimeUpdate({ label: time
-                                , uuid : this.props.uuid});
+                                , marker : this.props.uuid});
     }
 
     onNewEvent(data) {
