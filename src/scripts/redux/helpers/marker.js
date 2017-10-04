@@ -11,4 +11,15 @@ function getMarker(uuid, state) {
     return state.timeline.markers.filter(marker => marker.uuid === uuid)[0];
 }
 
-export {getMarker};
+/**
+ * Return the list of all UUID markers
+ * @param {ReduxStore} [state] - State where to look for the marker, or the current state
+ * @return {string[]}
+ */
+function listMarkersUUID(state) {
+    state = state || getCurrentState();
+    return state.timeline.markers.map(({uuid}) => uuid);
+}
+
+export {getMarker,
+        listMarkersUUID};

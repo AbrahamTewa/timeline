@@ -46,12 +46,25 @@ const LIST_MODIFIERS = [ADD_MARKER
  */
 function addEvent(data, position) {
 
+    let marker;
+
+    marker = Marker.getMarker(data.marker);
+
     // Checking that the marker exists
-    if (!Marker.getMarker(data.marker))
+    if (!marker)
         throw new ActionCreatorError( 'Marker not found'
                                     , { actionCreator: 'addEvent'
                                       , data
                                       , actionType   : ADD_EVENT});
+
+    if (typeof position !== 'undefined') {
+        if (!Number.isInteger(position) || position < 0 || position > marker.events.length ) {
+            throw new ActionCreatorError( 'Invalid position'
+                                        , { actionCreator: 'addEvent'
+                                          , position
+                                          , actionType   : ADD_EVENT});
+        }
+    }
 
     return { payload: { event: { uuid: uuid()
                                , ...data}
@@ -70,10 +83,28 @@ function addEvent(data, position) {
 /**
  *
  * @param {string} label - Label of the marker
- * @param {number} position
+ * @param {number} [position]
  * @returns {StoreAction.Timeline.AddMarker}
  */
-function addMarker(label, position=-1) {
+function addMarker(label, position) {
+
+    /** @type {number} */
+    let nbMarkers;
+
+    nbMarkers = Marker.listMarkersUUID().length;
+
+    if (typeof position !== 'undefined') {
+        if (!Number.isInteger(position) || position < 0 || position > nbMarkers) {
+            throw new ActionCreatorError( 'Invalid position'
+                                        , { actionCreator: 'addMarker'
+                                          , position
+                                          , actionType   : ADD_MARKER});
+        }
+    }
+    else {
+        position = nbMarkers;
+    }
+
     return { payload: { marker: { label
                                 , uuid : uuid()}
                       , position }
@@ -292,7 +323,7 @@ function reducer( state={ events   :{}
             markers = state.markers.slice(0);
             payload = action.payload;
 
-            position = payload.position === -1 ? markers.length : payload.position;
+            position = typeof payload.position === 'undefined' ? markers.length : payload.position;
 
             marker = { events: []
                      , ...payload.marker };

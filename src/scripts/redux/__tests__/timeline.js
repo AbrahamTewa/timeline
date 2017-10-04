@@ -1,17 +1,26 @@
 /* eslint-env node, jest */
 
+// ============================================================
+// Import packages
+import uuid from 'uuid/v4';
+
+// ============================================================
+// Import modules
+
 import '..';
 import * as redux from '../timeline';
 import {default as reducer} from '../timeline';
 import {ActionCreatorError} from '../helpers';
 import {getStore, configureStore} from '..';
-import uuid from 'uuid/v4';
 import { addEventToStore
        , addMarkerToStore
        , generateMarkerLabel
        , getNewEventData
        , overrideStore
        , resetStore} from './helpers';
+
+// ============================================================
+// Tests
 
 /**
  * Create and return a new marker object.
@@ -52,32 +61,6 @@ describe('Timeline', ()=> {
         beforeEach(resetStore);
 
         describe('Action creator: addEvent', () => {
-            it('Should create an action if marker exists', () => {
-                let action;
-                let marker;
-                let eventData;
-                let expectedAction;
-
-                // Creating initial state
-                {
-                    marker = getNewMarker();
-                    overrideStore({timeline: { events : {}
-                                             , markers: [marker]}});
-                }
-
-                eventData = getNewEventData(marker.uuid);
-                action = redux.addEvent(eventData);
-                let eventUUID = action.payload.event.uuid;
-
-                expect(typeof eventUUID).toBe('string');
-
-                expectedAction = { payload: { event: { uuid: eventUUID
-                                                     , ...eventData} }
-                                 , type   : redux.ADD_EVENT};
-
-                expect(action).toEqual(expectedAction);
-            });
-
             it('Should throw an error if marker doesn\'t exists', () => {
                 let eventData;
 
@@ -90,8 +73,72 @@ describe('Timeline', ()=> {
                 eventData = getNewEventData(uuid());
 
                 expect(() => redux.addEvent(eventData)).toThrowError(ActionCreatorError);
-            })
+            });
 
+            it('Should throw an error if position is invalid', () => {
+                let marker;
+                let eventData;
+
+                // Creating initial state
+                {
+                    marker    = addMarkerToStore();
+                    addEventToStore(marker.uuid);
+                    eventData = getNewEventData(marker.uuid);
+                }
+
+                expect(() => redux.addEvent(eventData, 10)).toThrowError(ActionCreatorError);
+                expect(() => redux.addEvent(eventData, -10)).toThrowError(ActionCreatorError);
+                expect(() => redux.addEvent(eventData, 'a')).toThrowError(ActionCreatorError);
+                expect(() => redux.addEvent(eventData, 2)).toThrowError(ActionCreatorError);
+            });
+
+            it('Should create an action at the given position', () => {
+                let action;
+                let marker;
+                let eventData;
+                let expectedAction;
+
+                // Creating initial state
+                {
+                    marker = addMarkerToStore();
+                    eventData = getNewEventData(marker.uuid);
+                    action = redux.addEvent(eventData);
+                }
+
+                let eventUUID = action.payload.event.uuid;
+
+                expect(typeof eventUUID).toBe('string');
+
+                expectedAction = { payload: { event: { uuid: eventUUID
+                                                     , ...eventData} }
+                                 , type   : redux.ADD_EVENT};
+
+                expect(action).toEqual(expectedAction);
+            });
+
+            it('Should create an action if marker exists', () => {
+                let action;
+                let marker;
+                let eventData;
+                let expectedAction;
+
+                // Creating initial state
+                {
+                    marker = addMarkerToStore();
+                    eventData = getNewEventData(marker.uuid);
+                    action = redux.addEvent(eventData);
+                }
+
+                let eventUUID = action.payload.event.uuid;
+
+                expect(typeof eventUUID).toBe('string');
+
+                expectedAction = { payload: { event: { uuid: eventUUID
+                                                     , ...eventData} }
+                                 , type   : redux.ADD_EVENT};
+
+                expect(action).toEqual(expectedAction);
+            });
         });
 
         describe('Action creator: moveEvent', () => {
@@ -669,6 +716,151 @@ describe('Timeline', ()=> {
                 }
             })
         });
+    });
+
+    describe('Markers', () => {
+
+        beforeEach(resetStore);
+
+        describe('Action creator: addMarker', () => {
+            it('Should throw an error if position is invalid', () => {
+
+                // The only valid position is 0 (0 marker in state)
+                expect(() => redux.addMarker('Test marker', 0)).not.toThrowError();
+
+                // The position 1 is invalid (0 marker in state)
+                expect(() => redux.addMarker('Test marker', 1)).toThrowError(ActionCreatorError);
+
+                // Position is negative
+                expect(() => redux.addMarker('Test marker', -1)).toThrowError(ActionCreatorError);
+
+                // Not a number
+                expect(() => redux.addMarker('Test marker', 'a')).toThrowError(ActionCreatorError);
+
+                // Error because is not an integer
+                expect(() => redux.addMarker('Test marker', 1.1)).toThrowError(ActionCreatorError);
+
+                addMarkerToStore();
+
+                // The valid positions are 0 and 1
+                expect(() => redux.addMarker('Test marker', 0)).not.toThrowError();
+                expect(() => redux.addMarker('Test marker', 1)).not.toThrowError();
+
+                // The position 2 is invalid (1 marker in state)
+                expect(() => redux.addMarker('Test marker', 2)).toThrowError(ActionCreatorError);
+            });
+
+            it('Should create an action at position 0 if no other marker', () => {
+                let action;
+                let expectedAction;
+                let markerLabel;
+
+                // Creating initial state
+                markerLabel = generateMarkerLabel();
+                action = redux.addMarker(markerLabel);
+
+                let eventUUID = action.payload.marker.uuid;
+
+                expect(typeof eventUUID).toBe('string');
+
+                expectedAction = { payload: { marker: { uuid: eventUUID
+                                                      , label: markerLabel},
+                                              position: 0}
+                                 , type   : redux.ADD_MARKER};
+
+                expect(action).toEqual(expectedAction);
+            });
+
+            it('Should create an action at position 1 if 1 marker', () => {
+                let action;
+                let expectedAction;
+                let markerLabel;
+
+                addMarkerToStore();
+
+                // Creating initial state
+                markerLabel = generateMarkerLabel();
+                action = redux.addMarker(markerLabel);
+
+                let eventUUID = action.payload.marker.uuid;
+
+                expect(typeof eventUUID).toBe('string');
+
+                expectedAction = { payload: { marker: { uuid: eventUUID
+                                                      , label: markerLabel},
+                                              position: 1}
+                                 , type   : redux.ADD_MARKER};
+
+                expect(action).toEqual(expectedAction);
+            });
+
+            it('Should create an action at the right position if no other marker', () => {
+                let action;
+                let eventUUID;
+                let expectedAction;
+                let markerLabel;
+
+                // Creating initial state
+                markerLabel = generateMarkerLabel();
+                action = redux.addMarker(markerLabel, 0);
+
+                eventUUID = action.payload.marker.uuid;
+
+                expect(typeof eventUUID).toBe('string');
+
+                expectedAction = { payload: { marker: { uuid: eventUUID
+                                                      , label: markerLabel},
+                                              position: 0}
+                                 , type   : redux.ADD_MARKER};
+
+                expect(action).toEqual(expectedAction);
+            });
+
+            it('Should create an action at the right position if one marker', () => {
+                let action;
+                let eventUUID;
+                let expectedAction;
+                let markerLabel;
+
+                // Creating initial state
+                addMarkerToStore();
+
+                // Position 0
+                {
+                    markerLabel = generateMarkerLabel();
+                    action = redux.addMarker(markerLabel, 0);
+
+                    eventUUID = action.payload.marker.uuid;
+
+                    expect(typeof eventUUID).toBe('string');
+
+                    expectedAction = { payload: { marker: { uuid: eventUUID
+                                                          , label: markerLabel},
+                                                  position: 0}
+                                     , type   : redux.ADD_MARKER};
+
+                    expect(action).toEqual(expectedAction);
+                }
+
+                // Position 1
+                {
+                    markerLabel = generateMarkerLabel();
+                    action = redux.addMarker(markerLabel, 1);
+
+                    eventUUID = action.payload.marker.uuid;
+
+                    expect(typeof eventUUID).toBe('string');
+
+                    expectedAction = { payload: { marker: { uuid: eventUUID
+                                                          , label: markerLabel},
+                                                  position: 1}
+                                     , type   : redux.ADD_MARKER};
+
+                    expect(action).toEqual(expectedAction);
+                }
+            });
+        });
+
     });
 
 });
