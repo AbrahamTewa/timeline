@@ -86,7 +86,7 @@ function addEvent(data, position) {
  * @param {number} [position]
  * @returns {StoreAction.Timeline.AddMarker}
  */
-function addMarker(label, position) {
+function addMarker({label, position}) {
     /** @type {number} */
     let nbMarkers;
 

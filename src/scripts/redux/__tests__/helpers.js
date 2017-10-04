@@ -37,11 +37,11 @@ function addMarkerToStore(label) {
     let action;
     let marker;
 
-    action = Timeline.addMarker(label || generateMarkerLabel());
+    action = Timeline.addMarker({label: label || generateMarkerLabel()});
     marker = action.payload.marker;
 
     getStore().dispatch(action);
-    return marker;
+    return {events: [], ...marker};
 }
 
 function generateMarkerLabel() {

@@ -3,7 +3,7 @@ import FormMarker from '../components/FormMarker';
 import {addMarker} from '../redux/timeline';
 
 function mapDispatchToProps(dispatch) {
-    return {onSubmit: (label) => { dispatch(addMarker(label)); }};
+    return {onSubmit: (label) => { dispatch(addMarker({label})); }};
 }
 
 const AddMarker = connect(undefined, mapDispatchToProps)(FormMarker);
