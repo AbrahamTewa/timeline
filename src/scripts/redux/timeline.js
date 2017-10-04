@@ -461,15 +461,20 @@ function reducer( state = { events   :{}
             /** @type {number} */
             let markerIndex;
 
+            let events;
+
             markerIndex = getMarkerIndex(state, action.payload.marker);
             marker = state.markers[markerIndex];
 
+            events = { ...state.events};
+
             // Removing all events of the marker
             for(let event of marker.events) {
-                delete state.events[event.uuid];
+                delete events[event];
             }
 
             return {...state
+                   , events
                    , markers: state.markers.filter(marker => marker.uuid !== action.payload.marker)};
         }
 

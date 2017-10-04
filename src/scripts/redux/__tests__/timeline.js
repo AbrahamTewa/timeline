@@ -18,6 +18,7 @@ import { addEventToStore
        , getNewEventData
        , overrideStore
        , resetStore} from './helpers';
+import {addEvent} from "../timeline";
 
 // ============================================================
 // Tests
@@ -718,7 +719,6 @@ describe('Timeline', ()=> {
     });
 
     describe('Markers', () => {
-
         beforeEach(resetStore);
 
         describe('Action creator: addMarker', () => {
@@ -1236,6 +1236,157 @@ describe('Timeline', ()=> {
             });
         });
 
-    });
+        describe('Action: RENAME_MARKER', ()=> {
+            it('Rename a marker', ()=> {
+                let action;
+                let expectedState;
+                let initialState;
+                let label;
+                let marker;
 
+                // Creating initial state
+                {
+                    marker = addMarkerToStore().uuid;
+                    label  = generateMarkerLabel();
+                    action = redux.renameMarker({marker, label});
+                }
+
+                // Testing reducer
+                {
+                    initialState = getStore().getState();
+
+                    expectedState = {timeline: { events : {}
+                                               , markers: [{ events: []
+                                                           , label
+                                                           , uuid: marker }]}};
+
+                    expect(reducer(initialState.timeline, action)).toEqual(expectedState.timeline);
+                }
+            });
+        });
+
+        describe('Action: REMOVE_MARKER', ()=> {
+            it('Remove a marker', ()=> {
+                let action;
+                let expectedState;
+                let initialState;
+                let markerA, markerC, markerD;
+                let markers;
+
+                // Creating initial state
+                {
+                    markerA = addMarkerToStore().uuid;
+                    addMarkerToStore();
+                    markerC = addMarkerToStore().uuid;
+                    markerD = addMarkerToStore().uuid;
+
+                    initialState = getStore().getState();
+                }
+
+                // Removing center element
+                {
+                    action = redux.removeMarker({marker: markerC});
+
+                    markers = initialState.timeline.markers;
+                    markers = [markers[0], markers[1], markers[3]];
+
+                    expectedState = {timeline: { events : {}
+                                               , markers: markers}};
+
+                    expect(reducer(initialState.timeline, action)).toEqual(expectedState.timeline);
+                }
+
+                // Removing first element
+                {
+                    action = redux.removeMarker({marker: markerA});
+
+                    initialState = getStore().getState();
+                    markers = initialState.timeline.markers;
+                    markers = [markers[1], markers[2], markers[3]];
+
+                    expectedState = {timeline: { events : {}
+                                               , markers: markers}};
+
+                    expect(reducer(initialState.timeline, action)).toEqual(expectedState.timeline);
+                }
+
+                // Removing last element
+                {
+                    action = redux.removeMarker({marker: markerD});
+
+                    initialState = getStore().getState();
+                    markers = initialState.timeline.markers;
+                    markers = [markers[0], markers[1], markers[2]];
+
+                    expectedState = {timeline: { events : {}
+                                               , markers: markers}};
+
+                    expect(reducer(initialState.timeline, action)).toEqual(expectedState.timeline);
+                }
+            });
+
+            it('Remove the only marker', ()=> {
+                let action;
+                let expectedState;
+                let initialState;
+                let marker;
+
+                // Creating initial state
+                {
+                    marker = addMarkerToStore().uuid;
+
+                    initialState = getStore().getState();
+                }
+
+                // Removing center element
+                {
+                    action = redux.removeMarker({marker: marker});
+
+                    expectedState = {timeline: { events : {}
+                                               , markers: []}};
+
+                    expect(reducer(initialState.timeline, action)).toEqual(expectedState.timeline);
+                }
+            });
+
+            it('Removing a marker remove all it\'s events', ()=>{
+                let action;
+                let events;
+                let eventAA, eventAB;
+                let expectedState;
+                let initialState;
+                let markers;
+                let markerA, markerB;
+
+                // Creating initial state
+                {
+                    markerA = addMarkerToStore().uuid;
+                    eventAA = addEventToStore(markerA).uuid;
+                    eventAB = addEventToStore(markerA).uuid;
+
+                    markerB = addMarkerToStore().uuid;
+                    addEventToStore(markerB);
+                    addEventToStore(markerB);
+
+                    initialState = getStore().getState();
+                }
+
+                // Removing center element
+                {
+                    events = { ...initialState.timeline.events};
+                    markers = initialState.timeline.markers;
+
+                    markers = [markers[1]];
+                    delete events[eventAA];
+                    delete events[eventAB];
+
+                    action = redux.removeMarker({marker: markerA});
+
+                    expectedState = {timeline: { events, markers}};
+
+                    expect(reducer(initialState.timeline, action)).toEqual(expectedState.timeline);
+                }
+            });
+        });
+    });
 });
