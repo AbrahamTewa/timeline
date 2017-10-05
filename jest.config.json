@@ -1,11 +1,11 @@
 {
   "coverageDirectory": "./reports/coverage/",
-  "name": "starter.react",
+  "name": "Timeline",
   "roots": [
     "./src"
   ],
   "testMatch": [
-    "**/__tests__/**/*.js"
+    "**/__test__/**/*.js"
   ],
   "verbose": true
 }
