@@ -1,7 +1,19 @@
-import {getStore, configureStore} from '..';
-import * as Timeline from '../timeline';
+/* eslint-env node, jest */
+
+// ============================================================
+// Import packages
+
 import faker from 'faker';
 
+
+// ============================================================
+// Import modules
+
+import {getStore, configureStore} from '..';
+import * as Timeline from '../timeline';
+
+// ============================================================
+// Tests
 describe('timeline', () => {
 
     describe('Helpers', ()=> {
@@ -11,6 +23,8 @@ describe('timeline', () => {
     });
 });
 
+// ============================================================
+// Functions
 /**
  * Create a new event and add it to the store.
  * @param {string} marker  - UUID of the event marker
@@ -82,6 +96,8 @@ function resetStore() {
     configureStore({timeline: state});
 }
 
+// ============================================================
+// Exports
 export { addEventToStore
        , addMarkerToStore
        , generateMarkerLabel

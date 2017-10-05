@@ -1,8 +1,11 @@
-// ******************** Imports ********************
+// ============================================================
+// Import packages
+
 import React from 'react';
 import PropTypes from 'prop-types';
 
-// ******************** Container ********************
+// ============================================================
+// Container
 
 class AddMarker extends React.Component {
 
@@ -56,7 +59,7 @@ class AddMarker extends React.Component {
 
 }
 
-AddMarker.propTypes = {onSubmit: PropTypes.func};
+AddMarker.propTypes = {onSubmit: PropTypes.func.isRequired};
 
 // ******************** Export ********************
 export default AddMarker;
