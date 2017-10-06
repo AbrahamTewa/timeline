@@ -3,6 +3,11 @@ logs
 *.log
 npm-debug.log*
 
+# Node installation files
+package-lock.json
+yarn.lock
+yarn-error.log
+
 # Runtime data
 pids
 *.pid
