@@ -12,6 +12,16 @@ import Adapter from 'enzyme-adapter-react-15';
 
 let initialized = false;
 
+// ============================================================
+// Tests
+describe('timeline', () => {
+
+    describe('Helpers', ()=> {
+        it('Nothing', ()=> {
+            expect(true);
+        });
+    });
+});
 
 // ============================================================
 // Functions
