@@ -23,16 +23,6 @@ import {addEvent} from "../timeline";
 // ============================================================
 // Tests
 
-/**
- * Create and return a new marker object.
- * @returns {ReduxStore.Timeline.Marker}
- */
-function getNewMarker() {
-    return { events: []
-           , label : generateMarkerLabel()
-           , uuid  : uuid()};
-}
-
 describe('Timeline', ()=> {
 
     // Creating store if it hasn't been created yet
