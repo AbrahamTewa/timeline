@@ -8,26 +8,38 @@ import sinon from 'sinon';
 
 // ============================================================
 // Import modules
-import Input from '../Input';
+import FormMaker from '../FormMarker';
 import {initializeEnzyme} from '.';
+import {generateMarkerLabel} from '../../redux/__test__/helpers';
 
 // ============================================================
 // Tests
 
 initializeEnzyme();
 describe('Components', ()=> {
-    describe('FormMarker', function() {
+    describe('FormMarker', () => {
 
         it('should render without throwing an error', () => {
-            expect(shallow(<Input title='hello'/>).contains(<input type={'text'} value={'hello'}/>)).toBe(true);
+            expect(shallow(<FormMaker onSubmit={()=>{}}/>).contains(<form className="addMarker"/>)).toBe(true);
         });
 
-        it('should react on changes', ()=>{
-            let onkeypress = sinon.spy();
-            let component = <Input title="xx" onkeypress={onkeypress} />;
-            const wrapper = shallow(component);
-            wrapper.simulate('change');
-            expect(onkeypress.calledOnce).toBeTruthy();
+        it('should react on submit', ()=>{
+            let onSubmit;
+            let component;
+            let markerLabel;
+            let wrapper;
+
+            onSubmit = sinon.spy();
+            component = <FormMaker onSubmit={onSubmit}/>;
+
+            markerLabel = generateMarkerLabel();
+            wrapper = shallow(component);
+            wrapper.find('#addMarkerInput').simulate('change', { target: { value: markerLabel }});
+            wrapper.find('input[type="submit"]').simulate('click');
+
+            wrapper.simulate('submit');
+
+            expect(onSubmit.calledOnece).toBe(true);
         });
     });
 });

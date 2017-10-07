@@ -16,7 +16,7 @@ import {initializeEnzyme} from '.';
 
 initializeEnzyme();
 describe('Components', ()=> {
-    describe('Input', function() {
+    describe('Input', () => {
 
         it('should render without throwing an error', () => {
             expect(shallow(<Input title='hello'/>).contains(<input type={'text'} value={'hello'}/>)).toBe(true);
@@ -27,7 +27,7 @@ describe('Components', ()=> {
             let component = <Input title="xx" onkeypress={onkeypress} />;
             const wrapper = shallow(component);
             wrapper.simulate('change');
-            expect(onkeypress.calledOnce).toBeTruthy();
+            expect(onkeypress.calledOnce).toBe(true);
         });
     });
 });
