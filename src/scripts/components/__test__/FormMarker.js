@@ -3,7 +3,7 @@
 // ============================================================
 // Import packages
 import React from 'react';
-import { shallow } from 'enzyme';
+import { mount } from 'enzyme';
 import sinon from 'sinon';
 
 // ============================================================
@@ -20,7 +20,8 @@ describe('Components', ()=> {
     describe('FormMarker', () => {
 
         it('should render without throwing an error', () => {
-            expect(shallow(<FormMaker onSubmit={()=>{}}/>).contains(<form className="addMarker"/>)).toBe(true);
+            const formMaker = mount(<FormMaker onSubmit={()=>{}}/>);
+            expect(formMaker.name()).toBe('FormMarker');
         });
 
         it('should react on submit', ()=>{
@@ -33,13 +34,12 @@ describe('Components', ()=> {
             component = <FormMaker onSubmit={onSubmit}/>;
 
             markerLabel = generateMarkerLabel();
-            wrapper = shallow(component);
+            wrapper = mount(component);
             wrapper.find('#addMarkerInput').simulate('change', { target: { value: markerLabel }});
-            wrapper.find('input[type="submit"]').simulate('click');
-
             wrapper.simulate('submit');
 
-            expect(onSubmit.calledOnece).toBe(true);
+            expect(onSubmit.calledOnce).toBe(true);
+            expect(onSubmit.calledWithExactly(markerLabel)).toBe(true);
         });
     });
 });

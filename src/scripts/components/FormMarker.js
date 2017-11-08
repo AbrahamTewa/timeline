@@ -7,7 +7,7 @@ import PropTypes from 'prop-types';
 // ============================================================
 // Container
 
-class AddMarker extends React.Component {
+class FormMarker extends React.Component {
 
     constructor(props) {
         super(props);
@@ -40,26 +40,29 @@ class AddMarker extends React.Component {
 
     render() {
         return (
-            <form className="addMarker form-inline"
-                  onSubmit={this.onSubmit}>
+            <form
+                className="addMarker form-inline"
+                onSubmit={this.onSubmit}>
                 <div className="form-group">
                     <label htmlFor="addMarkerInput">Ajouter un marqueur</label>
-                    <input className="form-control"
-                           id="addMarkerInput"
-                           onChange={this.onChange}
-                           ref={input => this.inputElement = input}
-                           type="text"/>
+                    <input
+                        className="form-control"
+                        id="addMarkerInput"
+                        onChange={this.onChange}
+                        ref={input => this.inputElement = input}
+                        type="text"/>
                 </div>
 
-                <input className="btn btn-primary"
-                       type="submit"
-                       value="Ajouter" />
+                <input
+                    className="btn btn-primary"
+                    type="submit"
+                    value="Ajouter" />
             </form>);
     }
 
 }
 
-AddMarker.propTypes = {onSubmit: PropTypes.func.isRequired};
+FormMarker.propTypes = {onSubmit: PropTypes.func.isRequired};
 
 // ******************** Export ********************
-export default AddMarker;
+export default FormMarker;
