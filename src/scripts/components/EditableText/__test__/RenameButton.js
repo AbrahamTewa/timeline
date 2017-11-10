@@ -8,26 +8,22 @@ import sinon from 'sinon';
 
 // ============================================================
 // Import modules
-import Input from '../Input';
-import {initializeEnzyme} from '../../test_helpers';
+import RenameButton from '../RenameButton';
+import {initializeEnzyme} from '../../../test_helpers';
 
 // ============================================================
 // Tests
 
 initializeEnzyme();
 describe('Components', ()=> {
-    describe('Input', () => {
-
-        it('should render without throwing an error', () => {
-            expect(shallow(<Input title='hello'/>).contains(<input type={'text'} value={'hello'}/>)).toBe(true);
-        });
+    describe('EditableText/RenameButton', () => {
 
         it('should react on changes', ()=>{
-            let onkeypress = sinon.spy();
-            let component = <Input title="xx" onkeypress={onkeypress} />;
+            let onClick = sinon.spy();
+            let component = <RenameButton onClick={onClick} />;
             const wrapper = shallow(component);
-            wrapper.simulate('change');
-            expect(onkeypress.calledOnce).toBe(true);
+            wrapper.simulate('click');
+            expect(onClick.calledOnce).toBe(true);
         });
     });
 });

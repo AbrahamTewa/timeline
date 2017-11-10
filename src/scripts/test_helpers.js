@@ -1,27 +1,13 @@
-/* eslint-env node, jest */
-
 // ============================================================
 // Import packages
 
 import { configure } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 
-
 // ============================================================
 // Module constants and variables
 
 let initialized = false;
-
-// ============================================================
-// Tests
-describe('timeline', () => {
-
-    describe('Helpers', ()=> {
-        it('Nothing', ()=> {
-            expect(true);
-        });
-    });
-});
 
 // ============================================================
 // Functions

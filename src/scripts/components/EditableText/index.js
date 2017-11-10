@@ -1,11 +1,14 @@
-// ******************** Imports ********************
+// ============================================================
+// Import packages
 import React from 'react';
 import PropTypes from 'prop-types';
 
-// ******************** Import components ********************
+// ============================================================
+// Import components
 import RenameButton from './RenameButton';
 
-// ******************** Component ********************
+// ============================================================
+// Component
 const MODE_BUTTON = 'BUTTON';
 const MODE_DIRECT = 'DIRECT';
 
@@ -17,7 +20,6 @@ class EditableText extends React.Component {
 
     /**
      *
-     * @param {string}           mode
      * @param {Object}           props
      * @param {string}           props.className
      * @param {string}           props.mode
@@ -97,7 +99,8 @@ EditableText.propTypes = { className : PropTypes.string
                          , mode      : PropTypes.string
                          , onChange  : PropTypes.func.isRequired};
 
-// ******************** Export ********************
+// ============================================================
+// Exports
 export default EditableText;
 
 export { MODE_BUTTON

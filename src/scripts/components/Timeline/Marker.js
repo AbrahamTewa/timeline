@@ -1,4 +1,5 @@
-// ******************** Imports ********************
+// ============================================================
+// Imports
 import PropTypes from 'prop-types';
 import React     from 'react';
 
@@ -8,8 +9,8 @@ import { default as EventList
 import Time      from './Time';
 import AddEvent  from './AddEvent';
 
-
-// ******************** Container ********************
+// ============================================================
+// Container
 
 class Marker extends React.Component {
 
@@ -81,5 +82,6 @@ Marker.propTypes = { events        : eventsPropType
                    , time          : PropTypes.string.isRequired
                    , uuid          : PropTypes.string.isRequired};
 
-// ******************** Export ********************
+// ============================================================
+// Exports
 export default Marker;

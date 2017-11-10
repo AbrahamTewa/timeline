@@ -1,9 +1,14 @@
-// ******************** Imports ********************
+// ============================================================
+// Import packages
 import React from 'react';
 import PropTypes from 'prop-types';
+
+// ============================================================
+// Import modules
 import EditableText from '../EditableText';
 
-// ******************** Container ********************
+// ============================================================
+// Components
 
 function Time({onChange, time}) {
     return (<EditableText className="timeline-time"
@@ -14,5 +19,6 @@ function Time({onChange, time}) {
 Time.propTypes = { onChange: PropTypes.func.isRequired
                  , time    : PropTypes.string.isRequired};
 
-// ******************** Export ********************
+// ============================================================
+// Exports
 export default Time;

@@ -25,8 +25,8 @@ class FormMarker extends React.Component {
         return this.state.value;
     }
 
-    onChange() {
-        this.setState({value: this.inputElement.value});
+    onChange({target}) {
+        this.setState({value: target.value});
     }
 
     onSubmit(event) {
@@ -48,6 +48,7 @@ class FormMarker extends React.Component {
                     <input
                         className="form-control"
                         id="addMarkerInput"
+                        autoFocus={this.props.autoFocus}
                         onChange={this.onChange}
                         ref={input => this.inputElement = input}
                         type="text"/>
@@ -62,7 +63,8 @@ class FormMarker extends React.Component {
 
 }
 
-FormMarker.propTypes = {onSubmit: PropTypes.func.isRequired};
+FormMarker.propTypes = {autoFocus: PropTypes.bool.isRequired,
+                        onSubmit: PropTypes.func.isRequired};
 
 // ******************** Export ********************
 export default FormMarker;
