@@ -1,0 +1,91 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Components EditableText Snapshots Button mode empty label 1`] = `
+<form
+  className="editable-text undefined"
+  data-mode="BUTTON"
+  onSubmit={[Function]}
+>
+  <input
+    disabled={true}
+    onBlur={[Function]}
+    onChange={[Function]}
+    type="text"
+    value=""
+  />
+  <a
+    className="rename-button"
+    href="#"
+    onClick={[Function]}
+  >
+    <i
+      className="fa fa-pencil fa-fw"
+    />
+  </a>
+</form>
+`;
+
+exports[`Components EditableText Snapshots Button mode empty label 2`] = `null`;
+
+exports[`Components EditableText Snapshots Button mode some label 1`] = `
+<form
+  className="editable-text undefined"
+  data-mode="BUTTON"
+  onSubmit={[Function]}
+>
+  <input
+    disabled={true}
+    onBlur={[Function]}
+    onChange={[Function]}
+    type="text"
+    value="Some label"
+  />
+  <a
+    className="rename-button"
+    href="#"
+    onClick={[Function]}
+  >
+    <i
+      className="fa fa-pencil fa-fw"
+    />
+  </a>
+</form>
+`;
+
+exports[`Components EditableText Snapshots Button mode some label 2`] = `null`;
+
+exports[`Components EditableText Snapshots Direct mode empty label 1`] = `
+<form
+  className="editable-text undefined"
+  data-mode="DIRECT"
+  onSubmit={[Function]}
+>
+  <input
+    disabled={true}
+    onBlur={[Function]}
+    onChange={[Function]}
+    type="text"
+    value=""
+  />
+</form>
+`;
+
+exports[`Components EditableText Snapshots Direct mode empty label 2`] = `null`;
+
+exports[`Components EditableText Snapshots Direct mode some label 1`] = `
+<form
+  className="editable-text undefined"
+  data-mode="DIRECT"
+  onSubmit={[Function]}
+>
+  <input
+    disabled={true}
+    onBlur={[Function]}
+    onChange={[Function]}
+    type="text"
+    value="Some label"
+  />
+</form>
+`;
+
+exports[`Components EditableText Snapshots Direct mode some label 2`] = `null`;

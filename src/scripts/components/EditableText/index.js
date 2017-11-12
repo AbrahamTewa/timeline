@@ -13,6 +13,14 @@ const MODE_BUTTON = 'BUTTON';
 const MODE_DIRECT = 'DIRECT';
 
 /**
+ * Component that will represent an editable text.
+ * In normal state, it will display the {label} text.
+ * In edit state, it will display an <input> to edit that text.
+ *
+ * Their is two edit mode :
+ *  - MODE_DIRECT: the edit mode is triggered simply by clicking on the text
+ *  - MODE_BUTTON: a "Edit" button is displayed near the text and will trigger the edit mode
+ *
  * @property {Object}  state
  * @property {boolean} state.updatable
  */
@@ -22,7 +30,7 @@ class EditableText extends React.Component {
      *
      * @param {Object}           props
      * @param {string}           props.className
-     * @param {string}           props.mode
+     * @param {string}           [props.mode=MODE_BUTTON]
      * @param {string}           props.label - Label to display
      * @param {function(string)} props.onChange
      */
@@ -32,54 +40,97 @@ class EditableText extends React.Component {
         this.enableUpdate  = this.enableUpdate.bind(this);
         this.disableUpdate = this.disableUpdate.bind(this);
         this.onChange      = this.onChange.bind(this);
+        this.onSubmit      = this.onSubmit.bind(this);
 
-        this.state = {updatable : this.props.mode === MODE_DIRECT};
+        this.state = {updatable : this.mode === MODE_DIRECT};
     }
 
+    // ==============================
+    // Component methods
+    /**
+     * Disable the edit mode
+     * @public
+     */
+    disableUpdate() {
+        this.toggleUpdate(false);
+    }
+
+    /**
+     * Enable the edit mode
+     * @public
+     */
+    enableUpdate() {
+        this.toggleUpdate(true);
+        this.focus();
+    }
+
+    /**
+     * Focus on the component
+     * @public
+     */
+    focus() {
+        this.inputElement.focus();
+    }
+
+    /**
+     * Listener trigger each time the input change
+     * @param {Event} event
+     * @private
+     */
     onChange(event) {
         this.props.onChange(event.target.value);
     }
 
-    enableUpdate() {
-        this.toggleUpdate(true);
-        this.inputElement.focus();
-    }
-
-    disableUpdate(event) {
+    /**
+     * Listener trigger each time the form is submit
+     * @param {Event} event
+     * @private
+     */
+    onSubmit(event) {
         event.preventDefault();
-        this.toggleUpdate(false);
+        this.disableUpdate();
     }
 
+    /**
+     * Toggle the edit mode
+     * @param {boolean} [updatable]
+     * @public
+     */
     toggleUpdate(updatable) {
         if (this.props.mode !== MODE_BUTTON)
             return;
 
-        this.setState({...this.setState
+        if (typeof updatable === 'undefined')
+            updatable = !this.state.updatable;
+
+        this.setState({...this.state
                       , updatable: updatable});
     }
 
+    // ==============================
+    // React methods
     componentDidMount() {
-        this.inputElement.focus();
+        this.focus();
     }
 
     componentDidUpdate() {
-        if (this.state.updatable)
-            this.inputElement.focus();
+        if (!this.state.updatable)
+            return;
+
+        this.focus();
     }
 
     render() {
         let renameButton;
 
-        if (this.props.mode === MODE_BUTTON) {
+        if (this.props.mode === MODE_BUTTON)
             renameButton =  <RenameButton onClick={this.enableUpdate}/>;
-        }
 
         return (
-            <form onSubmit={this.disableUpdate}
+            <form onSubmit={this.onSubmit}
                   data-mode={this.props.mode}
                   className={`editable-text ${this.props.className}`}>
                 <input disabled={!this.state.updatable}
-                       onClick={this.onClick}
                        onChange={this.onChange}
                        onBlur={this.disableUpdate}
                        ref={input => { this.inputElement = input; }}
@@ -92,7 +143,7 @@ class EditableText extends React.Component {
 
 }
 
-EditableText.defaultProps = {mode: MODE_BUTTON};
+EditableText.defaultProps = { mode     : MODE_BUTTON};
 
 EditableText.propTypes = { className : PropTypes.string
                          , label     : PropTypes.string.isRequired

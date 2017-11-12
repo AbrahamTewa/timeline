@@ -2,13 +2,13 @@
 
 // ============================================================
 // Import packages
-
 import faker from 'faker';
-
 
 // ============================================================
 // Import modules
 
+import {generateLabel,
+        generateText} from '../../test_helpers';
 import {getStore, configureStore} from '..';
 import * as Timeline from '../timeline';
 
@@ -59,7 +59,7 @@ function addMarkerToStore(label) {
 }
 
 function generateMarkerLabel() {
-    return faker.lorem.words(faker.random.number(5));
+    return generateLabel(5);
 }
 
 /**
@@ -69,9 +69,9 @@ function generateMarkerLabel() {
  * @returns {StoreAction.Timeline.AddEvent}
  */
 function getNewEventData(markerUUID, label) {
-    return { description     : faker.lorem.text(faker.random.number(4))
+    return { description     : generateText(4)
            , illustrationURL : faker.internet.avatar()
-           , label           : label || faker.lorem.words(faker.random.number(5))
+           , label           : label || generateLabel(5)
            , marker          : markerUUID};
 }
 
