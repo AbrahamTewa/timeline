@@ -1,9 +1,11 @@
 /* global tinymce */
-// ******************** Import NodeJS packages ********************
+// ============================================================
+// Import packages
 import React from 'react';
 import PropTypes from 'prop-types';
 
-// ******************** Component ********************
+// ============================================================
+// Component
 class TextEditor extends React.Component {
 
     constructor(props) {
@@ -12,6 +14,8 @@ class TextEditor extends React.Component {
         this.state = {};
     }
 
+    // ==============================
+    // Component methods
     getValue() {
         if (!this.state.editor)
             return undefined;
@@ -19,6 +23,8 @@ class TextEditor extends React.Component {
         return this.state.editor.getContent();
     }
 
+    // ==============================
+    // React methods
     async componentDidMount() {
         let editor;
         let state;

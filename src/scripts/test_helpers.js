@@ -1,14 +1,7 @@
 // ============================================================
 // Import packages
 import faker from 'faker';
-import { configure } from 'enzyme';
-import Adapter from 'enzyme-adapter-react-16';
 import renderer from 'react-test-renderer';
-
-// ============================================================
-// Module constants and variables
-
-let initialized = false;
 
 // ============================================================
 // Functions
@@ -44,18 +37,6 @@ function getShallowlyRenderedInstance(component) {
     return renderer._instance && renderer._instance._instance;
 }
 
-function initializeEnzyme() {
-    beforeAll(() => {
-
-        if (initialized) {
-            return;
-        }
-
-        initialized = true;
-        configure({ adapter: new Adapter() });
-    });
-}
-
 function snapshot(component) {
     const tree = renderer.create(component).toJSON();
     expect(tree).toMatchSnapshot();
@@ -65,5 +46,4 @@ function snapshot(component) {
 // Exports
 export {generateLabel,
         generateText,
-        snapshot,
-        initializeEnzyme};
+        snapshot};

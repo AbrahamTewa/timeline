@@ -8,20 +8,28 @@ import sinon from 'sinon';
 
 // ============================================================
 // Import modules
-import RenameButton from '../RenameButton';
+import AddButton from '../AddButton';
+import {initializeEnzyme,
+        snapshot} from '../../../../test_helpers';
 
 // ============================================================
 // Tests
 
+initializeEnzyme();
 describe('Components', ()=> {
-    describe('EditableText/RenameButton', () => {
-
+    describe('Unit test', () => {
         it('should react on changes', ()=>{
             let onClick = sinon.spy();
-            let component = <RenameButton onClick={onClick} />;
+            let component = <AddButton onClick={onClick} />;
             const wrapper = shallow(component);
             wrapper.simulate('click');
             expect(onClick.calledOnce).toBe(true);
+        });
+    });
+
+    describe('Snapshot', () => {
+        it('should render normally', ()=>{
+            snapshot(<AddButton onClick={()=>{}}/>);
         });
     });
 });

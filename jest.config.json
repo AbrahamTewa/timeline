@@ -4,6 +4,9 @@
   "roots": [
     "./src"
   ],
+  "setupFiles": [
+    "./enzyme.setup.js"
+  ],
   "testMatch": [
     "**/__test__/**/*.js"
   ],

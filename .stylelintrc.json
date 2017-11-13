@@ -6,7 +6,6 @@
       "always",
       {
         "ignore": [
-          "stylelint-command",
           "after-comment"
         ]
       }

@@ -9,12 +9,10 @@ import sinon from 'sinon';
 // ============================================================
 // Import modules
 import Input from '../Input';
-import {initializeEnzyme} from '../../test_helpers';
 
 // ============================================================
 // Tests
 
-initializeEnzyme();
 describe('Components', ()=> {
     describe('Input', () => {
 

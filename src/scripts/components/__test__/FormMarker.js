@@ -9,13 +9,11 @@ import sinon from 'sinon';
 // ============================================================
 // Import modules
 import FormMaker from '../FormMarker';
-import {initializeEnzyme} from '../../test_helpers';
 import {generateMarkerLabel} from '../../redux/__test__/helpers';
 
 // ============================================================
 // Tests
 
-initializeEnzyme();
 describe('Components', ()=> {
     describe('FormMarker', () => {
 

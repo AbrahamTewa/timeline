@@ -11,14 +11,12 @@ import sinon from 'sinon';
 // Import modules
 import EditableText,
        {MODE_BUTTON} from '..';
-import {generateLabel,
-        initializeEnzyme} from '../../../test_helpers';
+import {generateLabel} from '../../../test_helpers';
 import {MODE_DIRECT} from "../index";
 
 // ============================================================
 // Tests
 
-initializeEnzyme();
 describe('Components', ()=> {
     describe('EditableText', () => {
 

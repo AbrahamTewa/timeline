@@ -1,8 +1,8 @@
-// ******************** NodeJS Packages ********************
+// ******************** Import Packages ********************
 import React from 'react';
 import PropTypes from 'prop-types';
 
-// ******************** Components ********************
+// ******************** Import Components ********************
 import AddButton from './AddButton';
 import EventForm from '../EventForm';
 

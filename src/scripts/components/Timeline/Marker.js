@@ -1,8 +1,10 @@
 // ============================================================
-// Imports
+// Imports packages
 import PropTypes from 'prop-types';
 import React     from 'react';
 
+// ============================================================
+// Modules
 import { default as EventList
        , eventsPropType} from './EventList';
 
@@ -10,7 +12,7 @@ import Time      from './Time';
 import AddEvent  from './AddEvent';
 
 // ============================================================
-// Container
+// Component
 
 class Marker extends React.Component {
 
@@ -31,7 +33,8 @@ class Marker extends React.Component {
         this.onTimeUpdate = this.onTimeUpdate.bind(this);
     }
 
-    // ********** Event listeners **********
+    // ==============================
+    // Event listeners
     /**
      * Called when the time is updated by the update
      * @param {string} time
@@ -50,8 +53,8 @@ class Marker extends React.Component {
         this.props.onNewEvent(event);
     }
 
-    // ********** React methods **********
-
+    // ==============================
+    // React methods
     render() {
 
         let classNoEvents;

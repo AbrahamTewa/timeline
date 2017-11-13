@@ -16,6 +16,15 @@ plugins:
   - jest
   - react
 rules:
+  comma-style:
+    - error
+    - first
+  key-spacing:
+    - error
+    - align:
+        on: colon
+        beforeColon: true
+        afterColon: true
   no-await-in-loop:
     - error
   no-template-curly-in-string:
@@ -24,9 +33,7 @@ rules:
     - 2
     - never
   indent:
-    - error
-    - 4
-    - SwitchCase: 1
+    - off
   linebreak-style:
     - error
     - unix
