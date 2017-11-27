@@ -1,4 +1,4 @@
-# starter.reactjs &middot; [![Build Status](https://travis-ci.org/AbrahamTewa/timeline.svg?branch=master)](https://travis-ci.org/AbrahamTewa/timeline)
+# Timelines &middot; [![Build Status](https://travis-ci.org/AbrahamTewa/timeline.svg?branch=master)](https://travis-ci.org/AbrahamTewa/timeline)
 Timeline application to handle 
 
 ## Philosophy of the starter
