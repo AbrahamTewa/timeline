@@ -1,17 +1,17 @@
 {
-  "opts": {
-    "recurse": true,
-    "destination": "./doc/jsdoc/",
-    "template": "node_modules/minami"
-  },
-  "source": {
-    "include": [
-      "src"
-    ]
-  },
-  "plugins": [],
-  "templates": {
-    "cleverLinks": false,
-    "monospaceLinks": false
-  }
+    "opts": {
+        "recurse": true,
+        "destination": "./doc/jsdoc/",
+        "template": "node_modules/minami"
+    },
+    "source": {
+        "include": [
+            "src"
+        ]
+    },
+    "plugins": [],
+    "templates": {
+        "cleverLinks": false,
+        "monospaceLinks": false
+    }
 }

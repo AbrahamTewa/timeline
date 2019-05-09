@@ -1,10 +1,15 @@
+/* eslint-disable import/no-extraneous-dependencies */
 /* eslint-env node */
 
+// ============================================================
+// Import packages
 import { configure } from '@storybook/react';
-import 'src/vendors/timeliner/css/timeliner-future.css';
 
+// ============================================================
+// Functions
 function loadStories() {
-    require('../src/scripts/__stories__');
+    // eslint-disable-next-line global-require,import/no-internal-modules
+    require('../src/index.stories');
 }
 
 configure(loadStories, module);
