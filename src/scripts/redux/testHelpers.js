@@ -8,9 +8,9 @@ import faker from 'faker';
 // Import modules
 
 import {generateLabel,
-        generateText} from '../../test_helpers';
-import {getStore, configureStore} from '..';
-import * as Timeline from '../timeline';
+        generateText} from '../test_helpers';
+import {getStore, configureStore} from '.';
+import * as Timeline from './timeline';
 
 // ============================================================
 // Tests

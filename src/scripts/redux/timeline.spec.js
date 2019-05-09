@@ -7,18 +7,18 @@ import uuid from 'uuid/v4';
 // ============================================================
 // Import modules
 
-import '..';
-import * as redux from '../timeline';
-import {default as reducer} from '../timeline';
-import {ActionCreatorError} from '../helpers';
-import {getStore, configureStore} from '..';
+import '.';
+import * as redux from './timeline';
+import {default as reducer} from './timeline';
+import {ActionCreatorError} from './helpers';
+import {getStore, configureStore} from '.';
 import { addEventToStore
        , addMarkerToStore
        , generateMarkerLabel
        , getNewEventData
        , overrideStore
-       , resetStore} from './helpers';
-import {addEvent} from "../timeline";
+       , resetStore} from './testHelpers';
+import {addEvent} from "./timeline";
 
 // ============================================================
 // Tests

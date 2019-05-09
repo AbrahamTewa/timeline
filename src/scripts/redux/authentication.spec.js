@@ -1,12 +1,12 @@
 /* eslint-env node, jest */
-import * as redux from '../authentication';
+import * as redux from './authentication';
 import { default as reducer
-       , UserAlreadyAuthenticatedError} from '../authentication';
+       , UserAlreadyAuthenticatedError} from './authentication';
 
-import { __mock__ as gapiMock} from '../../../../__mocks__/gapi';
-import gapi from '../../../../__mocks__/gapi';
-import {getStore, configureStore} from '..';
-import {overrideStore} from './helpers';
+import { __mock__ as gapiMock} from '../../../__mocks__/gapi';
+import gapi from '../../../__mocks__/gapi';
+import {getStore, configureStore} from '.';
+import {overrideStore} from './testHelpers';
 
 describe('Authentication', () => {
 

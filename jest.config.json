@@ -1,6 +1,6 @@
 {
    "coverageDirectory": "./reports/tests/unit/coverage/",
-   "name": "starter.react",
+   "name": "timeline",
    "roots": [
         "./src"
    ],

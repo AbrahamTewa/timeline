@@ -8,8 +8,8 @@ import sinon from 'sinon';
 
 // ============================================================
 // Import modules
-import FormMaker from '../FormMarker';
-import {generateMarkerLabel} from '../../redux/__test__/helpers';
+import FormMaker from './FormMarker';
+import {generateMarkerLabel} from '../redux/testHelpers';
 
 // ============================================================
 // Tests

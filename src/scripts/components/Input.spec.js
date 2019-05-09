@@ -8,7 +8,7 @@ import sinon from 'sinon';
 
 // ============================================================
 // Import modules
-import Input from '../Input';
+import Input from './Input';
 
 // ============================================================
 // Tests
