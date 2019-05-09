@@ -1,6 +1,10 @@
 /* global gapi */
-import {toPromise} from './main';
+// ============================================================
+// Import modules
+import { toPromise } from './main';
 
+// ============================================================
+// Functions
 /**
  * Indicate if a user is currently signed or not
  * @returns {boolean}
@@ -9,16 +13,19 @@ function isSignedIn() {
     return gapi.auth2.getAuthInstance().isSignedIn();
 }
 
-function disconnect() {
+async function disconnect() {
+    const user = gapi.auth2.getAuthInstance().currentUser.get();
 
-    let user;
-    user = gapi.auth2.getAuthInstance().currentUser.get();
-
-    if (!user.isSignedIn())
+    if (!user.isSignedIn()) {
         return;
+    }
 
-    return toPromise(user.disconnect());
+    await toPromise(user.disconnect());
 }
 
-export { disconnect
-       , isSignedIn};
+// ============================================================
+// Exports
+export {
+    disconnect
+    , isSignedIn,
+};

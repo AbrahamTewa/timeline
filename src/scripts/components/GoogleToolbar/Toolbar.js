@@ -1,57 +1,77 @@
-// ******************** NodeJS packages ********************
-import React        from 'react';
-import PropTypes    from 'prop-types';
+// ============================================================
+// Import packages
+import React from 'react';
+import PropTypes from 'prop-types';
 
-// ******************** Components ********************
-import LoginButton    from './LoginButton';
-import OpenButton     from './OpenButton';
-import SaveButton     from './SaveButton';
-import UserDropdown   from './UserDropdown';
+// ============================================================
+// Import components
+import LoginButton from './LoginButton';
+import OpenButton from './OpenButton';
+import SaveButton from './SaveButton';
+import UserDropdown from './UserDropdown';
 
-// ******************** Component ********************
+// ============================================================
+// Component
+function Toolbar({
+    access_token : accessToken,
+    disconnect,
+    document,
+    loadDocument,
+    onLogin,
+    userProfile,
+}) {
+    let openButton;
+    let saveButton;
+    let userDropdown;
 
-class Toolbar extends React.Component {
+    if (accessToken) {
+        openButton = (
+            <OpenButton
+                access_token={accessToken}
+                document={document}
+                loadDocument={loadDocument}
+            />
+        );
 
-    constructor(props) {
-        super(props);
+        saveButton = <SaveButton />;
+
+        userDropdown = (
+            <UserDropdown
+                disconnect={disconnect}
+                userProfile={userProfile}
+            />
+        );
     }
 
-    render() {
-        let openButton;
-        let saveButton;
-        let userDropdown;
-
-        if (this.props.access_token) {
-            openButton = <OpenButton access_token= {this.props.access_token}
-                                     document    = {this.props.document}
-                                     loadDocument= {this.props.loadDocument}/>;
-
-            saveButton = <SaveButton />;
-
-            userDropdown = <UserDropdown disconnect  = {this.props.disconnect}
-                                         userProfile = {this.props.userProfile}/>;
-        }
-
-        return (<div className="toolbar">
-                    <LoginButton onLogin={this.props.onLogin}
-                                 isAuthenticated={!!this.props.access_token}/>
-                    {userDropdown}
-                    {openButton}
-                    {saveButton}
-                </div>);
-    }
-
+    return (
+        <div className="toolbar">
+            <LoginButton
+                onLogin={onLogin}
+                isAuthenticated={!!accessToken}
+            />
+            {userDropdown}
+            {openButton}
+            {saveButton}
+        </div>
+    );
 }
 
-// ******************** Prop-types ********************
-Toolbar.propTypes = { access_token : PropTypes.string
-                    , disconnect   : PropTypes.func.isRequired
-                    , document     : PropTypes.shape({ saved: PropTypes.bool.isRequired
-                                                     , url  : PropTypes.string}).isRequired
-                    , loadDocument : PropTypes.func.isRequired
-                    , onLogin      : PropTypes.func.isRequired
-                    , saveDocument : PropTypes.func.isRequired
-                    , userProfile  : UserDropdown.propTypes.userProfile};
+Toolbar.defaultProps = {
+    access_token : '',
+    userProfile  : undefined,
+};
+
+Toolbar.propTypes = {
+    access_token : PropTypes.string,
+    disconnect   : PropTypes.func.isRequired,
+    document     : PropTypes.shape({
+        saved : PropTypes.bool.isRequired,
+        url   : PropTypes.string,
+    }).isRequired,
+    loadDocument : PropTypes.func.isRequired,
+    onLogin      : PropTypes.func.isRequired,
+    userProfile  : UserDropdown.propTypes.userProfile,
+};
 
 // ******************** Exports ********************
 export default Toolbar;

@@ -1,36 +1,46 @@
-import React     from 'react';
+// ============================================================
+// Import packages
+import React from 'react';
 import PropTypes from 'prop-types';
 
-import Event           from '../Event';
-import {eventAttributePropTypes} from '../Event';
+// ============================================================
+// Import modules
+import Event, { eventAttributePropTypes } from '../Event';
 
-class ListItem extends React.Component {
-
-    constructor(props) {
-        super(props);
-    }
-
-    // ********** React methods **********
-
-    render() {
-        return  <li data-uuid={this.props.event.uuid}>
-                    <div className = "reorder">
-                        <i className="fa fa-reorder" />
-                    </div>
-                    <Event description     = {this.props.event.description}
-                           illustrationURL = {this.props.event.illustrationURL}
-                           label           = {this.props.event.label}
-                           onChange        = {this.props.onEventChange}
-                           onRemove        = {this.props.onEventRemove}
-                           uuid            = {this.props.event.uuid}/>
-                </li>;
-    }
+// ============================================================
+// Component
+function ListItem({
+    event,
+    onEventChange,
+    onEventRemove,
+}) {
+    return (
+        <li data-uuid={event.uuid}>
+            <div className="reorder">
+                <i className="fa fa-reorder" />
+            </div>
+            <Event
+                description={event.description}
+                illustrationURL={event.illustrationURL}
+                label={event.label}
+                onChange={onEventChange}
+                onRemove={onEventRemove}
+                uuid={event.uuid}
+            />
+        </li>
+    );
 }
 
+ListItem.defaultProps = {
+    event : {},
+};
 
-ListItem.propTypes = { event         : PropTypes.shape(eventAttributePropTypes)
-                     , onEventChange : PropTypes.func.isRequired
-                     , onEventRemove : PropTypes.func.isRequired};
+ListItem.propTypes = {
+    event         : PropTypes.shape(eventAttributePropTypes),
+    onEventChange : PropTypes.func.isRequired,
+    onEventRemove : PropTypes.func.isRequired,
+};
 
-
+// ============================================================
+// Exports
 export default ListItem;

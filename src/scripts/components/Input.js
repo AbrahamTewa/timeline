@@ -4,17 +4,24 @@ import PropTypes from 'prop-types';
 
 // ******************** Container ********************
 
-function Input({onkeypress, title}) {
-
-    return (<input
-                type="text"
-                value={title}
-                onChange={onkeypress} />);
-
+function Input({ onkeypress, title }) {
+    return (
+        <input
+            type="text"
+            value={title}
+            onChange={onkeypress}
+        />
+    );
 }
 
-Input.propTypes = { onkeypress: PropTypes.func
-                  , title     : PropTypes.string.isRequired};
+Input.defaultProps = {
+    onkeypress : undefined,
+};
+
+Input.propTypes = {
+    onkeypress : PropTypes.func,
+    title      : PropTypes.string.isRequired,
+};
 
 // ******************** Export ********************
 export default Input;

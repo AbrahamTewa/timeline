@@ -38,3 +38,5 @@ jspm_packages
 .idea/
 build/
 /doc/
+.vscode
+/docs/vendors

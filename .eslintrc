@@ -5,6 +5,7 @@ env:
     es6: true
     node: true
     jest: true
+    jquery: true
 
 extends:
     - airbnb
@@ -29,9 +30,24 @@ settings:
         version: "16.1"
 
 rules:
+    brace-style:
+        - error
+        - stroustrup
+        - allowSingleLine: false
     indent:
         - error
         - 4
+
+    no-use-before-define:
+        - off
+
+    prefer-destructuring:
+        - off
+
+    key-spacing:
+        - error
+        - align: colon
+          beforeColon: true
 
     # ====================
     # Plugin: Import
@@ -40,10 +56,17 @@ rules:
         - error
         - allow:
               - history/createBrowserHistory
+              - uuid/v4
+
+    import/prefer-default-export:
+        - off
 
     # ====================
     # Plugin: react
     # ====================
+    react/destructuring-assignment:
+        - off
+
     react/jsx-filename-extension:
         - off
 

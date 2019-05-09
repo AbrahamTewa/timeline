@@ -1,21 +1,32 @@
-import { combineReducers
-       , createStore } from 'redux';
+// ============================================================
+// Import packages
+import {
+    combineReducers,
+    createStore,
+} from 'redux';
 
+// ============================================================
+// Import modules
 import authentication from './authentication';
-import document       from './document';
-import timeline       from './timeline';
+import document from './document';
+import timeline from './timeline';
 
-// ******************** Global variables and constants ********************
-const reducers = combineReducers( { authentication
-                                  , document
-                                  , timeline} );
+// ============================================================
+// Module's constants and variables
+const reducers = combineReducers({
+    authentication,
+    document,
+    timeline,
+});
 let store;
 
-// ******************** Functions ********************
+// ============================================================
+// Functions
 function configureStore(initialState) {
-    store = createStore( reducers
-                       , initialState
-                       , window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
+    store = createStore(reducers,
+        initialState,
+        // eslint-disable-next-line no-underscore-dangle
+        window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
 }
 
 function getStore() {
@@ -27,7 +38,9 @@ function getCurrentState() {
 }
 
 // ******************** Exports ********************
-export { configureStore
-       , getCurrentState
-       , getStore
-       , reducers};
+export {
+    configureStore
+    , getCurrentState
+    , getStore
+    , reducers,
+};

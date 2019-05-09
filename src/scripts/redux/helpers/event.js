@@ -1,5 +1,9 @@
-import {getCurrentState} from '..';
+// ============================================================
+// Import modules
+import { getCurrentState } from '..';
 
+// ============================================================
+// Functions
 /**
  *
  * @param {string}      uuid   - UUID of the event
@@ -11,4 +15,8 @@ function getEvent(uuid, state) {
     return state.timeline.events[uuid];
 }
 
-export {getEvent};
+// ============================================================
+// Exports
+export {
+    getEvent,
+};

@@ -9,41 +9,35 @@ import sinon from 'sinon';
 // ============================================================
 // Import modules
 import FormMaker from './FormMarker';
-import {generateMarkerLabel} from '../redux/testHelpers';
+import { generateMarkerLabel } from '../redux/testHelpers';
 
 // ============================================================
 // Tests
 
-describe('Components', ()=> {
+describe('Components', () => {
     describe('FormMarker', () => {
-
         it('should render without throwing an error', () => {
-            const formMarker = mount(<FormMaker onSubmit={()=>{}} autoFocus={true}/>);
+            const formMarker = mount(<FormMaker onSubmit={() => {}} autoFocus />);
             expect(formMarker.name()).toBe('FormMarker');
         });
 
         it('should handle autoFocus correctly', () => {
             let formMarker;
 
-            formMarker = mount(<FormMaker onSubmit={()=>{}} autoFocus={true}/>);
-            expect(formMarker.find("#addMarkerInput").prop('autoFocus')).toBe(true);
+            formMarker = mount(<FormMaker onSubmit={() => {}} autoFocus />);
+            expect(formMarker.find('#addMarkerInput').prop('autoFocus')).toBe(true);
 
-            formMarker = mount(<FormMaker onSubmit={()=>{}} autoFocus={false}/>);
-            expect(formMarker.find("#addMarkerInput").prop('autoFocus')).toBe(false);
+            formMarker = mount(<FormMaker onSubmit={() => {}} autoFocus={false} />);
+            expect(formMarker.find('#addMarkerInput').prop('autoFocus')).toBe(false);
         });
 
-        it('should react on submit', ()=>{
-            let onSubmit;
-            let component;
-            let markerLabel;
-            let wrapper;
+        it('should react on submit', () => {
+            const onSubmit = sinon.spy();
+            const component = <FormMaker onSubmit={onSubmit} autoFocus />;
 
-            onSubmit = sinon.spy();
-            component = <FormMaker onSubmit={onSubmit} autoFocus={true}/>;
-
-            markerLabel = generateMarkerLabel();
-            wrapper = mount(component);
-            wrapper.find('#addMarkerInput').simulate('change', { target: { value: markerLabel }});
+            const markerLabel = generateMarkerLabel();
+            const wrapper = mount(component);
+            wrapper.find('#addMarkerInput').simulate('change', { target : { value : markerLabel } });
             wrapper.simulate('submit');
 
             expect(onSubmit.calledOnce).toBe(true);

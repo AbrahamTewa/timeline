@@ -1,28 +1,26 @@
 /* eslint-env node, jest */
 
-import * as redux from './document';
-import { default as reducer} from './document';
-import {getStore, configureStore} from '.';
+import reducer, * as redux from './document';
+import { getStore, configureStore } from '.';
 
-describe('Document', ()=> {
-
+// ============================================================
+// Tests
+describe('Document', () => {
     // Creating store if it hasn't been created yet
     beforeAll(() => {
-        let store = getStore();
+        const store = getStore();
 
-        if (store)
+        if (store) {
             return;
+        }
 
         configureStore({});
     });
 
     describe('Action type: OTHER', () => {
         it('should not alter the state', () => {
-            let state;
-            let resultState;
-
-            state = {};
-            resultState = reducer(state, {type: 'OTHER'});
+            const state = {};
+            const resultState = reducer(state, { type: 'OTHER' });
 
             expect(resultState).toBe(state);
             expect(JSON.stringify(resultState)).toBe(JSON.stringify({}));
@@ -30,122 +28,105 @@ describe('Document', ()=> {
     });
 
     describe('Action type: OPEN_FILE', () => {
-
         it('should open a file', () => {
-            let action;
-            let expectedState;
-            let fileId;
-            let initialState;
-
-            fileId = '1234596789746543546354312';
+            const fileId = '1234596789746543546354312';
 
             // Testing action creator
-            action = redux.openFile({fileId});
+            const action = redux.openFile({ fileId });
 
-            expect(action).toEqual({ payload: {fileId}
-                                   , type   : redux.OPEN_FILE});
+            expect(action).toEqual({
+                payload: { fileId },
+                type: redux.OPEN_FILE,
+            });
 
             // Testing reducer
-            initialState = { fileId: 'XXXXXXXXXXXXXXXXXXXXX'
-                           , name  : 'A fake name'};
+            const initialState = {
+                fileId: 'XXXXXXXXXXXXXXXXXXXXX',
+                name: 'A fake name',
+            };
 
-            expectedState = { fileId
-                            , saveStatus: redux.SAVE_STATUS.SAVED};
+            const expectedState = {
+                fileId,
+                saveStatus: redux.SAVE_STATUS.SAVED,
+            };
 
             expect(reducer(initialState, action)).toEqual(expectedState);
         });
     });
 
     describe('Action type: RENAME_FILE', () => {
-        it ('should rename a file', () => {
-            let action;
-            let expectedState;
-            let fileId;
-            let initialState;
-            let newName;
-            let oldName;
-
-            fileId  = '1234596789746543546354312';
-            newName = 'A new name';
-            oldName = 'Old name';
+        it('should rename a file', () => {
+            const fileId = '1234596789746543546354312';
+            const newName = 'A new name';
+            const oldName = 'Old name';
 
             // Testing action creator
-            action  = redux.renameFile({name: newName});
+            const action = redux.renameFile({ name: newName });
 
-            expect(action).toEqual({ payload: {name: newName}
-                                   , type   : redux.RENAME_FILE});
+            expect(action).toEqual({
+                payload: { name: newName },
+                type: redux.RENAME_FILE,
+            });
 
             // Testing reducer
-            initialState = { fileId, name: oldName};
-            expectedState = {fileId, name: newName};
+            const initialState = { fileId, name: oldName };
+            const expectedState = { fileId, name: newName };
 
             expect(reducer(initialState, action)).toEqual(expectedState);
         });
     });
 
     describe('Action type: SAVING_FILE', () => {
-        it ('should declare the file as currently saving', () => {
-            let action;
-            let expectedState;
-            let fileId;
-            let initialState;
-
-            fileId = '1234596789746543546354312';
+        it('should declare the file as currently saving', () => {
+            const fileId = '1234596789746543546354312';
 
             // Testing action creator
-            action = redux.savingFile();
+            const action = redux.savingFile();
 
-            expect(action).toEqual({type: redux.SAVING_FILE});
+            expect(action).toEqual({ type: redux.SAVING_FILE });
 
             // Testing reducer
-            initialState = {fileId, saveStatus: redux.SAVE_STATUS.SAVED};
-            expectedState = {fileId, saveStatus: redux.SAVE_STATUS.SAVING};
+            const initialState = { fileId, saveStatus: redux.SAVE_STATUS.SAVED };
+            const expectedState = { fileId, saveStatus: redux.SAVE_STATUS.SAVING };
 
             expect(reducer(initialState, action)).toEqual(expectedState);
         });
     });
 
     describe('Action type: SAVED_FILE', () => {
-        it ('should declare the current file as saved', () => {
-            let action;
-            let expectedState;
-            let fileId;
-            let initialState;
-
-            fileId = '1234596789746543546354312';
+        it('should declare the current file as saved', () => {
+            const fileId = '1234596789746543546354312';
 
             // Testing action creator
-            action = redux.savedFile();
+            const action = redux.savedFile();
 
-            expect(action).toEqual({ payload: {}
-                                   , type   : redux.SAVED_FILE});
+            expect(action).toEqual({
+                payload: {},
+                type: redux.SAVED_FILE,
+            });
 
             // Testing reducer
-            initialState = {fileId, saveStatus: redux.SAVE_STATUS.SAVING};
-            expectedState = {fileId, saveStatus: redux.SAVE_STATUS.SAVED};
+            const initialState = { fileId, saveStatus: redux.SAVE_STATUS.SAVING };
+            const expectedState = { fileId, saveStatus: redux.SAVE_STATUS.SAVED };
 
             expect(reducer(initialState, action)).toEqual(expectedState);
         });
 
-        it ('should allow "saving as"', () => {
-            let action;
-            let expectedState;
-            let initialFileId;
-            let initialState;
-            let finalSavedId;
-
-            initialFileId = ' ';
-            finalSavedId  = '98765432109876543210548798';
+        it('should allow "saving as"', () => {
+            const initialFileId = ' ';
+            const finalSavedId = '98765432109876543210548798';
 
             // Testing action creator
-            action = redux.savedFile({fileId: finalSavedId});
+            const action = redux.savedFile({ fileId: finalSavedId });
 
-            expect(action).toEqual({ payload: {fileId: finalSavedId}
-                                   , type: redux.SAVED_FILE});
+            expect(action).toEqual({
+                payload: { fileId: finalSavedId },
+                type: redux.SAVED_FILE,
+            });
 
             // Testing reducer
-            initialState  = {fileId: initialFileId, saveStatus: redux.SAVE_STATUS.SAVING};
-            expectedState = {fileId: finalSavedId , saveStatus: redux.SAVE_STATUS.SAVED};
+            const initialState = { fileId: initialFileId, saveStatus: redux.SAVE_STATUS.SAVING };
+            const expectedState = { fileId: finalSavedId, saveStatus: redux.SAVE_STATUS.SAVED };
 
             expect(reducer(initialState, action)).toEqual(expectedState);
         });

@@ -1,72 +1,59 @@
+// ============================================================
+// Functions
 /**
  *
  * @param {HTMLElement|React.Component} element
  */
 function scrollIfNeeded(element) {
-
-    let isStrictlyBetween;
-    let pageYOffset;
-    let innerHeight;
     let scrollXTo;
     let scrollYTo;
 
-    pageYOffset = window.pageYOffset;
-    innerHeight  = window.innerHeight;
+    const { pageYOffset, innerHeight } = window;
 
-    isStrictlyBetween = (value, min, max) => value < max && value > min;
+    const isStrictlyBetween = (value, min, max) => value < max && value > min;
 
     // Vertical scrolling
-    if (!isStrictlyBetween( element.offsetTop
-                          , pageYOffset
-                          , pageYOffset + innerHeight)) {
-
+    if (!isStrictlyBetween(
+        element.offsetTop,
+        pageYOffset,
+        pageYOffset + innerHeight,
+    )) {
         // If the element is fully invisible on top or visible partially at the top of the window :
         // We scroll to the top border of the element
-        if (pageYOffset > element.offsetTop)
+        if (pageYOffset > element.offsetTop) {
             scrollYTo = element.offsetTop;
-        else {
+        } else {
             // Otherwise, the element is hidden/partially visible at the bottom
-            let delta;
-            let elementOffsetBottom;
-            let windowOffsetBottom;
+            const elementOffsetBottom = element.offsetTop + element.offsetHeight;
+            const windowOffsetBottom = window.pageYOffset + window.innerHeight;
 
-            elementOffsetBottom = element.offsetTop + element.offsetHeight;
-            windowOffsetBottom  = window.pageYOffset + window.innerHeight;
-
-            delta = elementOffsetBottom - windowOffsetBottom;
+            const delta = elementOffsetBottom - windowOffsetBottom;
 
             scrollYTo = window.pageYOffset - delta;
         }
-    }
-    else {
+    } else {
         // No scrolling
         scrollYTo = window.pageYOffset;
     }
 
     // Horizontal scrolling
-    if (!isStrictlyBetween( element.offsetLeft
-                          , window.pageXOffset
-                          , window.pageXOffset + window.innerWidth)) {
-
+    if (!isStrictlyBetween(
+        element.offsetLeft,
+        window.pageXOffset,
+        window.pageXOffset + window.innerWidth,
+    )) {
         // If the element is fully invisible on top or visible partially at the top of the window :
         // We scroll to the top border of the element
-        if (pageYOffset > element.offsetLeft)
-            scrollXTo = element.offsetLeft;
-        else {
+        if (pageYOffset > element.offsetLeft) { scrollXTo = element.offsetLeft; } else {
             // Otherwise, the element is hidden/partially visible at the bottom
-            let delta;
-            let elementOffsetRight;
-            let windowOffsetRight;
+            const elementOffsetRight = element.offsetLeft + element.offsetWidth;
+            const windowOffsetRight = window.pageXOffset + window.innerWidth;
 
-            elementOffsetRight = element.offsetLeft + element.offsetWidth;
-            windowOffsetRight  = window.pageXOffset + window.innerWidth;
-
-            delta = elementOffsetRight - windowOffsetRight;
+            const delta = elementOffsetRight - windowOffsetRight;
 
             scrollXTo = window.pageXOffset - delta;
         }
-    }
-    else {
+    } else {
         // No horizontal scrolling
         scrollXTo = window.pageXOffset;
     }
@@ -74,4 +61,8 @@ function scrollIfNeeded(element) {
     window.scrollTo(scrollXTo, scrollYTo);
 }
 
-export {scrollIfNeeded};
+// ============================================================
+// Exports
+export {
+    scrollIfNeeded,
+};

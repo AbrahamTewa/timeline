@@ -1,11 +1,19 @@
+// ============================================================
+// Import modules
 import ActionCreatorError from './ActionCreatorError';
 
+// ============================================================
+// Error
 class InvalidMarkerPosition extends ActionCreatorError {
-    constructor({actionCreator, actionType, data, position}) {
-        super('Invalid marker position', {actionCreator, actionType, data});
+    constructor({
+        actionCreator, actionType, data, position,
+    }) {
+        super('Invalid marker position', { actionCreator, actionType, data });
 
-        this.action = { creator: actionCreator
-                      , type   : actionType};
+        this.action = {
+            creator: actionCreator,
+            type: actionType,
+        };
 
         this.data = data;
 
@@ -13,4 +21,6 @@ class InvalidMarkerPosition extends ActionCreatorError {
     }
 }
 
+// ============================================================
+// Exports
 export default InvalidMarkerPosition;

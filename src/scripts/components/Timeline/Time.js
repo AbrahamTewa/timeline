@@ -10,14 +10,20 @@ import EditableText from '../EditableText';
 // ============================================================
 // Components
 
-function Time({onChange, time}) {
-    return (<EditableText className="timeline-time"
-                          label={time}
-                          onChange={onChange} />);
+function Time({ onChange, time }) {
+    return (
+        <EditableText
+            className="timeline-time"
+            label={time}
+            onChange={onChange}
+        />
+    );
 }
 
-Time.propTypes = { onChange: PropTypes.func.isRequired
-                 , time    : PropTypes.string.isRequired};
+Time.propTypes = {
+    onChange : PropTypes.func.isRequired,
+    time     : PropTypes.string.isRequired,
+};
 
 // ============================================================
 // Exports

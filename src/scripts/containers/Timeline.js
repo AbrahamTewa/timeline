@@ -1,43 +1,46 @@
+// ============================================================
+// Import packages
 import { connect } from 'react-redux';
-import TimelineComponent from '../components/Timeline';
-import { addEvent
-       , moveEvent
-       , removeEvent
-       , renameMarker
-       , updateEvent} from '../redux/timeline';
 
+// ============================================================
+// Import modules
+import TimelineComponent from '../components/Timeline';
+import {
+    addEvent,
+    moveEvent,
+    removeEvent,
+    renameMarker,
+    updateEvent,
+} from '../redux/timeline';
+
+// ============================================================
+// Functions
 function mapDispatchToProps(dispatch) {
-    return { onEventChange      : params => dispatch(updateEvent(params))
-           , onEventMoved       : params => dispatch(moveEvent(params))
-           , onEventRemove      : params => dispatch(removeEvent(params))
-           , onMarkerTimeUpdate : params => dispatch(renameMarker(params))
-           , onNewEvent         : params => dispatch(addEvent(params))};
+    return {
+        onEventChange      : params => dispatch(updateEvent(params)),
+        onEventMoved       : params => dispatch(moveEvent(params)),
+        onEventRemove      : params => dispatch(removeEvent(params)),
+        onMarkerTimeUpdate : params => dispatch(renameMarker(params)),
+        onNewEvent         : params => dispatch(addEvent(params)),
+    };
 }
 
 /**
  *
  * @param {ReduxStore} state
  */
-function mapStateToProps (state) {
-    let props;
+function mapStateToProps(state) {
+    const props = { dragModeEnabled : false };
 
-    props = {dragModeEnabled: false};
+    props.markers = state.timeline.markers.map((marker) => {
+        const events = marker.events.map(uuid => state.timeline.events[uuid]);
 
-    props.markers = state.timeline.markers.map(function (marker) {
-        let events;
-
-        events = marker.events.map(function(uuid) {
-            let event;
-
-            event = state.timeline.events[uuid];
-
-            return event;
-        });
-
-        return { dragModeEnabled : false
-               , events
-               , time : marker.label
-               , uuid : marker.uuid};
+        return {
+            dragModeEnabled : false,
+            events,
+            time            : marker.label,
+            uuid            : marker.uuid,
+        };
     });
 
     return props;
@@ -45,4 +48,6 @@ function mapStateToProps (state) {
 
 const CurrentTimeline = connect(mapStateToProps, mapDispatchToProps)(TimelineComponent);
 
+// ============================================================
+// Exports
 export default CurrentTimeline;

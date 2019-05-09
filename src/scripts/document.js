@@ -1,7 +1,11 @@
 /* global gapi */
-import {toPromise} from './main';
-import {MIME_TYPE} from './settings';
+// ============================================================
+// Import modules
+import { toPromise } from './main';
+import { MIME_TYPE } from './settings';
 
+// ============================================================
+// Functions
 /**
  * Create a new document
  * @param content
@@ -9,46 +13,48 @@ import {MIME_TYPE} from './settings';
  * @param parentId
  * @returns {Promise.<*>}
  */
-async function create({ content
-                      , name
-                      , parentId}) {
-    let fileId;
-    let param;
+async function create({
+    content,
+    name,
+    parentId,
+}) {
+    const param = {
+        mimeType: MIME_TYPE,
+        name,
+        parent: [parentId],
+        uploadType: 'media',
+    };
 
-    param = { mimeType  : MIME_TYPE
-            , name
-            , parent    : [parentId]
-            , uploadType:'media'};
+    const { result } = await toPromise(gapi.client.drive.files.create(param));
 
-    let {result} = await toPromise(gapi.client.drive.files.create(param));
+    const fileId = result.id;
 
-    fileId = result.id;
+    await update({ content, fileId });
 
-    await update({ content, fileId});
-
-    return {fileId};
+    return { fileId };
 }
 
-async function get({fileId}) {
-    let document;
-    let thenable;
+async function get({ fileId }) {
+    const thenable = gapi.client.request({
+        path: `https://www.googleapis.com/drive/v3/files/${fileId}`,
+        params: {
+            alt: 'media',
+            mimeType: MIME_TYPE,
+        },
+        method: 'GET',
+    }).then(r => window.result = r);
 
-    thenable = gapi.client.request({ path: `https://www.googleapis.com/drive/v3/files/${fileId}`
-                                   , params : { alt      : 'media'
-                                              , mimeType : MIME_TYPE}
-                                   , method: 'GET'}).then(r => window.result = r);
-
-    document = await toPromise(thenable);
+    const document = await toPromise(thenable);
 
     return document.body;
 }
 
-async function rename({fileId, name}) {
-    let param;
-
-    param = { fileId
-            , name
-            , uploadType:'media'};
+async function rename({ fileId, name }) {
+    const param = {
+        fileId,
+        name,
+        uploadType: 'media',
+    };
 
     await toPromise(gapi.client.drive.files.update(param));
 
@@ -61,24 +67,27 @@ async function rename({fileId, name}) {
  * @param {string} fileId
  * @returns {Promise}
  */
-async function update({content, fileId}) {
-    let params;
-    let thenable;
+async function update({ content, fileId }) {
+    const params = {
+        mimeType: 'text/plain',
+        uploadType: 'multipart',
+    };
 
-    params = { mimeType   : 'text/plain'
-             , uploadType : 'multipart'};
-
-    thenable = gapi.client.request({ path: `https://www.googleapis.com/upload/drive/v3/files/${fileId}`
-                                   , body : content
-                                   , method: 'PATCH'
-                                   , params}).then(() => {});
+    const thenable = gapi.client.request({
+        path: `https://www.googleapis.com/upload/drive/v3/files/${fileId}`,
+        body: content,
+        method: 'PATCH',
+        params,
+    }).then(() => {});
 
     await toPromise(thenable);
 
     return undefined;
 }
 
-export { create
-       , get
-       , rename
-       , update};
+export {
+    create
+    , get
+    , rename
+    , update,
+};

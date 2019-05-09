@@ -1,67 +1,69 @@
 /* global google */
-let currentUser;
 
-import FilePicker          from './components/GoogleToolbar/FilePicker';
-import * as document       from './document';
-import {getStore}          from './redux';
+// ============================================================
+// Import modules
+import FilePicker from './components/GoogleToolbar/FilePicker';
+import * as document from './document';
+import { getStore } from './redux';
 import * as documentAction from './redux/document';
 
+// ============================================================
+// Module's constants and variables
+let currentUser;
+
+// ============================================================
+// Functions
 async function forceSave() {
-
-    let doc;
-    /** @type {string} */
-    let fileId;
-
-    let filePicker;
-
-    /** @type {string} */
-    let parent;
-
     /** @type {ReduxStore} */
-    let state;
-    let store;
-    let view;
+    const store = getStore();
+    const state = store.getState();
 
-    store = getStore();
-    state = store.getState();
+    /** @type {string} */
+    const fileId = state.document.fileId;
 
-    fileId = state.document.fileId;
+    if (fileId) {
+        await saveDocument();
+        return;
+    }
 
-    if (fileId)
-        return saveDocument();
-
-    view = new google.picker.DocsView(google.picker.ViewId.FOLDERS);
+    const view = new google.picker.DocsView(google.picker.ViewId.FOLDERS);
     view.setIncludeFolders(true);
     view.setMode(google.picker.DocsViewMode.LIST);
     view.setSelectFolderEnabled(true);
     view.setParent('root');
 
-    filePicker = new FilePicker({ access_token: state.authentication.oauth.access_token
-                                , views       : [view]});
+    const filePicker = new FilePicker({
+        access_token: state.authentication.oauth.access_token,
+        views: [view],
+    });
 
     // If the file hasn't been saved yet, then we ask the user to pick a folder where to create it
 
-    parent = await filePicker.display();
+    /** @type {string} */
+    const parent = await filePicker.display();
 
     store.dispatch(documentAction.savingFile());
 
-    if (typeof parent === 'undefined')
+    if (typeof parent === 'undefined') {
         return;
+    }
 
-    doc = await document.create({ content : toSaveFormat(state)
-                                , name    : state.document.name
-                                , parentId: parent.parentId});
+    const doc = await document.create({
+        content: toSaveFormat(state),
+        name: state.document.name,
+        parentId: parent.parentId,
+    });
 
-    store.dispatch(documentAction.savedFile({fileId: doc.fileId}));
+    store.dispatch(documentAction.savedFile({ fileId: doc.fileId }));
 }
 
 /**
  *
- * @param {string} document
+ * @param {string} doc
  * @returns {ReduxStore}
  */
-function fromSaveFormat(document) {
-    return {timeline: JSON.parse(document).data};
+function fromSaveFormat(doc) {
+    return { timeline: JSON.parse(doc).data };
 }
 
 function getCurrentUser() {
@@ -69,19 +71,17 @@ function getCurrentUser() {
 }
 
 async function saveDocument() {
-    let content;
-    let store;
-    let state;
-
-    store = getStore();
+    const store = getStore();
 
     store.dispatch(documentAction.savingFile());
 
-    state = store.getState();
-    content = toSaveFormat(state);
+    const state = store.getState();
+    const content = toSaveFormat(state);
 
-    await document.update({ content
-                          , fileId: state.document.fileId});
+    await document.update({
+        content,
+        fileId: state.document.fileId,
+    });
 
     store.dispatch(documentAction.savedFile());
 }
@@ -99,13 +99,11 @@ function enableEventDrag() {
 }
 
 function toPromise(thenable) {
-
-    let promise;
     let promiseHolder;
 
-    promise = new Promise(function(onFulfill, onReject) {
-        promiseHolder = {onFulfill, onReject};
-    });
+    const promise = new Promise(((onFulfill, onReject) => {
+        promiseHolder = { onFulfill, onReject };
+    }));
 
     thenable.then(promiseHolder.onFulfill, promiseHolder.onReject);
 
@@ -118,22 +116,24 @@ function toPromise(thenable) {
  * @returns {string}
  */
 function toSaveFormat(state) {
-    let document;
+    const doc = {
+        application: 'github.com/abrahamtewa/timeline',
+        version: '0.0.1',
+    };
 
-    document = { application: 'github.com/abrahamtewa/timeline'
-               , version: '0.0.1'};
+    doc.data = state.timeline;
 
-    document.data = state.timeline;
-
-    return JSON.stringify(document);
+    return JSON.stringify(doc);
 }
 
-export { disableEventDrag
-       , enableEventDrag
-       , forceSave
-       , fromSaveFormat
-       , getCurrentUser
-       , saveDocument
-       , setCurrentUser
-       , toPromise
-       , toSaveFormat};
+export {
+    disableEventDrag
+    , enableEventDrag
+    , forceSave
+    , fromSaveFormat
+    , getCurrentUser
+    , saveDocument
+    , setCurrentUser
+    , toPromise
+    , toSaveFormat,
+};

@@ -1,37 +1,45 @@
+// ============================================================
+// Import packages
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import AddMarker    from './AddMarker';
+// ============================================================
+// Import modues
+import AddMarker from './AddMarker';
 import DocumentName from './DocumentName';
-import Timeline     from './Timeline';
-import Toolbar      from './Toolbar';
+import Timeline from './Timeline';
+import Toolbar from './Toolbar';
 
 function mapStateToProps(state) {
-    return { noMarkers: state.timeline.markers.length === 0};
+    return { noMarkers : state.timeline.markers.length === 0 };
 }
 
-function App({noMarkers}) {
-    let noMarkersClass;
+function App({ noMarkers }) {
     let timeline;
 
-    noMarkersClass = noMarkers ? 'noMarkers' : '';
+    const noMarkersClass = noMarkers ? 'noMarkers' : '';
 
-    if (!noMarkers)
-        timeline = <Timeline id="timeline"/>;
+    if (!noMarkers) {
+        timeline = <Timeline id="timeline" />;
+    }
 
-    return (<div className={noMarkersClass}>
-                <header>
-                    <DocumentName />
-                    <Toolbar />
-                </header>
-                <AddMarker/>
-                {timeline}
-            </div>);
+    return (
+        <div className={noMarkersClass}>
+            <header>
+                <DocumentName />
+                <Toolbar />
+            </header>
+            <AddMarker />
+            {timeline}
+        </div>
+    );
 }
 
-App.propTypes = {noMarkers: PropTypes.bool.isRequired};
+App.propTypes = { noMarkers : PropTypes.bool.isRequired };
 
 const AppContainer = connect(mapStateToProps)(App);
 
+// ============================================================
+// Exports
 export default AppContainer;

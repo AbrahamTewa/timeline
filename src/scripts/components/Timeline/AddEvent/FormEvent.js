@@ -1,13 +1,15 @@
-// ******************** Imports NodeJS packages ********************
-import React     from 'react';
+// ============================================================
+// Import packages
+import React from 'react';
 import PropTypes from 'prop-types';
 
-// ******************** Imports components ********************
+// ============================================================
+// Import components
 import DescriptionForm from './DescriptionForm';
 
-// ******************** Container ********************
+// ============================================================
+// Components
 class FormEvent extends React.Component {
-
     /**
      *
      * @param {Object} props
@@ -24,38 +26,57 @@ class FormEvent extends React.Component {
      */
     onSubmit(event) {
         event.preventDefault();
-        this.props.onNewEvent({ label      : this.labelInput.value
-                              , description: this.descriptionForm.getValue()});
+        this.props.onNewEvent({
+            label       : this.labelInput.value,
+            description : this.descriptionForm.getValue(),
+        });
     }
 
     render() {
-        return (<form className="form-event"
-                      onSubmit={this.onSubmit}>
-                    <div className="form-group row no-gutters">
-                        <label htmlFor="event">Évènement</label>
-                        <input className="form-control"
-                               id="event"
-                               placeholder="Nom de l'évènement"
-                               ref={input => { this.labelInput = input; }}
-                               type="text"/>
-                    </div>
+        return (
+            <form
+                className="form-event"
+                onSubmit={this.onSubmit}
+            >
+                <div className="form-group row no-gutters">
+                    <label htmlFor="event">Évènement</label>
+                    <input
+                        className="form-control"
+                        id="event"
+                        placeholder="Nom de l'évènement"
+                        ref={(input) => {
+                            this.labelInput = input;
+                        }}
+                        type="text"
+                    />
+                </div>
 
-                    <DescriptionForm ref={r => this.descriptionForm = r} />
-                    <div className="form-event_actions">
-                        <input className="btn btn-primary"
-                               type="submit"
-                               value="Ajouter évènement" />
-                        <input className="btn btn-secondary"
-                               onClick={this.props.onCancel}
-                               type="button"
-                               value="Annuler" />
-                    </div>
-                </form>);
+                <DescriptionForm ref={(r) => {
+                    this.descriptionForm = r;
+                }}
+                />
+                <div className="form-event_actions">
+                    <input
+                        className="btn btn-primary"
+                        type="submit"
+                        value="Ajouter évènement"
+                    />
+                    <input
+                        className="btn btn-secondary"
+                        onClick={this.props.onCancel}
+                        type="button"
+                        value="Annuler"
+                    />
+                </div>
+            </form>
+        );
     }
 }
 
-FormEvent.propTypes = { onCancel  : PropTypes.func.isRequired
-                      , onNewEvent: PropTypes.func.isRequired};
+FormEvent.propTypes = {
+    onCancel   : PropTypes.func.isRequired,
+    onNewEvent : PropTypes.func.isRequired,
+};
 
 // ******************** Exports ********************
 export default FormEvent;

@@ -1,3 +1,4 @@
+/* eslint-disable import/no-extraneous-dependencies */
 /* eslint-env node, jest */
 
 // ============================================================
@@ -10,33 +11,31 @@ import sinon from 'sinon';
 // ============================================================
 // Import modules
 import EditableText,
-       {MODE_BUTTON} from '..';
-import {generateLabel} from '../../../test_helpers';
-import {MODE_DIRECT} from "../index";
+{ MODE_BUTTON } from '..';
+import { generateLabel } from '../../../test_helpers';
+import { MODE_DIRECT } from '../index';
 
 // ============================================================
 // Tests
 
-describe('Components', ()=> {
+describe('Components', () => {
     describe('EditableText', () => {
-
         // ====================
         // Helpers
-        const enableEdition = function(editableText) {
+        const enableEdition = function (editableText) {
             editableText.instance().enableUpdate();
             editableText.update();
         };
 
-        const generateEditableText = function(label='') {
-            return mount(<EditableText label={label} onChange={() => {}}/>);
+        const generateEditableText = function (label = '') {
+            return mount(<EditableText label={label} onChange={() => {}} />);
         };
 
         /**
          * @param editableText
          * @param {boolean} updatable
          */
-        const testUpdateMode = function(editableText, updatable) {
-
+        const testUpdateMode = function (editableText, updatable) {
             editableText.update();
             const input = editableText.find('input');
 
@@ -62,17 +61,19 @@ describe('Components', ()=> {
             expect(form.prop('data-mode')).toBe(MODE_BUTTON);
         });
 
-        it('should handle className', ()=> {
+        it('should handle className', () => {
             const className = generateLabel(1);
 
-            const editableText = mount(<EditableText className={className}
-                                                     label={generateLabel()}
-                                                     onChange={() => {}}/>);
+            const editableText = mount(<EditableText
+                className={className}
+                label={generateLabel()}
+                onChange={() => {}}
+            />);
 
             expect(editableText.hasClass(className)).toBe(true);
         });
 
-        it('should handle empty string as label', ()=> {
+        it('should handle empty string as label', () => {
             const editableText = generateEditableText('');
             const input = editableText.find('input');
             expect(input.prop('value')).toBe('');
@@ -116,17 +117,16 @@ describe('Components', ()=> {
         });
 
         it('should allow text edition', () => {
-            let component;
-            let editableText;
-            let label;
-            let onChangeSpy;
+            const onChangeSpy = sinon.spy();
+            const label = generateLabel();
+            const component = (
+                <EditableText
+                    label={label}
+                    onChange={onChangeSpy}
+                />
+            );
 
-            onChangeSpy = sinon.spy();
-            label = generateLabel();
-            component = <EditableText label={label}
-                                      onChange={onChangeSpy}/>;
-
-            editableText = mount(component);
+            const editableText = mount(component);
 
             testUpdateMode(editableText, false);
             enableEdition(editableText);
@@ -135,7 +135,7 @@ describe('Components', ()=> {
             // With a simple label
             {
                 const newLabel = generateLabel();
-                editableText.find('input').simulate('change', { target: { value: newLabel }});
+                editableText.find('input').simulate('change', { target : { value : newLabel } });
 
                 expect(onChangeSpy.calledOnce).toBe(true);
                 expect(onChangeSpy.args[0][0]).toBe(newLabel);
@@ -149,7 +149,7 @@ describe('Components', ()=> {
             // With an empty label
             {
                 const newLabel = '';
-                editableText.find('input').simulate('change', { target: { value: newLabel }});
+                editableText.find('input').simulate('change', { target : { value : newLabel } });
 
                 expect(onChangeSpy.calledOnce).toBe(true);
                 expect(onChangeSpy.args[0][0]).toBe(newLabel);
@@ -159,7 +159,7 @@ describe('Components', ()=> {
             }
         });
 
-        describe('Button mode', ()=> {
+        describe('Button mode', () => {
             let editableText;
             let label;
             let onChangeSpy;
@@ -167,13 +167,15 @@ describe('Components', ()=> {
             // ====================
             // Triggers
             beforeEach(() => {
-                let component;
-
                 onChangeSpy = sinon.spy();
                 label = generateLabel();
-                component = <EditableText label={label}
-                                          mode={MODE_BUTTON}
-                                          onChange={onChangeSpy}/>;
+                const component = (
+                    <EditableText
+                        label={label}
+                        mode={MODE_BUTTON}
+                        onChange={onChangeSpy}
+                    />
+                );
 
                 editableText = mount(component);
             });
@@ -198,13 +200,15 @@ describe('Components', ()=> {
             // ====================
             // Triggers
             beforeEach(() => {
-                let component;
-
                 onChangeSpy = sinon.spy();
                 label = generateLabel();
-                component = <EditableText label={label}
-                                          mode={MODE_DIRECT}
-                                          onChange={onChangeSpy}/>;
+                const component = (
+                    <EditableText
+                        label={label}
+                        mode={MODE_DIRECT}
+                        onChange={onChangeSpy}
+                    />
+                );
 
                 editableText = mount(component);
             });
@@ -216,16 +220,16 @@ describe('Components', ()=> {
             });
         });
 
-        describe('Snapshots', ()=> {
-
-            const snapshot = function(component) {
-
-                let options = {createNodeMock: (element) => {
-                                    if (element.type === 'input') {
-                                        return { focus: () => {}};
-                                    }
-                                    return null;
-                                }};
+        describe('Snapshots', () => {
+            const snapshot = function (component) {
+                const options = {
+                    createNodeMock : (element) => {
+                        if (element.type === 'input') {
+                            return { focus : () => {} };
+                        }
+                        return null;
+                    },
+                };
 
                 const tree = renderer.create(component, options);
                 expect(tree.toJSON()).toMatchSnapshot();
@@ -236,33 +240,39 @@ describe('Components', ()=> {
                 expect(tree.toJSON()).toMatchSnapshot();
             };
 
-            describe('Button mode', ()=> {
-
-                it('empty label', ()=> {
-                    snapshot(<EditableText label={''}
-                                           mode={MODE_BUTTON}
-                                           onChange={()=>{}}/>);
+            describe('Button mode', () => {
+                it('empty label', () => {
+                    snapshot(<EditableText
+                        label=""
+                        mode={MODE_BUTTON}
+                        onChange={() => {}}
+                    />);
                 });
 
-                it('some label', ()=> {
-                    snapshot(<EditableText label={'Some label'}
-                                           mode={MODE_BUTTON}
-                                           onChange={()=>{}}/>);
+                it('some label', () => {
+                    snapshot(<EditableText
+                        label="Some label"
+                        mode={MODE_BUTTON}
+                        onChange={() => {}}
+                    />);
                 });
             });
 
-            describe('Direct mode', ()=> {
-
-                it('empty label', ()=> {
-                    snapshot(<EditableText label={''}
-                                           mode={MODE_DIRECT}
-                                           onChange={()=>{}}/>);
+            describe('Direct mode', () => {
+                it('empty label', () => {
+                    snapshot(<EditableText
+                        label=""
+                        mode={MODE_DIRECT}
+                        onChange={() => {}}
+                    />);
                 });
 
-                it('some label', ()=> {
-                    snapshot(<EditableText label={'Some label'}
-                                           mode={MODE_DIRECT}
-                                           onChange={()=>{}}/>);
+                it('some label', () => {
+                    snapshot(<EditableText
+                        label="Some label"
+                        mode={MODE_DIRECT}
+                        onChange={() => {}}
+                    />);
                 });
             });
         });

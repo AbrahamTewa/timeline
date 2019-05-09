@@ -8,19 +8,21 @@ import sinon from 'sinon';
 
 // ============================================================
 // Import modules
-import AddButton from '../AddButton';
-import {initializeEnzyme,
-        snapshot} from '../../../../test_helpers';
+import AddButton from './AddButton';
+import {
+    initializeEnzyme,
+    snapshot,
+} from '../../../test_helpers';
 
 // ============================================================
 // Tests
 
 initializeEnzyme();
-describe('Components', ()=> {
+describe('Components', () => {
     describe('Unit test', () => {
-        it('should react on changes', ()=>{
-            let onClick = sinon.spy();
-            let component = <AddButton onClick={onClick} />;
+        it('should react on changes', () => {
+            const onClick = sinon.spy();
+            const component = <AddButton onClick={onClick} />;
             const wrapper = shallow(component);
             wrapper.simulate('click');
             expect(onClick.calledOnce).toBe(true);
@@ -28,8 +30,8 @@ describe('Components', ()=> {
     });
 
     describe('Snapshot', () => {
-        it('should render normally', ()=>{
-            snapshot(<AddButton onClick={()=>{}}/>);
+        it('should render normally', () => {
+            snapshot(<AddButton onClick={() => {}} />);
         });
     });
 });

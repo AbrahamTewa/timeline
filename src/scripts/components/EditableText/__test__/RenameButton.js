@@ -1,3 +1,4 @@
+/* eslint-disable import/no-extraneous-dependencies */
 /* eslint-env node, jest */
 
 // ============================================================
@@ -13,12 +14,11 @@ import RenameButton from '../RenameButton';
 // ============================================================
 // Tests
 
-describe('Components', ()=> {
+describe('Components', () => {
     describe('EditableText/RenameButton', () => {
-
-        it('should react on changes', ()=>{
-            let onClick = sinon.spy();
-            let component = <RenameButton onClick={onClick} />;
+        it('should react on changes', () => {
+            const onClick = sinon.spy();
+            const component = <RenameButton onClick={onClick} />;
             const wrapper = shallow(component);
             wrapper.simulate('click');
             expect(onClick.calledOnce).toBe(true);

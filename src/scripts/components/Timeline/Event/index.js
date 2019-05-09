@@ -1,2 +1,2 @@
-export {default as default} from './Event';
-export {eventAttributePropTypes} from './Event';
+export { default } from './Event';
+export { eventAttributePropTypes } from './Event';

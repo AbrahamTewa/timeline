@@ -1,37 +1,27 @@
-// ******************** Import Packages ********************
+// ============================================================
+// Import packages
 import React from 'react';
 import PropTypes from 'prop-types';
 
-// ******************** Import Components ********************
+// ============================================================
+// Import modules
 import AddButton from './AddButton';
 import EventForm from '../EventForm';
 
-// ******************** Component ********************
+// ============================================================
+// Component
 class AddEvent extends React.Component {
-
     constructor(props) {
         super(props);
 
-        this.onAdd      = this.onAdd.bind(this);
-        this.onCancel   = this.onCancel.bind(this);
+        this.onAdd = this.onAdd.bind(this);
+        this.onCancel = this.onCancel.bind(this);
         this.onNewEvent = this.onNewEvent.bind(this);
-        this.state    = { formDisplayed: false };
+        this.state = { formDisplayed : false };
     }
 
-    /**
-     * Toggle the display of the form button
-     * @param {boolean} display
-     */
-    toggleFormDisplay(display) {
-        let state;
-
-        state = { ...this.state
-                , formDisplayed: display};
-
-        this.setState(state);
-    }
-
-    // ***** Events *****
+    // ==================================================
+    // Event listeners
 
     /**
      * Callback triggered when the user click on the "Add" button
@@ -60,24 +50,49 @@ class AddEvent extends React.Component {
         this.props.onNewEvent(data);
     }
 
+    // ==================================================
+    // Helpers
+
+    /**
+     * Toggle the display of the form button
+     * @param {boolean} display
+     */
+    toggleFormDisplay(display) {
+        const state = {
+            ...this.state,
+            formDisplayed : display,
+        };
+
+        this.setState(state);
+    }
+
     render() {
         let button;
         let form;
 
-        if (this.state.formDisplayed)
-            form = <EventForm onCancel={this.onCancel}
-                              onSubmit={this.onNewEvent}/>;
-        else
-            button = <AddButton onClick={this.onAdd}/>;
+        if (this.state.formDisplayed) {
+            form = (
+                <EventForm
+                    onCancel={this.onCancel}
+                    onSubmit={this.onNewEvent}
+                />
+            );
+        }
+        else {
+            button = <AddButton onClick={this.onAdd} />;
+        }
 
-        return (<div className="add-event">
-                    {button}
-                    {form}
-                </div>);
+        return (
+            <div className="add-event">
+                {button}
+                {form}
+            </div>
+        );
     }
 }
 
-AddEvent.propTypes = {onNewEvent : PropTypes.func.isRequired};
+AddEvent.propTypes = { onNewEvent : PropTypes.func.isRequired };
 
-// ******************** Exports ********************
+// ============================================================
+// Exports
 export default AddEvent;

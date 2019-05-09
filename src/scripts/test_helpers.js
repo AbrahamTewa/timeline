@@ -1,3 +1,4 @@
+/* eslint-disable import/no-extraneous-dependencies */
 // ============================================================
 // Import packages
 import faker from 'faker';
@@ -12,7 +13,7 @@ import renderer from 'react-test-renderer';
  * @param {number} maxWords
  * @returns {string}
  */
-function generateLabel(maxWords=5) {
+function generateLabel(maxWords = 5) {
     return faker.lorem.words(faker.random.number(maxWords));
 }
 
@@ -23,18 +24,7 @@ function generateLabel(maxWords=5) {
  * @returns {string}
  */
 function generateText(maxParagraph) {
-    return faker.lorem.text(faker.random.number(maxParagraph))
-}
-
-/**
- *
- * @param {React.Component} component
- * @returns {element}
- */
-function getShallowlyRenderedInstance(component) {
-    const renderer = ReactTestUtils.createRenderer();
-    renderer.render(component);
-    return renderer._instance && renderer._instance._instance;
+    return faker.lorem.text(faker.random.number(maxParagraph));
 }
 
 function snapshot(component) {
@@ -44,6 +34,8 @@ function snapshot(component) {
 
 // ============================================================
 // Exports
-export {generateLabel,
-        generateText,
-        snapshot};
+export {
+    generateLabel,
+    generateText,
+    snapshot,
+};

@@ -15,6 +15,12 @@
    "reporters": [
        "default",
        [
+           "jest-stare",
+           {
+               "resultDir": "./reports/tests/unit"
+           }
+       ],
+       [
            "jest-junit",
            {
                 "outputDirectory": "./reports/tests/unit",

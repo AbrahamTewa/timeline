@@ -1,49 +1,50 @@
 /* global gapi */
-// ******************** NodeJS packages ********************
+// ============================================================
+// Import packages
 import React from 'react';
 import PropTypes from 'prop-types';
 
-// ******************** Component ********************
+// ============================================================
+// Component
 class LoginButton extends React.Component {
-
-    constructor(props) {
-        super(props);
-    }
-
     componentDidMount() {
-        /** @type {Object} */
-        let params;
-
-        params = { longtitle : true
-                 , onsuccess : this.onLoginSuccess.bind(this)
-                 , scope     : 'https://www.googleapis.com/auth/drive.readonly'
-                 , theme     : 'dark'};
+        const params = {
+            longtitle : true,
+            onsuccess : this.onLoginSuccess.bind(this),
+            scope     : 'https://www.googleapis.com/auth/drive.readonly',
+            theme     : 'dark',
+        };
 
         gapi.signin2.render(this.buttonElement, params);
     }
 
     async onLoginSuccess(user) {
-        let oauth;
+        const oauth = user.getAuthResponse();
 
-        oauth = user.getAuthResponse();
-
-        if (!oauth.access_token)
+        if (!oauth.access_token) {
             await user.reloadAuthResponse();
+        }
 
         this.props.onLogin();
     }
 
     render() {
-        return (<div className={'login-button' + (this.props.isAuthenticated ? ' hidden': '')}
-                     ref={input => this.buttonElement = input }>
-                </div>);
+        return (
+            <div
+                className={`login-button${this.props.isAuthenticated ? ' hidden' : ''}`}
+                ref={(input) => {
+                    this.buttonElement = input;
+                }}
+            />
+        );
     }
-
 }
 
-// ******************** Prop-types ********************
-LoginButton.propTypes = { isAuthenticated: PropTypes.bool.isRequired
-                        , onLogin        : PropTypes.func.isRequired};
+LoginButton.propTypes = {
+    isAuthenticated : PropTypes.bool.isRequired,
+    onLogin         : PropTypes.func.isRequired,
+};
 
-// ******************** Exports ********************
+// ============================================================
+// Exports
 export default LoginButton;

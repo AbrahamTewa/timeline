@@ -25,7 +25,6 @@ const MODE_DIRECT = 'DIRECT';
  * @property {boolean} state.updatable
  */
 class EditableText extends React.Component {
-
     /**
      *
      * @param {Object}           props
@@ -37,16 +36,54 @@ class EditableText extends React.Component {
     constructor(props) {
         super(props);
 
-        this.enableUpdate  = this.enableUpdate.bind(this);
+        this.enableUpdate = this.enableUpdate.bind(this);
         this.disableUpdate = this.disableUpdate.bind(this);
-        this.onChange      = this.onChange.bind(this);
-        this.onSubmit      = this.onSubmit.bind(this);
+        this.onChange = this.onChange.bind(this);
+        this.onSubmit = this.onSubmit.bind(this);
 
-        this.state = {updatable : this.mode === MODE_DIRECT};
+        this.state = { updatable : this.mode === MODE_DIRECT };
     }
 
-    // ==============================
-    // Component methods
+    // ==================================================
+    // Lifecycle
+
+    componentDidMount() {
+        this.focus();
+    }
+
+    componentDidUpdate() {
+        if (!this.state.updatable) {
+            return;
+        }
+
+        this.focus();
+    }
+
+    // ==================================================
+    // Event listeners
+
+    /**
+     * Listener trigger each time the input change
+     * @param {Event} event
+     * @private
+     */
+    onChange(event) {
+        this.props.onChange(event.target.value);
+    }
+
+    /**
+     * Listener trigger each time the form is submit
+     * @param {Event} event
+     * @private
+     */
+    onSubmit(event) {
+        event.preventDefault();
+        this.disableUpdate();
+    }
+
+    // ==================================================
+    // Controllers
+
     /**
      * Disable the edit mode
      * @public
@@ -73,86 +110,71 @@ class EditableText extends React.Component {
     }
 
     /**
-     * Listener trigger each time the input change
-     * @param {Event} event
-     * @private
-     */
-    onChange(event) {
-        this.props.onChange(event.target.value);
-    }
-
-    /**
-     * Listener trigger each time the form is submit
-     * @param {Event} event
-     * @private
-     */
-    onSubmit(event) {
-        event.preventDefault();
-        this.disableUpdate();
-    }
-
-    /**
      * Toggle the edit mode
      * @param {boolean} [updatable]
      * @public
      */
     toggleUpdate(updatable) {
-        if (this.props.mode !== MODE_BUTTON)
+        if (this.props.mode !== MODE_BUTTON) {
             return;
+        }
 
-        if (typeof updatable === 'undefined')
-            updatable = !this.state.updatable;
+        let isUpdatable = typeof updatable === 'undefined'
+            ? !this.state.updatable
+            : updatable;
 
-        this.setState({...this.state
-                      , updatable: updatable});
-    }
-
-    // ==============================
-    // React methods
-    componentDidMount() {
-        this.focus();
-    }
-
-    componentDidUpdate() {
-        if (!this.state.updatable)
-            return;
-
-        this.focus();
+        this.setState({
+            ...this.state,
+            updatable : isUpdatable,
+        });
     }
 
     render() {
         let renameButton;
 
-        if (this.props.mode === MODE_BUTTON)
-            renameButton =  <RenameButton onClick={this.enableUpdate}/>;
+        if (this.props.mode === MODE_BUTTON) {
+            renameButton = <RenameButton onClick={this.enableUpdate} />;
+        }
 
         return (
-            <form onSubmit={this.onSubmit}
-                  data-mode={this.props.mode}
-                  className={`editable-text ${this.props.className}`}>
-                <input disabled={!this.state.updatable}
-                       onChange={this.onChange}
-                       onBlur={this.disableUpdate}
-                       ref={input => { this.inputElement = input; }}
-                       type="text"
-                       value={this.props.label}/>
+            <form
+                onSubmit={this.onSubmit}
+                data-mode={this.props.mode}
+                className={`editable-text ${this.props.className}`}
+            >
+                <input
+                    disabled={!this.state.updatable}
+                    onChange={this.onChange}
+                    onBlur={this.disableUpdate}
+                    ref={(input) => {
+                        this.inputElement = input;
+                    }}
+                    type="text"
+                    value={this.props.label}
+                />
                 {renameButton}
             </form>
         );
     }
-
 }
 
-EditableText.defaultProps = { mode     : MODE_BUTTON};
+EditableText.defaultProps = {
+    className : undefined,
+    mode      : MODE_BUTTON,
+};
 
-EditableText.propTypes = { className : PropTypes.string
-                         , label     : PropTypes.string.isRequired
-                         , mode      : PropTypes.string
-                         , onChange  : PropTypes.func.isRequired};
+EditableText.propTypes = {
+    className : PropTypes.string,
+    label     : PropTypes.string.isRequired,
+    mode      : PropTypes.string,
+    onChange  : PropTypes.func.isRequired,
+};
 
 // ============================================================
 // Exports
 export default EditableText;
 
-export { MODE_BUTTON
-       , MODE_DIRECT};
+export {
+    MODE_BUTTON
+    , MODE_DIRECT,
+};

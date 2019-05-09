@@ -1,15 +1,25 @@
-// ******************** NodeJS packages ********************
-import React     from 'react';
+// ============================================================
+// Import packages
+import React from 'react';
 
-import {forceSave} from '../../main';
+// ============================================================
+// Import modules
+import { forceSave } from '../../main';
 
-// ******************** Component ********************
+// ============================================================
+// Component
 function SaveButton() {
-    return (<button className="btn btn-primary"
-                    onClick={forceSave}>
+    return (
+        <button
+            className="btn btn-primary"
+            onClick={forceSave}
+            type="button"
+        >
                 Enregistrer
-            </button>);
+        </button>
+    );
 }
 
-// ******************** Exports ********************
+// ============================================================
+// Exports
 export default SaveButton;

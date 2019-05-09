@@ -1,5 +1,9 @@
-import {getCurrentState} from '..';
+// ============================================================
+// Import modules
+import { getCurrentState } from '..';
 
+// ============================================================
+// Functions
 /**
  *
  * @param {string}      uuid   - UUID of the marker
@@ -7,8 +11,8 @@ import {getCurrentState} from '..';
  * @returns {ReduxStore.Timeline.Marker}
  */
 function getMarker(uuid, state) {
-    state = state || getCurrentState();
-    return state.timeline.markers.filter(marker => marker.uuid === uuid)[0];
+    const currentState = state || getCurrentState();
+    return currentState.timeline.markers.filter(marker => marker.uuid === uuid)[0];
 }
 
 /**
@@ -17,9 +21,13 @@ function getMarker(uuid, state) {
  * @return {string[]}
  */
 function listMarkersUUID(state) {
-    state = state || getCurrentState();
-    return state.timeline.markers.map(({uuid}) => uuid);
+    const currentState = state || getCurrentState();
+    return currentState.timeline.markers.map(({ uuid }) => uuid);
 }
 
-export {getMarker,
-        listMarkersUUID};
+// ============================================================
+// Exports
+export { 
+    getMarker,
+    listMarkersUUID,
+};
