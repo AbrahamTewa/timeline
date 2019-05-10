@@ -9,7 +9,7 @@ import { configure } from '@storybook/react';
 // Functions
 function loadStories() {
     // eslint-disable-next-line global-require,import/no-internal-modules
-    require('../src/index.stories');
+    require('../stories');
 }
 
 configure(loadStories, module);

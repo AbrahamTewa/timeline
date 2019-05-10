@@ -21,7 +21,7 @@ async function initialize() {
  */
 function initializeEditor() {
     tinymce.init({
-        selector: '.text-editor',
+        selector : '.text-editor',
     });
 }
 
@@ -40,31 +40,32 @@ function initializeStore() {
         profile = user.getBasicProfile();
 
         authentication = {
-            oauth: { access_token: accessToken },
+            oauth : { access_token : accessToken },
 
-            profile: {
-                email: profile.getEmail(),
-                fullName: profile.getName(),
-                image: profile.getImageUrl(),
+            profile : {
+                email    : profile.getEmail(),
+                fullName : profile.getName(),
+                image    : profile.getImageUrl(),
             },
 
-            signedIn: true,
-            user: { id: profile.getId() },
+            signedIn : true,
+            user     : { id : profile.getId() },
         };
-    } else {
-        authentication = { signedIn: false };
+    }
+    else {
+        authentication = { signedIn : false };
     }
 
     /** @type {ReduxStore} */
     const initialState = {
         authentication,
-        document: {
-            name: 'Ma chronologie.timeline',
-            saved: true,
+        document : {
+            name  : 'Ma chronologie.timeline',
+            saved : true,
         },
-        timeline: {
-            events: {},
-            markers: [],
+        timeline : {
+            events  : {},
+            markers : [],
         },
     };
 
@@ -78,7 +79,7 @@ async function initializeAPI() {
 
     return Promise.all([gapi.client.load('drive', 'v3'),
         gapi.client.init({
-            clientId: CLIENT_ID,
+            clientId : CLIENT_ID,
             scope,
         })]);
 }
@@ -90,7 +91,7 @@ function loadAPI(api) {
         promiseHolder = { onFulfill, onReject };
     }));
 
-    gapi.load(api, { callback: promiseHolder.onFulfill });
+    gapi.load(api, { callback : promiseHolder.onFulfill });
 
     return promise;
 }

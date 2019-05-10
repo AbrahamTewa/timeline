@@ -1,7 +1,7 @@
 /* global gapi */
 // ============================================================
 // Import modules
-import { toPromise } from './main';
+import { toPromise } from './helpers';
 
 // ============================================================
 // Functions

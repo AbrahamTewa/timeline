@@ -43,6 +43,7 @@ class UserDropdown extends React.Component {
                     </span>
                 </button>
                 <div className="dropdown-menu">
+                    {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
                     <a
                         onClick={this.disconnect}
                         className="dropdown-item"

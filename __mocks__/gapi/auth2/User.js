@@ -1,11 +1,15 @@
-// ******************** NodeJS packages ********************
+// ============================================================
+// Import packages
 import yaml from 'js-yaml';
 import fs from 'mz/fs';
 
+// ============================================================
+// Import modules
 import UserBasicProfile from './UserBasicProfile';
 import UserAuthResponse from './UserAuthResponse';
 
-// ******************** Module constants and variables ********************
+// ============================================================
+// Module's constants and variables
 const mapUsers = {};
 
 /**
@@ -13,22 +17,26 @@ const mapUsers = {};
  */
 let currentUser;
 
-// ******************** Class ********************
+// ============================================================
+// Class
 class User {
-
     /**
      * @param {MockData.User} data
      */
     constructor(data) {
-        this.__mock__ = { data
-                        , userAuthResponse: new UserAuthResponse(data)
-                        , userBasicProfile: new UserBasicProfile(data) };
+        // eslint-disable-next-line no-underscore-dangle
+        this.__mock__ = {
+            data,
+            userAuthResponse : new UserAuthResponse(data),
+            userBasicProfile : new UserBasicProfile(data),
+        };
     }
 
     /**
      * @returns {UserAuthResponse}
      */
     getAuthResponse() {
+        // eslint-disable-next-line no-underscore-dangle
         return this.__mock__.userAuthResponse;
     }
 
@@ -36,6 +44,7 @@ class User {
      * @returns {UserBasicProfile}
      */
     getBasicProfile() {
+        // eslint-disable-next-line no-underscore-dangle
         return this.__mock__.userBasicProfile;
     }
 }
@@ -52,7 +61,6 @@ function getCurrentUser() {
  * @param {string} name
  */
 async function loadUser(name) {
-
     /**
      * type {Object}
      */
@@ -61,32 +69,34 @@ async function loadUser(name) {
     user = mapUsers[name];
 
     if (!user) {
-        let content;
         let type;
         let filePath = `${__dirname}/../../__data__/users/${name}`;
 
         // Searching for either YAML or JSON file
-        if (await fs.exists(filePath + '.yml')) {
+        if (await fs.exists(`${filePath}.yml`)) {
             filePath += '.yml';
             type = 'YML';
         }
-        else if (await fs.exists(filePath + '.json')) {
+        else if (await fs.exists(`${filePath}.json`)) {
             filePath += '.json';
             type = 'JSON';
         }
-        else
+        else {
             throw new Error('User not found');
+        }
 
-        content = await fs.readFile(filePath);
+        const content = await fs.readFile(filePath);
 
-        switch(type) {
-            case 'JSON':
-                user = JSON.parse(content);
-                break;
+        switch (type) {
+        case 'JSON':
+            user = JSON.parse(content);
+            break;
 
-            case 'YAML':
-                user = yaml.safeLoad(content);
-                break;
+        case 'YAML':
+            user = yaml.safeLoad(content);
+            break;
+        default:
+            throw new Error('Invalid type');
         }
 
         mapUsers[name] = user;
@@ -97,9 +107,11 @@ async function loadUser(name) {
     return currentUser;
 }
 
-// ******************** Exports ********************
-
+// ============================================================
+// Exports
 export default User;
 
-export {loadUser,
-        getCurrentUser};
+export {
+    loadUser,
+    getCurrentUser,
+};

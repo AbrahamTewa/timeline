@@ -10,14 +10,12 @@ import sinon from 'sinon';
 // Import modules
 import AddButton from './AddButton';
 import {
-    initializeEnzyme,
     snapshot,
-} from '../../../test_helpers';
+} from '../../../testHelpers';
 
 // ============================================================
 // Tests
 
-initializeEnzyme();
 describe('Components', () => {
     describe('Unit test', () => {
         it('should react on changes', () => {

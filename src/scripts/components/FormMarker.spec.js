@@ -9,7 +9,7 @@ import sinon from 'sinon';
 // ============================================================
 // Import modules
 import FormMaker from './FormMarker';
-import { generateMarkerLabel } from '../redux/testHelpers';
+import { generateMarkerLabel } from '../testHelpers';
 
 // ============================================================
 // Tests

@@ -79,6 +79,7 @@ class Event extends React.Component {
     }
 
     removeEvent() {
+        // eslint-disable-next-line no-alert
         if (!window.confirm('Confirmer la suppression de l\'évènement ?')) {
             return;
         }

@@ -1,55 +1,62 @@
-// ******************** NodeJS packages ********************
+// ============================================================
+// Import packages
 import { connect } from 'react-redux';
 
+// ============================================================
+// Import modules
 import * as auth from '../auth';
 import * as document from '../document';
 
-// ******************** Action creators ********************
+// ============================================================
+// Action creators
 import {
-    disconnect,
-    disconnecting,
-    loginUser,
-} from '../redux/authentication';
+    authentication,
+    document as documentAction,
+    timeline,
+} from '../redux';
 
-import { openFile } from '../redux/document';
-
-import { loadTimeline } from '../redux/timeline';
+import { authentication as authController } from '../controllers';
 
 import {
     fromSaveFormat,
     saveDocument,
 } from '../main';
 
-// ******************** Component ********************
-import GoogleToolbar from '../components/GoogleToolbar';
+// ============================================================
+// Import components
+import { GoogleToolbar } from '../components';
 
-// ******************** Complexe actions ********************
+// ============================================================
+// Functions
 /**
  *
  * @param {function} dispatch
  */
 function disconnectUser(dispatch) {
-    dispatch(disconnecting());
+    dispatch(authentication.disconnecting());
 
     auth.disconnect().then(() => {
-        dispatch(disconnect());
+        dispatch(authentication.disconnect());
     });
 }
 
 async function loadDocument(dispatch, { fileId }) {
-    dispatch(openFile({ fileId }));
+    dispatch(documentAction.openFile({ fileId }));
     const content = await document.get({ fileId });
 
-    const timeline = fromSaveFormat(content);
+    const data = fromSaveFormat(content);
 
-    dispatch(loadTimeline(timeline));
+    dispatch(timeline.loadTimeline(data));
 }
 
 // ******************** Redux ********************
 function mapStateToProps(state) {
     let userProfile;
 
-    const accessToken = state.authentication.user ? state.authentication.oauth.access_token : undefined;
+    const accessToken = state.authentication.user
+        ? state.authentication.oauth.access_token
+        : undefined;
+
     const doc = {
         saved : state.document.saved,
         url   : state.document.url,
@@ -73,7 +80,7 @@ function mapDispatchProps(dispatch) {
     return {
         disconnect   : () => disconnectUser(dispatch),
         loadDocument : ({ fileId }) => loadDocument(dispatch, { fileId }),
-        onLogin      : () => dispatch(loginUser()),
+        onLogin      : () => authController.loginUser(dispatch),
         saveDocument : () => saveDocument,
     };
 }

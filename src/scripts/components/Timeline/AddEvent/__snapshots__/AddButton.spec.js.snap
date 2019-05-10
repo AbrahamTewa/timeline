@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Components Snapshot should render normally 1`] = `
+<button
+  className="btn btn-outline-primary btn-sm"
+  onClick={[Function]}
+  type="button"
+>
+  + Évènement
+</button>
+`;

@@ -6,8 +6,8 @@ import { connect } from 'react-redux';
 
 // ============================================================
 // Import packages
-import EditableText, { MODE_DIRECT } from '../components/EditableText';
-import { renameFile } from '../redux/document';
+import { EditableText, MODE_DIRECT } from '../components';
+import { document } from '../redux';
 
 // ============================================================
 // Container
@@ -36,7 +36,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
     return {
-        onChange : name => dispatch(renameFile(name)),
+        onChange : name => dispatch(document.renameFile(name)),
     };
 }
 

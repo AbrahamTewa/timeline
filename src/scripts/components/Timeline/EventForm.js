@@ -106,6 +106,7 @@ class EventForm extends React.Component {
                 <div className="form-group row no-gutters">
                     <label htmlFor="description">Description</label>
                     <TextEditor
+                        id="description"
                         className="form-control"
                         initialValue={this.props.description}
                         placeholder="Description"

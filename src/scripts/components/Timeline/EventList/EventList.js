@@ -21,33 +21,10 @@ class EventList extends React.Component {
         this.state = { dragEnabled : false };
     }
 
-    getNode() {
-        // eslint-disable-next-line react/no-find-dom-node
-        return ReactDOM.findDOMNode(this);
-    }
-
-    onStop(event, { item }) {
-        let eventNode;
-        let marker;
-        let position;
-
-        eventNode = item.get(0);
-        marker = eventNode.parentElement.parentElement.id;
-        position = Array.prototype.slice.call(this.getNode().children).indexOf(eventNode);
-
-        $(this.getNode()).sortable('cancel');
-        console.log('onStop');
-        this.props.onEventMoved({
-            event : item.get(0).dataset.uuid,
-            marker,
-            position,
-        });
-    }
-
-    // ***** React methods *****
+    // ============================================================
+    // React lifecycle
     componentDidMount() {
-        let sortableConfig;
-        sortableConfig = {
+        const sortableConfig = {
             axis        : 'y',
             connectWith : '.timeline-event-list',
             cursorAt    : {
@@ -66,7 +43,6 @@ class EventList extends React.Component {
             stop : this.onStop.bind(this),
         };
 
-        console.log('componentDidMount');
         $(this.getNode()).sortable(sortableConfig);
     }
 
@@ -74,17 +50,38 @@ class EventList extends React.Component {
         $(this.getNode()).sortable('destroy');
     }
 
+    // ============================================================
     // Event listeners
-    render() {
-        let events;
+    onStop(event, { item }) {
+        const eventNode = item.get(0);
+        const marker = eventNode.parentElement.parentElement.id;
+        const position = Array.prototype.slice.call(this.getNode().children).indexOf(eventNode);
 
-        events = this.props.events.map(event => (
-                        <ListItem
-event ={event}
-                key ={event.uuid}
-                onEventChange ={this.props.onEventChange}
-                onEventRemove= {this.props.onEventRemove} 
-/>
+        $(this.getNode()).sortable('cancel');
+        this.props.onEventMoved({
+            event : item.get(0).dataset.uuid,
+            marker,
+            position,
+        });
+    }
+
+    // ============================================================
+    // Getters
+    getNode() {
+        // eslint-disable-next-line react/no-find-dom-node
+        return ReactDOM.findDOMNode(this);
+    }
+
+    // ============================================================
+    // Renderer
+    render() {
+        const events = this.props.events.map(event => (
+            <ListItem
+                event={event}
+                key={event.uuid}
+                onEventChange={this.props.onEventChange}
+                onEventRemove={this.props.onEventRemove}
+            />
         ));
 
         return (
@@ -96,6 +93,10 @@ event ={event}
 }
 
 const eventsPropType = PropTypes.arrayOf(PropTypes.shape(eventAttributePropTypes)).isRequired;
+
+EventList.defaultProps = {
+    events : undefined,
+};
 
 EventList.propTypes = {
     events        : eventsPropType,

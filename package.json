@@ -10,21 +10,20 @@
   },
   "private": true,
   "scripts": {
-    "analysis": "grunt clean:analysis && plato --dir reports/analysis --recurse --title \"Starter React\" src/**/*.js",
-    "babel": "babel src --out-dir dist",
-    "babel:watch": "babel src --out-dir dist --watch",
-    "build": "cross-env NODE_ENV=production grunt pre-build && webpack -p",
-    "clean": "grunt clean",
-    "dev": "webpack-dev-server",
-    "doc": "npm run doc:jsdoc && npm run doc:storybook",
-    "doc:jsdoc": "grunt clean:jsdoc && jsdoc -c ./jsdoc.config.json --readme README.md",
-    "doc:storybook": "grunt clean:storybook && build-storybook -c storybook -o doc/storybook",
-    "lint": "grunt lint --force",
+    "build": "cross-env NODE_ENV=production gulp prepare:build && webpack -p",
+    "clean": "gulp clean",
+    "doc": "run-p doc:*",
+    "doc:jsdoc": "gulp clean:doc:jsdoc && jsdoc -c ./jsdoc.config.json --readme README.md",
+    "doc:storybook": "gulp clean:doc:storybook && build-storybook -c storybook -o doc/storybook",
+    "lint": "run-p lint:*",
+    "lint:javascript": "eslint .",
+    "lint:markdown": "remark . --quiet --frail",
+    "lint:style": "stylelint \"./**/*.?(c|sc|sa)ss\"",
     "start": "node server.js ",
-    "test": "jest --config jest.config.json",
-    "test-u": "jest --config jest.config.json --updateSnapshot",
-    "test-cov": "grunt clean:coverage && jest --config jest.config.json --coverage",
-    "watch": "webpack-dev-server --progress --inline --hot",
+    "test": "cross-env JEST_STARE_RESULT_DIR=./reports/tests/unit jest --config jest.json",
+    "test-u": "jest --config jest.json --updateSnapshot",
+    "test-cov": "gulp clean:report:coverage && cross-env JEST_STARE_RESULT_DIR=./reports/tests/unit JEST_STARE_COVERAGE_LINK=./coverage/lcov-report/index.html jest --config jest.json --coverage",
+    "watch": "webpack-dev-server --progress --hot -d",
     "watch:storybook": "start-storybook -p 9001 -c storybook"
   },
   "repository": {
@@ -99,7 +98,6 @@
     "mz": "^2.6.0",
     "node-sass": "^4.12.0",
     "npm-run-all": "^4.1.5",
-    "plato": "^1.7.0",
     "randomstring": "^1.1.5",
     "react-test-renderer": "^16.8.6",
     "redux-mock-store": "^1.2.3",
@@ -120,5 +118,8 @@
   },
   "optionalDependencies": {
     "fsevents": "*"
+  },
+  "jest-stare": {
+    "resultDir": "./reports/tests/unit"
   }
 }

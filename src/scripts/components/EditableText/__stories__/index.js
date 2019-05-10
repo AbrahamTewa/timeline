@@ -1,2 +1,0 @@
-import './RenameButton';
-import './EditableText';

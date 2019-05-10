@@ -2,10 +2,12 @@
 
 // ============================================================
 // Import modules
-import FilePicker from './components/GoogleToolbar/FilePicker';
+import { FilePicker } from './components';
 import * as document from './document';
-import { getStore } from './redux';
-import * as documentAction from './redux/document';
+import {
+    document as documentAction,
+    getStore,
+} from './redux';
 
 // ============================================================
 // Module's constants and variables
@@ -33,8 +35,8 @@ async function forceSave() {
     view.setParent('root');
 
     const filePicker = new FilePicker({
-        access_token: state.authentication.oauth.access_token,
-        views: [view],
+        access_token : state.authentication.oauth.access_token,
+        views        : [view],
     });
 
     // If the file hasn't been saved yet, then we ask the user to pick a folder where to create it
@@ -49,12 +51,12 @@ async function forceSave() {
     }
 
     const doc = await document.create({
-        content: toSaveFormat(state),
-        name: state.document.name,
-        parentId: parent.parentId,
+        content  : toSaveFormat(state),
+        name     : state.document.name,
+        parentId : parent.parentId,
     });
 
-    store.dispatch(documentAction.savedFile({ fileId: doc.fileId }));
+    store.dispatch(documentAction.savedFile({ fileId : doc.fileId }));
 }
 
 /**
@@ -63,7 +65,7 @@ async function forceSave() {
  * @returns {ReduxStore}
  */
 function fromSaveFormat(doc) {
-    return { timeline: JSON.parse(doc).data };
+    return { timeline : JSON.parse(doc).data };
 }
 
 function getCurrentUser() {
@@ -80,7 +82,7 @@ async function saveDocument() {
 
     await document.update({
         content,
-        fileId: state.document.fileId,
+        fileId : state.document.fileId,
     });
 
     store.dispatch(documentAction.savedFile());
@@ -98,18 +100,6 @@ function enableEventDrag() {
 
 }
 
-function toPromise(thenable) {
-    let promiseHolder;
-
-    const promise = new Promise(((onFulfill, onReject) => {
-        promiseHolder = { onFulfill, onReject };
-    }));
-
-    thenable.then(promiseHolder.onFulfill, promiseHolder.onReject);
-
-    return promise;
-}
-
 /**
  *
  * @param {ReduxStore} state
@@ -117,8 +107,8 @@ function toPromise(thenable) {
  */
 function toSaveFormat(state) {
     const doc = {
-        application: 'github.com/abrahamtewa/timeline',
-        version: '0.0.1',
+        application : 'github.com/abrahamtewa/timeline',
+        version     : '0.0.1',
     };
 
     doc.data = state.timeline;
@@ -134,6 +124,5 @@ export {
     , getCurrentUser
     , saveDocument
     , setCurrentUser
-    , toPromise
     , toSaveFormat,
 };

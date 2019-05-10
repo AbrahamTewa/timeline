@@ -4,24 +4,20 @@ import { connect } from 'react-redux';
 
 // ============================================================
 // Import modules
-import TimelineComponent from '../components/Timeline';
+import { Timeline as TimelineComponent } from '../components';
 import {
-    addEvent,
-    moveEvent,
-    removeEvent,
-    renameMarker,
-    updateEvent,
-} from '../redux/timeline';
+    timeline,
+} from '../redux';
 
 // ============================================================
 // Functions
 function mapDispatchToProps(dispatch) {
     return {
-        onEventChange      : params => dispatch(updateEvent(params)),
-        onEventMoved       : params => dispatch(moveEvent(params)),
-        onEventRemove      : params => dispatch(removeEvent(params)),
-        onMarkerTimeUpdate : params => dispatch(renameMarker(params)),
-        onNewEvent         : params => dispatch(addEvent(params)),
+        onEventChange      : params => dispatch(timeline.updateEvent(params)),
+        onEventMoved       : params => dispatch(timeline.moveEvent(params)),
+        onEventRemove      : params => dispatch(timeline.removeEvent(params)),
+        onMarkerTimeUpdate : params => dispatch(timeline.renameMarker(params)),
+        onNewEvent         : params => dispatch(timeline.addEvent(params)),
     };
 }
 

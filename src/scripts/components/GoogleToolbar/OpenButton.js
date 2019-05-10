@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 
 // ============================================================
 // Import modules
-import FilePicker from './FilePicker';
+import FilePicker from '../FilePicker';
 import { MIME_TYPE } from '../../settings';
 
 // ============================================================
@@ -28,6 +28,7 @@ class OpenButton extends React.Component {
 
     async onClick() {
         if (!this.props.document.url && !this.props.document.saved) {
+            // eslint-disable-next-line no-alert
             if (!window.confirm('La timeline actuelle n\'a pas été sauvegardée. Continuer ?')) {
                 return;
             }

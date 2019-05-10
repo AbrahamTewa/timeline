@@ -5,7 +5,8 @@ let config;
 if (process.env.NODE_ENV === 'production') {
     // eslint-disable-next-line global-require
     config = require('./webpack.production').default;
-} else {
+}
+else {
     // eslint-disable-next-line global-require
     config = require('./webpack.development').default;
 }

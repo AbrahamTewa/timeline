@@ -1,7 +1,13 @@
-import {getCurrentUser} from './User';
+import {
+    getCurrentUser,
+    loadUser,
+} from './User';
 
 function getAuthInstance() {
-    return {currentUser: {get: getCurrentUser}};
+    return { currentUser : { get : getCurrentUser } };
 }
 
-export {getAuthInstance};
+export {
+    getAuthInstance,
+    loadUser,
+};

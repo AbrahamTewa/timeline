@@ -4,15 +4,15 @@ import { connect } from 'react-redux';
 
 // ============================================================
 // Import modules
-import FormMarker from '../components/FormMarker';
-import { addMarker } from '../redux/timeline';
+import { FormMarker } from '../components';
+import { timeline } from '../redux';
 
 // ============================================================
 // Functions
 function mapDispatchToProps(dispatch) {
     return {
         onSubmit : (label) => {
-            dispatch(addMarker({ label }));
+            dispatch(timeline.addMarker({ label }));
         },
     };
 }

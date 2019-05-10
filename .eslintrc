@@ -57,6 +57,7 @@ rules:
         - allow:
               - history/createBrowserHistory
               - uuid/v4
+              - mz/fs
 
     import/prefer-default-export:
         - off
@@ -77,3 +78,12 @@ rules:
     react/jsx-indent-props:
         - error
         - 4
+
+    jsx-a11y/label-has-for:
+        - off
+
+    jsx-a11y/label-has-associated-control:
+        - error
+        - controlComponents:
+            - TextEditor
+ 

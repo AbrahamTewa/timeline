@@ -1,7 +1,7 @@
 /* global gapi */
 // ============================================================
 // Import modules
-import { toPromise } from './main';
+import { toPromise } from './helpers';
 import { MIME_TYPE } from './settings';
 
 // ============================================================
@@ -19,10 +19,10 @@ async function create({
     parentId,
 }) {
     const param = {
-        mimeType: MIME_TYPE,
+        mimeType   : MIME_TYPE,
         name,
-        parent: [parentId],
-        uploadType: 'media',
+        parent     : [parentId],
+        uploadType : 'media',
     };
 
     const { result } = await toPromise(gapi.client.drive.files.create(param));
@@ -36,13 +36,15 @@ async function create({
 
 async function get({ fileId }) {
     const thenable = gapi.client.request({
-        path: `https://www.googleapis.com/drive/v3/files/${fileId}`,
-        params: {
-            alt: 'media',
-            mimeType: MIME_TYPE,
+        path   : `https://www.googleapis.com/drive/v3/files/${fileId}`,
+        params : {
+            alt      : 'media',
+            mimeType : MIME_TYPE,
         },
-        method: 'GET',
-    }).then(r => window.result = r);
+        method : 'GET',
+    }).then((r) => {
+        window.result = r;
+    });
 
     const document = await toPromise(thenable);
 
@@ -53,7 +55,7 @@ async function rename({ fileId, name }) {
     const param = {
         fileId,
         name,
-        uploadType: 'media',
+        uploadType : 'media',
     };
 
     await toPromise(gapi.client.drive.files.update(param));
@@ -69,14 +71,14 @@ async function rename({ fileId, name }) {
  */
 async function update({ content, fileId }) {
     const params = {
-        mimeType: 'text/plain',
-        uploadType: 'multipart',
+        mimeType   : 'text/plain',
+        uploadType : 'multipart',
     };
 
     const thenable = gapi.client.request({
-        path: `https://www.googleapis.com/upload/drive/v3/files/${fileId}`,
-        body: content,
-        method: 'PATCH',
+        path   : `https://www.googleapis.com/upload/drive/v3/files/${fileId}`,
+        body   : content,
+        method : 'PATCH',
         params,
     }).then(() => {});
 

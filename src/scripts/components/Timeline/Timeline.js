@@ -30,10 +30,10 @@ class Timeline extends React.Component {
     applyPlugin() {
         $.timeliner({ timelineContainer : `#${this.props.id}` });
 
-        this.setState({
-            ...this.state,
+        this.setState(prevState => ({
+            ...prevState,
             pluginApplied : true,
-        });
+        }));
     }
 
     render() {

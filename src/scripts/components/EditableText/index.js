@@ -119,13 +119,15 @@ class EditableText extends React.Component {
             return;
         }
 
-        let isUpdatable = typeof updatable === 'undefined'
-            ? !this.state.updatable
-            : updatable;
+        this.setState((prevState) => {
+            const isUpdatable = typeof updatable === 'undefined'
+                ? !prevState.updatable
+                : updatable;
 
-        this.setState({
-            ...this.state,
-            updatable : isUpdatable,
+            return {
+                ...prevState,
+                updatable : isUpdatable,
+            };
         });
     }
 

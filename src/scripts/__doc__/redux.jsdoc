@@ -58,35 +58,6 @@
  */
 
 /**
- * @typedef {Object} StoreAction.Timeline.RemoveMarker
- * @property {Object} payload
- * @property {string} payload.marker - UUID of the marker to remove
- */
-
-/**
- * @typedef {Object} StoreAction.Timeline.MoveMarker
- * @property {Object} payload
- * @property {number} payload.position - New position of the marker
- * @property {string} payload.marker   - UUID of the marker to move
- */
-
-/**
- * @typedef {Object} StoreAction.Timeline.RenameMarker
- * @property {Object} payload
- * @property {string} payload.label  - New label
- * @property {string} payload.marker - UUID of the marker to rename
- */
-
-/**
- * @typedef {Object} StoreAction.Timeline.MoveEvent
- * @property {Object} payload
- * @property {string} payload.event    - UUID of the event to move
- * @property {string} payload.marker   - Marker when the event has been moved
- * @property {number} payload.position - Position in the marker event list of the event
- * @property {string} type
- */
-
-/**
  * @typedef {Object} StoreAction.Timeline.UpdateEventLabel
  * @property {string} label      - New label of the event
  * @property {string} markerUUID  - UUID of the marker

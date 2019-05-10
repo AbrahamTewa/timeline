@@ -1,10 +1,13 @@
-// ******************** NodeJS packages ********************
+// ============================================================
+// Import packages
 import React from 'react';
 import PropTypes from 'prop-types';
 
-// ==================================================
+// ============================================================
+// Component
 function RenameButton({ onClick }) {
     return (
+        // eslint-disable-next-line jsx-a11y/anchor-is-valid
         <a
             className="rename-button"
             href="#"

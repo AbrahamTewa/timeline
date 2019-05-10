@@ -1,12 +1,12 @@
+/* eslint-disable no-underscore-dangle */
 class UserBasicProfile {
-
     /**
      *
      * @param {MockData.User} user
      */
     constructor(user) {
-        this.user     = user;
-        this.__mock__ = {...user.profile};
+        this.user = user;
+        this.__mock__ = { ...user.profile };
     }
 
     getEmail() {

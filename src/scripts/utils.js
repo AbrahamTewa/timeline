@@ -22,7 +22,8 @@ function scrollIfNeeded(element) {
         // We scroll to the top border of the element
         if (pageYOffset > element.offsetTop) {
             scrollYTo = element.offsetTop;
-        } else {
+        }
+        else {
             // Otherwise, the element is hidden/partially visible at the bottom
             const elementOffsetBottom = element.offsetTop + element.offsetHeight;
             const windowOffsetBottom = window.pageYOffset + window.innerHeight;
@@ -31,7 +32,8 @@ function scrollIfNeeded(element) {
 
             scrollYTo = window.pageYOffset - delta;
         }
-    } else {
+    }
+    else {
         // No scrolling
         scrollYTo = window.pageYOffset;
     }
@@ -44,7 +46,10 @@ function scrollIfNeeded(element) {
     )) {
         // If the element is fully invisible on top or visible partially at the top of the window :
         // We scroll to the top border of the element
-        if (pageYOffset > element.offsetLeft) { scrollXTo = element.offsetLeft; } else {
+        if (pageYOffset > element.offsetLeft) {
+            scrollXTo = element.offsetLeft;
+        }
+        else {
             // Otherwise, the element is hidden/partially visible at the bottom
             const elementOffsetRight = element.offsetLeft + element.offsetWidth;
             const windowOffsetRight = window.pageXOffset + window.innerWidth;
@@ -53,7 +58,8 @@ function scrollIfNeeded(element) {
 
             scrollXTo = window.pageXOffset - delta;
         }
-    } else {
+    }
+    else {
         // No horizontal scrolling
         scrollXTo = window.pageXOffset;
     }
