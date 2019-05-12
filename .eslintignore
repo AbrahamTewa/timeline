@@ -1,6 +1,7 @@
 /build/
 /doc/
 /docs/
+/docs/vendors/
 /node_modules/
 /reports/
-/docs/vendors/
+/statics

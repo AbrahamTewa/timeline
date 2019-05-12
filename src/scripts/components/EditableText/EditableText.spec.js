@@ -10,7 +10,7 @@ import sinon from 'sinon';
 
 // ============================================================
 // Import modules
-import EditableText, { MODE_BUTTON, MODE_DIRECT } from '.';
+import EditableText, { MODE_BUTTON, MODE_DIRECT } from './EditableText';
 import { generateLabel } from '../../testHelpers';
 
 // ============================================================

@@ -1,4 +1,6 @@
-const ACTION = 'timeline.LOAD';
+// ============================================================
+// Module's constants and variables
+const ACTION_TYPE = 'timeline.LOAD';
 
 // ============================================================
 // Functions
@@ -8,18 +10,17 @@ const ACTION = 'timeline.LOAD';
  * @public
  */
 function actionCreator({ timeline }) {
-    return {
-        payload : { timeline },
-        type    : ACTION,
-    };
+    return { timeline };
 }
 
 function reducer(state, { timeline }) {
     return timeline;
 }
 
+// ============================================================
+// Exports
 export {
-    ACTION,
+    ACTION_TYPE,
 
     actionCreator,
     reducer,

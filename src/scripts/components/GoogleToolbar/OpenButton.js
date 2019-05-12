@@ -71,5 +71,6 @@ OpenButton.defaultProps = {
     access_token : undefined,
 };
 
-// ******************** Exports ********************
+// ============================================================
+// Exports
 export default OpenButton;

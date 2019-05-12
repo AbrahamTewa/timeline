@@ -20,7 +20,7 @@ export default {
     devtool   : 'source-map',
     devServer : {
         hot                : true,
-        contentBase        : false,
+        contentBase        : path.join(__dirname, 'statics'),
         historyApiFallback : true,
         publicPath         : '/',
     },
@@ -64,7 +64,9 @@ export default {
     },
     plugins : [
         new StyleLintPlugin(styleLintOptions),
-        new HtmlWebpackPlugin(),
+        new HtmlWebpackPlugin({
+            template : 'src/index.html',
+        }),
     ],
     resolve : {
         modules    : ['node_modules'],

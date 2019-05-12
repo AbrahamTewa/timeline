@@ -3,11 +3,12 @@
 // ============================================================
 // Import modules
 import { FilePicker } from './components';
-import * as document from './document';
+import { document as documentController } from './controllers';
 import {
     document as documentAction,
     getStore,
 } from './redux';
+import { FILE_FORMAT_VERSION } from './constants';
 
 // ============================================================
 // Module's constants and variables
@@ -50,7 +51,7 @@ async function forceSave() {
         return;
     }
 
-    const doc = await document.create({
+    const doc = await documentController.create({
         content  : toSaveFormat(state),
         name     : state.document.name,
         parentId : parent.parentId,
@@ -65,7 +66,11 @@ async function forceSave() {
  * @returns {ReduxStore}
  */
 function fromSaveFormat(doc) {
-    return { timeline : JSON.parse(doc).data };
+    const fileContent = JSON.parse(doc);
+
+    const document = documentController.toLastVersion(fileContent);
+
+    return { timeline : document.data };
 }
 
 function getCurrentUser() {
@@ -80,7 +85,7 @@ async function saveDocument() {
     const state = store.getState();
     const content = toSaveFormat(state);
 
-    await document.update({
+    await documentController.update({
         content,
         fileId : state.document.fileId,
     });
@@ -108,7 +113,7 @@ function enableEventDrag() {
 function toSaveFormat(state) {
     const doc = {
         application : 'github.com/abrahamtewa/timeline',
-        version     : '0.0.1',
+        version     : FILE_FORMAT_VERSION,
     };
 
     doc.data = state.timeline;

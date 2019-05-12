@@ -15,7 +15,7 @@ import * as updateEventAction from './updateEvent';
 const reducers = {
     [addEventAction.ACTION_TYPE]     : addEventAction.reducer,
     [addMarkerAction.ACTION_TYPE]    : addMarkerAction.reducer,
-    [loadTimelineAction.ACTION]      : loadTimelineAction.reducer,
+    [loadTimelineAction.ACTION_TYPE] : loadTimelineAction.reducer,
     [moveEventAction.ACTION_TYPE]    : moveEventAction.reducer,
     [moveMarkerAction.ACTION_TYPE]   : moveMarkerAction.reducer,
     [removeEventAction.ACTION_TYPE]  : removeEventAction.reducer,

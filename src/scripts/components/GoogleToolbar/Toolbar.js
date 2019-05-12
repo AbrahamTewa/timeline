@@ -73,5 +73,6 @@ Toolbar.propTypes = {
     userProfile  : UserDropdown.propTypes.userProfile,
 };
 
-// ******************** Exports ********************
+// ============================================================
+// Exports
 export default Toolbar;

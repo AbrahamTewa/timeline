@@ -88,8 +88,12 @@ class FormMarker extends React.Component {
     }
 }
 
+FormMarker.defaultProps = {
+    autoFocus : false,
+};
+
 FormMarker.propTypes = {
-    autoFocus : PropTypes.bool.isRequired,
+    autoFocus : PropTypes.bool,
     onSubmit  : PropTypes.func.isRequired,
 };
 

@@ -1,12 +1,16 @@
-// ******************** Imports ********************
+// ============================================================
+// Import packages
 import PropTypes from 'prop-types';
 import React from 'react';
 import ReactDOM from 'react-dom';
 
+// ============================================================
+// Import modules
 import ListItem from './ListItem';
 import { eventAttributePropTypes } from '../Event';
 
-// ******************** Container ********************
+// ============================================================
+// Component
 class EventList extends React.Component {
     /**
      * @param {Object} props
@@ -105,6 +109,7 @@ EventList.propTypes = {
     onEventRemove : PropTypes.func.isRequired,
 };
 
-// ******************** Export ********************
+// ============================================================
+// Exports
 export default EventList;
 export { eventsPropType };

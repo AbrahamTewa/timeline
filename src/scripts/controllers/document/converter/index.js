@@ -1,0 +1,1 @@
+export { toLastVersion } from './main';

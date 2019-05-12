@@ -108,6 +108,7 @@ class Event extends React.Component {
                 illustrationURL={this.props.illustrationURL}
                 label={this.props.label}
                 removeEvent={this.removeEvent}
+                uuid={this.props.uuid}
             />
         );
     }

@@ -22,7 +22,7 @@ const loginUser = getActionCreator(loginUserAction);
 // Functions
 function getActionCreator({ ACTION_TYPE, actionCreator }) {
     return (...args) => {
-        const payload = actionCreator(args);
+        const payload = actionCreator(...args);
 
         return {
             payload,

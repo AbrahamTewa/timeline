@@ -1,8 +1,8 @@
 /* global gapi */
 // ============================================================
 // Import modules
-import { toPromise } from './helpers';
-import { MIME_TYPE } from './settings';
+import { toPromise } from '../../helpers';
+import { MIME_TYPE } from '../../settings';
 
 // ============================================================
 // Functions
@@ -35,20 +35,16 @@ async function create({
 }
 
 async function get({ fileId }) {
-    const thenable = gapi.client.request({
+    const file = await gapi.client.request({
         path   : `https://www.googleapis.com/drive/v3/files/${fileId}`,
         params : {
             alt      : 'media',
             mimeType : MIME_TYPE,
         },
         method : 'GET',
-    }).then((r) => {
-        window.result = r;
     });
 
-    const document = await toPromise(thenable);
-
-    return document.body;
+    return file.body;
 }
 
 async function rename({ fileId, name }) {
@@ -88,8 +84,8 @@ async function update({ content, fileId }) {
 }
 
 export {
-    create
-    , get
-    , rename
-    , update,
+    create,
+    get,
+    rename,
+    update,
 };

@@ -5,7 +5,6 @@ import { connect } from 'react-redux';
 // ============================================================
 // Import modules
 import * as auth from '../auth';
-import * as document from '../document';
 
 // ============================================================
 // Action creators
@@ -13,9 +12,13 @@ import {
     authentication,
     document as documentAction,
     timeline,
+    SAVE_STATUS,
 } from '../redux';
 
-import { authentication as authController } from '../controllers';
+import {
+    authentication as authController,
+    document as documentController,
+} from '../controllers';
 
 import {
     fromSaveFormat,
@@ -42,14 +45,15 @@ function disconnectUser(dispatch) {
 
 async function loadDocument(dispatch, { fileId }) {
     dispatch(documentAction.openFile({ fileId }));
-    const content = await document.get({ fileId });
+    const content = await documentController.get({ fileId });
 
     const data = fromSaveFormat(content);
 
     dispatch(timeline.loadTimeline(data));
 }
 
-// ******************** Redux ********************
+// ============================================================
+// Redux
 function mapStateToProps(state) {
     let userProfile;
 
@@ -58,7 +62,7 @@ function mapStateToProps(state) {
         : undefined;
 
     const doc = {
-        saved : state.document.saved,
+        saved : state.document.saveStatus === SAVE_STATUS.SAVED,
         url   : state.document.url,
     };
 
@@ -87,5 +91,6 @@ function mapDispatchProps(dispatch) {
 
 const Toolbar = connect(mapStateToProps, mapDispatchProps)(GoogleToolbar);
 
-// ******************** Exports ********************
+// ============================================================
+// Exports
 export default Toolbar;
